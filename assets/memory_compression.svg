@@ -1,125 +1,171 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="100%" height="100%">
-  <defs>
-    <style>
-      @keyframes suckIn {
-        0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
-        40% { transform: translate(150px, 80px) scale(0.1) rotate(360deg); opacity: 0; }
-        100% { opacity: 0; }
-      }
-      @keyframes centrifugeSpin {
-        0% { transform: rotate(0deg) scale(1); }
-        30% { transform: rotate(720deg) scale(1.1); filter: drop-shadow(0 0 20px #8b5cf6); }
-        50% { transform: rotate(1440deg) scale(1); filter: drop-shadow(0 0 5px #8b5cf6); }
-        100% { transform: rotate(1440deg) scale(1); }
-      }
-      @keyframes coreGlow {
-        0%, 35% { r: 0; opacity: 0; }
-        40% { r: 15; opacity: 1; fill: #ffffff; filter: drop-shadow(0 0 30px #ffffff); }
-        50%, 100% { r: 25; opacity: 1; fill: #10b981; filter: drop-shadow(0 0 20px #10b981); }
-      }
-      @keyframes scanLaser {
-        0%, 55% { transform: translateX(0); opacity: 0; }
-        60% { opacity: 1; }
-        75% { transform: translateX(80px); opacity: 1; }
-        80%, 100% { opacity: 0; transform: translateX(80px); }
-      }
-      @keyframes vaporization {
-        0%, 80% { opacity: 1; filter: none; }
-        85% { opacity: 0.5; filter: blur(5px); transform: translateY(-10px); }
-        100% { opacity: 0; filter: blur(10px); transform: translateY(-20px); }
-      }
-      @keyframes commitFlash {
-        0%, 85% { opacity: 0; }
-        90%, 95% { opacity: 1; }
-        100% { opacity: 0; }
-      }
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Transactional Memory Compression">
+  <style>
+    /* Master transaction: 10s. intake/distill → append → verify → truncate → commit */
 
-      .bg { fill: #020617; }
-      .tube { fill: none; stroke: #1e293b; stroke-width: 40; stroke-linecap: round; }
-      .tube-inner { fill: none; stroke: #0f172a; stroke-width: 32; stroke-linecap: round; }
-      .data-cube { fill: #3b82f6; stroke: #60a5fa; stroke-width: 1; opacity: 0.8; }
-      
-      .centrifuge-ring { fill: none; stroke: #8b5cf6; stroke-width: 4; stroke-dasharray: 20 10; }
-      .centrifuge-hub { fill: #1e293b; stroke: #c084fc; stroke-width: 2; }
-      
-      .scan-line { stroke: #10b981; stroke-width: 4; stroke-linecap: round; filter: drop-shadow(0 0 8px #10b981); }
-      
-      .disk-drive { fill: #0f172a; stroke: #475569; stroke-width: 3; rx: 8; }
-      .disk-slot { fill: #020617; rx: 2; }
-    </style>
+    /* Cubes stream continuously; parent group handles the Truncate vaporization */
+    .cube { animation: intake 2.5s linear infinite; }
+    @keyframes intake {
+      0%   { transform: translate(0,0) scale(1); opacity: 0; }
+      8%   { opacity: 1; }
+      70%  { transform: translate(230px, 0) scale(.75); opacity: 1; }
+      100% { transform: translate(330px, 0) scale(.1); opacity: 0; }
+    }
+    .stream-stage { animation: truncate 10s linear infinite; }
+    @keyframes truncate {
+      0%,68%  { opacity: 1; filter: blur(0px); }
+      80%,92% { opacity: 0; filter: blur(14px); }
+      97%,100%{ opacity: 1; filter: blur(0px); }
+    }
+    .centrifuge-outer { transform-box: fill-box; transform-origin: center; animation: rotCW 6s linear infinite; }
+    .centrifuge-blades { transform-box: fill-box; transform-origin: center; animation: rotCCW 1.6s linear infinite; }
+    @keyframes rotCW  { to { transform: rotate(360deg); } }
+    @keyframes rotCCW { to { transform: rotate(-360deg); } }
+
+    .core { transform-box: fill-box; transform-origin: center; animation: coreLife 10s ease-in-out infinite; }
+    @keyframes coreLife {
+      0%   { transform: scale(.15); opacity: .2; }
+      35%  { transform: scale(.7);  opacity: .7; }
+      50%  { transform: scale(1);   opacity: 1; }
+      72%  { transform: scale(1);   opacity: 1; }
+      78%  { transform: scale(1.25); opacity: 1; }   /* commit pulse */
+      95%  { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(.15); opacity: .2; }
+    }
+    .scan-beam { opacity: 0; animation: scan 10s linear infinite; }
+    @keyframes scan {
+      0%,52% { opacity: 0; transform: translateX(-60px); }
+      55%    { opacity: 1; transform: translateX(-60px); }
+      68%    { opacity: 1; transform: translateX(60px); }
+      70%,100% { opacity: 0; transform: translateX(60px); }
+    }
+    .verify-ring { fill: none; stroke: #22ff88; stroke-width: 3; transform-box: fill-box; transform-origin: center;
+      opacity: 0; animation: verifyOK 10s ease-out infinite; }
+    @keyframes verifyOK {
+      0%,69% { opacity: 0; transform: scale(.5); }
+      71%    { opacity: 1; transform: scale(.7); }
+      82%    { opacity: 0; transform: scale(1.8); }
+      100%   { opacity: 0; }
+    }
+    .commit-seal { opacity: 0; transform-box: fill-box; transform-origin: center; animation: seal 10s ease infinite; }
+    @keyframes seal {
+      0%,76% { opacity: 0; transform: scale(.3) rotate(-90deg); }
+      80%,94%{ opacity: 1; transform: scale(1) rotate(0deg); }
+      98%,100%{ opacity: 0; transform: scale(.3) rotate(-90deg); }
+    }
+    .energy-line { stroke-dasharray: 10 14; animation: dashFlow .8s linear infinite; }
+    @keyframes dashFlow { to { stroke-dashoffset: -24; } }
+    .status-lamp { animation: lampCycle 10s linear infinite; }
+    @keyframes lampCycle {
+      0%,50%  { fill: #22d3ee; } 51%,69% { fill: #ffb020; }
+      70%,96% { fill: #22ff88; } 97%,100%{ fill: #22d3ee; }
+    }
+    .ring-tick { animation: rotCW 20s linear infinite; transform-box: fill-box; transform-origin: center; }
+    .exhaust { opacity: 0; animation: exhaustPuff 10s ease-out infinite; }
+    @keyframes exhaustPuff {
+      0%,74% { opacity: 0; transform: translateY(0) scale(.5); }
+      78% { opacity: .8; } 90% { opacity: 0; transform: translateY(-40px) scale(1.6); }
+      100% { opacity: 0; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#060714"/><stop offset="1" stop-color="#0e0a24"/>
+    </linearGradient>
+    <radialGradient id="coreGrad" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#a78bfa"/>
+      <stop offset=".7" stop-color="#7c3aed"/><stop offset="1" stop-color="#2e1065"/>
+    </radialGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b3f63"/><stop offset=".5" stop-color="#1c2040"/><stop offset="1" stop-color="#101430"/>
+    </linearGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity=".06"/><stop offset="1" stop-color="#22d3ee" stop-opacity=".3"/>
+    </linearGradient>
+    <filter id="glowP" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowCy" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="glowGr" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <!-- isometric data cube -->
+    <g id="dcube">
+      <polygon points="0,-9 9,-4.5 9,4.5 0,9 -9,4.5 -9,-4.5" fill="#164e63"/>
+      <polygon points="0,-9 9,-4.5 0,0 -9,-4.5" fill="#22d3ee"/>
+      <polygon points="0,0 9,-4.5 9,4.5 0,9" fill="#0e7490"/>
+      <polygon points="0,0 -9,-4.5 -9,4.5 0,9" fill="#155e75"/>
+    </g>
   </defs>
 
-  <rect width="800" height="300" class="bg" rx="16" />
+  <rect width="800" height="500" fill="url(#bg3)"/>
+  <g stroke="#151a3a" stroke-width="1" opacity=".7">
+    <path d="M0 100 H800 M0 250 H800 M0 400 H800 M200 0 V500 M600 0 V500"/>
+  </g>
 
-  <!-- 1. Truncate Zone (Vaporizes at the end) -->
-  <g style="animation: vaporization 12s infinite;">
-    <!-- Large Intake Tube -->
-    <path d="M -50 150 Q 200 150 250 200" class="tube" />
-    <path d="M -50 150 Q 200 150 250 200" class="tube-inner" />
-    
-    <!-- Floating Data Cubes (4k Tokens) -->
-    <g transform="translate(50, 100)">
-      <!-- Wave 1 -->
-      <rect x="0" y="20" width="15" height="15" class="data-cube" style="animation: suckIn 12s infinite 0.1s;" />
-      <rect x="30" y="-10" width="10" height="10" class="data-cube" style="animation: suckIn 12s infinite 0.3s;" />
-      <rect x="50" y="40" width="12" height="12" class="data-cube" style="animation: suckIn 12s infinite 0.5s;" />
-      <rect x="80" y="10" width="18" height="18" class="data-cube" style="animation: suckIn 12s infinite 0.2s;" />
-      
-      <!-- Wave 2 -->
-      <rect x="-20" y="50" width="14" height="14" class="data-cube" style="animation: suckIn 12s infinite 1.1s;" />
-      <rect x="10" y="70" width="8" height="8" class="data-cube" style="animation: suckIn 12s infinite 1.3s;" />
-      <rect x="90" y="60" width="16" height="16" class="data-cube" style="animation: suckIn 12s infinite 1.5s;" />
-      
-      <!-- Wave 3 -->
-      <rect x="120" y="20" width="12" height="12" class="data-cube" style="animation: suckIn 12s infinite 2.1s;" />
-      <rect x="150" y="50" width="20" height="20" class="data-cube" style="animation: suckIn 12s infinite 2.3s;" />
+  <!-- ===== Intake stream + tube (dissolves on Truncate) ===== -->
+  <g class="stream-stage">
+    <path d="M20 220 L330 236 L330 264 L20 280 Z" fill="url(#tube)" stroke="#155e75" stroke-width="1.5"/>
+    <path class="energy-line" d="M28 250 H330" stroke="#22d3ee" stroke-width="2" fill="none" opacity=".7"/>
+    <g filter="url(#glowCy)">
+      <use href="#dcube" class="cube" x="30"  y="234" style="animation-delay:0s"/>
+      <use href="#dcube" class="cube" x="30"  y="262" style="animation-delay:-.4s"/>
+      <use href="#dcube" class="cube" x="55"  y="248" style="animation-delay:-.9s"/>
+      <use href="#dcube" class="cube" x="30"  y="222" style="animation-delay:-1.3s"/>
+      <use href="#dcube" class="cube" x="70"  y="270" style="animation-delay:-1.7s"/>
+      <use href="#dcube" class="cube" x="45"  y="240" style="animation-delay:-2.1s"/>
+      <use href="#dcube" class="cube" x="60"  y="258" style="animation-delay:-.65s"/>
+      <use href="#dcube" class="cube" x="38"  y="276" style="animation-delay:-1.95s"/>
     </g>
-    
-    <text x="100" y="240" fill="#64748b" font-family="monospace" font-size="14px" font-weight="bold">ACTIVE WORKLOG (4k)</text>
-  </g>
-
-  <!-- 2. Distill Centrifuge -->
-  <g transform="translate(350, 200)">
-    <!-- Base structure -->
-    <circle cx="0" cy="0" r="60" fill="#0f172a" stroke="#1e293b" stroke-width="4" />
-    
-    <!-- Rotating rings -->
-    <g style="animation: centrifugeSpin 12s infinite cubic-bezier(0.4, 0, 0.2, 1); transform-origin: 0px 0px;">
-      <circle cx="0" cy="0" r="50" class="centrifuge-ring" />
-      <circle cx="0" cy="0" r="35" class="centrifuge-ring" style="stroke-dasharray: 10 30; stroke: #c084fc;" />
-      <path d="M -50 0 L 50 0 M 0 -50 L 0 50 M -35 -35 L 35 35 M -35 35 L 35 -35" stroke="#475569" stroke-width="2" />
-      <circle cx="0" cy="0" r="15" class="centrifuge-hub" />
+    <!-- loose ambient cubes -->
+    <g filter="url(#glowCy)" opacity=".8">
+      <use href="#dcube" x="60" y="140"/><use href="#dcube" x="110" y="360"/>
+      <use href="#dcube" x="150" y="120" transform="scale(.8)"/><use href="#dcube" x="90" y="410" transform="scale(.7)"/>
     </g>
-    
-    <text x="0" y="80" fill="#c084fc" font-family="monospace" font-size="14px" font-weight="bold" text-anchor="middle">DISTILLATION ENGINE</text>
   </g>
 
-  <!-- Flow connecting centrifuge to disk -->
-  <path d="M 410 200 L 550 200" fill="none" stroke="#334155" stroke-width="4" stroke-dasharray="10 5" />
-
-  <!-- 3 & 4. Archive Disk & Verification -->
-  <g transform="translate(550, 140)">
-    <rect x="0" y="0" width="150" height="120" class="disk-drive" />
-    <rect x="20" y="20" width="110" height="10" class="disk-slot" />
-    <rect x="20" y="40" width="110" height="10" class="disk-slot" />
-    
-    <!-- The Compressed Core (Appends) -->
-    <circle cx="75" cy="80" r="0" style="animation: coreGlow 12s infinite;" />
-    
-    <!-- The Scanning Laser (Verifies) -->
-    <g style="animation: scanLaser 12s infinite; transform-origin: center;">
-      <line x1="35" y1="50" x2="35" y2="110" class="scan-line" />
-      <rect x="30" y="45" width="10" height="5" fill="#10b981" />
-      <rect x="30" y="110" width="10" height="5" fill="#10b981" />
+  <!-- ===== Centrifuge chamber ===== -->
+  <g transform="translate(430 250)">
+    <circle r="118" fill="#0b0e22" stroke="#3b3f63" stroke-width="3"/>
+    <g class="ring-tick" stroke="#4c4f78" stroke-width="2">
+      <path d="M0 -118 v10 M0 118 v-10 M-118 0 h10 M118 0 h-10 M-83 -83 l7 7 M83 83 l-7 -7 M83 -83 l-7 7 M-83 83 l7 -7"/>
     </g>
-    
-    <text x="75" y="-10" fill="#10b981" font-family="monospace" font-size="14px" font-weight="bold" text-anchor="middle">SAFE ARCHIVE (500t)</text>
+    <g class="centrifuge-outer">
+      <circle r="98" fill="none" stroke="#6d28d9" stroke-width="4" stroke-dasharray="40 22" filter="url(#glowP)"/>
+      <circle r="86" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="6 14"/>
+    </g>
+    <g class="centrifuge-blades" opacity=".9">
+      <path d="M0 0 L60 -18 A62 62 0 0 1 60 18 Z" fill="#312e81"/>
+      <path d="M0 0 L-48 42 A62 62 0 0 1 -62 8 Z" fill="#312e81"/>
+      <path d="M0 0 L-8 -62 A62 62 0 0 1 26 -56 Z" fill="#312e81"/>
+      <circle r="62" fill="none" stroke="#7c3aed" stroke-width="2"/>
+    </g>
+    <!-- compressed core -->
+    <circle class="core" r="34" fill="url(#coreGrad)" filter="url(#glowP)"/>
+    <circle class="verify-ring" r="44"/>
+    <!-- verify scan beam -->
+    <g class="scan-beam">
+      <line x1="0" y1="-52" x2="0" y2="52" stroke="#22ff88" stroke-width="3" filter="url(#glowGr)"/>
+      <line x1="0" y1="-52" x2="0" y2="52" stroke="#eafff3" stroke-width="1"/>
+    </g>
+    <!-- commit seal -->
+    <g class="commit-seal">
+      <circle r="16" fill="#052e16" stroke="#22ff88" stroke-width="3" filter="url(#glowGr)"/>
+      <path d="M-7 0 l5 6 l10 -12" fill="none" stroke="#22ff88" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <g class="exhaust" fill="#a78bfa" opacity=".6">
+      <circle cx="-20" cy="-120" r="6"/><circle cx="4" cy="-130" r="9"/><circle cx="26" cy="-122" r="5"/>
+    </g>
   </g>
 
-  <!-- 5. Commit Notification -->
-  <g style="animation: commitFlash 12s infinite;">
-    <rect x="250" y="40" width="300" height="50" rx="8" fill="#10b981" />
-    <text x="400" y="70" fill="#ffffff" font-family="monospace" font-size="18px" font-weight="bold" text-anchor="middle">TRANSACTION COMMITTED ✓</text>
+  <!-- ===== Output rail / committed ledger ===== -->
+  <g>
+    <path d="M548 250 H780" stroke="#1c2040" stroke-width="10" stroke-linecap="round"/>
+    <path class="energy-line" d="M548 250 H780" stroke="#7c3aed" stroke-width="3" fill="none" filter="url(#glowP)"/>
+    <rect x="700" y="196" width="72" height="108" rx="10" fill="url(#hull)" stroke="#4c4f78" stroke-width="2"/>
+    <rect x="712" y="210" width="48" height="10" rx="3" fill="#0b0e22"/>
+    <rect x="712" y="228" width="48" height="10" rx="3" fill="#0b0e22"/>
+    <rect x="712" y="246" width="48" height="10" rx="3" fill="#0b0e22"/>
+    <circle class="status-lamp" cx="736" cy="282" r="7" filter="url(#glowGr)"/>
   </g>
 
+  <!-- machine plinth -->
+  <rect x="330" y="386" width="200" height="18" rx="6" fill="url(#hull)" stroke="#3b3f63"/>
+  <path d="M380 386 L400 368 h60 l20 18" fill="none" stroke="#3b3f63" stroke-width="3"/>
 </svg>

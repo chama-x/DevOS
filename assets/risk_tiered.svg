@@ -1,131 +1,172 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" width="100%" height="100%">
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Risk-Tiered Autonomy">
+  <style>
+    :root { color-scheme: dark; }
+    .trace { stroke: #1e3a5f; stroke-width: 3; fill: none; }
+    .trace-lit { stroke: #0ea5e9; stroke-width: 1.5; fill: none; opacity: .35; }
+    .via { fill: #0f2547; stroke: #2563eb; stroke-width: 1.5; }
+    .chip { fill: #0b1a33; stroke: #38bdf8; stroke-width: 1; }
+    .pin { stroke: #38bdf8; stroke-width: 1.5; opacity: .6; }
+
+    /* ---- T0/T1 lower tracks: always flowing green pulses ---- */
+    .pulse-low {
+      stroke: #22ff88; stroke-width: 4; fill: none; stroke-linecap: round;
+      stroke-dasharray: 26 90;
+      filter: url(#glowGreen);
+      animation: flow 1.1s linear infinite;
+    }
+    .pulse-low.b { animation-duration: 1.5s; stroke-dasharray: 18 110; }
+    .pulse-low.c { animation-duration: 0.8s; stroke-dasharray: 12 70; stroke-width: 3; }
+    @keyframes flow { to { stroke-dashoffset: -232; } }
+
+    /* ---- T3 track: blocked pulses (red, stalled) ---- */
+    .pulse-blocked {
+      stroke: #ff3355; stroke-width: 4; fill: none; stroke-linecap: round;
+      stroke-dasharray: 22 80; filter: url(#glowRed);
+      animation: crawl 2.4s linear infinite;
+      transition: opacity .5s ease;
+    }
+    @keyframes crawl { to { stroke-dashoffset: -102; } }
+    .stall-dot { fill: #ff3355; filter: url(#glowRed); animation: stallBlink 1s ease-in-out infinite alternate; transition: opacity .4s; }
+    @keyframes stallBlink { from { opacity: .25; } to { opacity: 1; } }
+
+    /* ---- T3 approved flow (hidden until hover) ---- */
+    .pulse-approved {
+      stroke: #22ff88; stroke-width: 4; fill: none; stroke-linecap: round;
+      stroke-dasharray: 26 90; filter: url(#glowGreen);
+      animation: flow 1s linear infinite;
+      opacity: 0; transition: opacity .6s ease .45s;
+    }
+    svg:hover .pulse-approved { opacity: 1; }
+    svg:hover .pulse-blocked, svg:hover .stall-dot { opacity: 0; }
+
+    /* ---- Gate mechanics ---- */
+    .gear { transform-box: fill-box; transform-origin: center; animation: spin 7s linear infinite; }
+    .gear.rev { animation: spinR 9s linear infinite; }
+    @keyframes spin  { to { transform: rotate(360deg); } }
+    @keyframes spinR { to { transform: rotate(-360deg); } }
+    svg:hover .gear     { animation: spinR 1.4s linear infinite; }
+    svg:hover .gear.rev { animation: spin  1.4s linear infinite; }
+
+    .door { transition: transform .7s cubic-bezier(.7,-0.2,.3,1.2) .15s; }
+    svg:hover .door-l { transform: translateX(-46px); }
+    svg:hover .door-r { transform: translateX(46px); }
+
+    .core-red   { transition: opacity .5s ease; animation: corePulse 1.6s ease-in-out infinite alternate; }
+    .core-green { opacity: 0; transition: opacity .5s ease .3s; }
+    svg:hover .core-red { opacity: 0; }
+    svg:hover .core-green { opacity: 1; animation: corePulse 1s ease-in-out infinite alternate; }
+    @keyframes corePulse { from { transform: scale(1); } to { transform: scale(1.12); } }
+    .core-red, .core-green { transform-box: fill-box; transform-origin: center; }
+
+    .halt-ring { fill: none; stroke: #ff3355; stroke-width: 2; stroke-dasharray: 6 6;
+      transform-box: fill-box; transform-origin: center;
+      animation: spinR 12s linear infinite; transition: opacity .4s; }
+    svg:hover .halt-ring { opacity: 0; }
+    .scan-line { stroke: #22d3ee; stroke-width: 1; opacity: .5;
+      animation: scanY 3s ease-in-out infinite alternate; }
+    @keyframes scanY { from { transform: translateY(0); } to { transform: translateY(440px); } }
+    .lbl { font: 700 11px monospace; fill: #7dd3fc; opacity: .7; letter-spacing: 2px; }
+  </style>
+
   <defs>
-    <style>
-      @keyframes flowGreen {
-        0% { stroke-dashoffset: 400; opacity: 0; }
-        20% { opacity: 1; }
-        80% { opacity: 1; }
-        100% { stroke-dashoffset: 0; opacity: 0; }
-      }
-      @keyframes pulseNode {
-        0%, 100% { r: 4; fill: #10b981; filter: drop-shadow(0 0 2px #10b981); }
-        50% { r: 6; fill: #34d399; filter: drop-shadow(0 0 8px #34d399); }
-      }
-      @keyframes gearSpin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      @keyframes gearSpinReverse {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(-360deg); }
-      }
-      @keyframes lockCorePulse {
-        0%, 100% { fill: #ef4444; filter: drop-shadow(0 0 10px #ef4444); }
-        50% { fill: #f87171; filter: drop-shadow(0 0 20px #ef4444); }
-      }
-      @keyframes alertText {
-        0%, 100% { opacity: 1; fill: #ef4444; }
-        50% { opacity: 0.5; }
-      }
-      
-      .bg { fill: #020617; }
-      .grid { stroke: #1e293b; stroke-width: 1; stroke-dasharray: 4 4; }
-      .trace-bg { fill: none; stroke: #334155; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
-      .trace-flow { fill: none; stroke: #10b981; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100 300; animation: flowGreen 3s linear infinite; }
-      
-      /* Base Board Details */
-      .chip { fill: #0f172a; stroke: #475569; stroke-width: 2; rx: 4; }
-      .pin { fill: #64748b; }
-      
-      /* Lock Mechanism */
-      .lock-container { transform-origin: 500px 200px; cursor: pointer; }
-      .gear { fill: none; stroke: #64748b; stroke-width: 4; stroke-dasharray: 8 6; transform-origin: center; }
-      .gear-inner { fill: #1e293b; stroke: #94a3b8; stroke-width: 2; }
-      .core-red { animation: lockCorePulse 2s infinite; }
-      
-      /* Hover States */
-      .lock-container:hover .gear-left { transform: translateX(-30px) rotate(-180deg); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-      .lock-container:hover .gear-right { transform: translateX(30px) rotate(180deg); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-      .lock-container:hover .core-red { fill: #10b981; filter: drop-shadow(0 0 25px #10b981); transition: all 0.5s ease; animation: none; }
-      .lock-container:hover .shield-wall { stroke: #10b981; stroke-dasharray: 10 10; transition: all 0.5s ease; }
-      .lock-container:hover .t3-trace { stroke: #10b981; animation: flowGreen 2s linear infinite; }
-      .lock-container:hover .alert-msg { opacity: 0; }
-      .lock-container:hover .approve-msg { opacity: 1; }
-      
-      .t3-trace { fill: none; stroke: #ef4444; stroke-width: 4; stroke-dasharray: 100 300; stroke-dashoffset: 400; transition: all 0.5s ease; }
-      .approve-msg { opacity: 0; fill: #10b981; font-family: monospace; font-weight: bold; font-size: 14px; transition: opacity 0.5s; text-anchor: middle; }
-    </style>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#050b18"/><stop offset="1" stop-color="#0a1428"/>
+    </linearGradient>
+    <radialGradient id="coreR" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffb3c0"/><stop offset=".4" stop-color="#ff3355"/><stop offset="1" stop-color="#7a0f22"/>
+    </radialGradient>
+    <radialGradient id="coreG" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#d9ffe9"/><stop offset=".4" stop-color="#22ff88"/><stop offset="1" stop-color="#0a5c33"/>
+    </radialGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#334a66"/><stop offset=".5" stop-color="#16263d"/><stop offset="1" stop-color="#0c1728"/>
+    </linearGradient>
+    <filter id="glowGreen" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowRed" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <g id="gearShape">
+      <g>
+        <rect x="-4" y="-22" width="8" height="10" rx="2" fill="#3d5a80"/>
+        <rect x="-4" y="12"  width="8" height="10" rx="2" fill="#3d5a80"/>
+        <rect x="-22" y="-4" width="10" height="8" rx="2" fill="#3d5a80"/>
+        <rect x="12"  y="-4" width="10" height="8" rx="2" fill="#3d5a80"/>
+        <rect x="-4" y="-22" width="8" height="10" rx="2" fill="#3d5a80" transform="rotate(45)"/>
+        <rect x="-4" y="12"  width="8" height="10" rx="2" fill="#3d5a80" transform="rotate(45)"/>
+        <rect x="-22" y="-4" width="10" height="8" rx="2" fill="#3d5a80" transform="rotate(45)"/>
+        <rect x="12"  y="-4" width="10" height="8" rx="2" fill="#3d5a80" transform="rotate(45)"/>
+      </g>
+      <circle r="15" fill="#22344f" stroke="#5d84b0" stroke-width="2"/>
+      <circle r="5" fill="#0a1428" stroke="#5d84b0" stroke-width="1.5"/>
+      <circle r="10" fill="none" stroke="#5d84b0" stroke-width=".8" stroke-dasharray="3 3"/>
+    </g>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="300" class="bg" rx="16" />
-  <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
-    <rect width="40" height="40" fill="none" class="grid" />
-  </pattern>
-  <rect width="800" height="300" fill="url(#gridPattern)" rx="16" />
+  <rect width="800" height="500" fill="url(#bg)"/>
 
-  <!-- Microchips / Nodes Decoration -->
-  <g transform="translate(60, 40)">
-    <rect x="0" y="0" width="60" height="40" class="chip" />
-    <rect x="-5" y="5" width="5" height="5" class="pin" /><rect x="-5" y="15" width="5" height="5" class="pin" /><rect x="-5" y="25" width="5" height="5" class="pin" />
-    <rect x="60" y="5" width="5" height="5" class="pin" /><rect x="60" y="15" width="5" height="5" class="pin" /><rect x="60" y="25" width="5" height="5" class="pin" />
+  <!-- decorative pcb mesh -->
+  <g class="trace-lit">
+    <path d="M0 60 H180 L220 100 H320 M480 100 L520 60 H800"/>
+    <path d="M0 460 H120 L160 420 H640 L680 460 H800"/>
+    <path d="M60 0 V40 L100 80 V180 M60 500 V430"/>
+    <path d="M740 0 V50 L700 90 V180 M740 500 V420"/>
+    <path d="M250 0 V30 L290 70 M550 0 V30 L510 70"/>
   </g>
-  <g transform="translate(680, 180)">
-    <rect x="0" y="0" width="50" height="50" class="chip" />
-    <circle cx="25" cy="25" r="10" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
-  </g>
+  <line class="scan-line" x1="0" y1="30" x2="800" y2="30"/>
 
-  <!-- T0/T1 Safe Track -->
+  <!-- chips -->
   <g>
-    <!-- Background traces -->
-    <path d="M 120 60 L 250 60 L 280 90 L 600 90 L 630 60 L 750 60" class="trace-bg" />
-    <path d="M 120 60 L 250 60 L 280 90 L 600 90 L 630 60 L 750 60" class="trace-flow" style="animation-delay: 0s;" />
-    <path d="M 120 60 L 250 60 L 280 90 L 600 90 L 630 60 L 750 60" class="trace-flow" style="animation-delay: 1.5s;" />
-    <!-- Nodes -->
-    <circle cx="250" cy="60" class="node" style="animation: pulseNode 2s infinite 0s;" />
-    <circle cx="600" cy="90" class="node" style="animation: pulseNode 2s infinite 1s;" />
+    <rect class="chip" x="70" y="205" width="90" height="90" rx="6"/>
+    <rect x="88" y="223" width="54" height="54" rx="4" fill="#08111f" stroke="#1e3a5f"/>
+    <g class="pin"><path d="M80 195 v10 M100 195 v10 M120 195 v10 M140 195 v10 M80 295 v10 M100 295 v10 M120 295 v10 M140 295 v10"/></g>
+    <rect class="chip" x="645" y="205" width="90" height="90" rx="6"/>
+    <rect x="663" y="223" width="54" height="54" rx="4" fill="#08111f" stroke="#1e3a5f"/>
+    <g class="pin"><path d="M655 195 v10 M675 195 v10 M695 195 v10 M715 195 v10 M655 295 v10 M675 295 v10 M695 295 v10 M715 295 v10"/></g>
   </g>
 
-  <!-- T3 Restricted Track -->
+  <!-- ===== T0 / T1 lower tracks ===== -->
   <g>
-    <path d="M 100 200 L 400 200 L 430 200" class="trace-bg" />
-    <path d="M 570 200 L 600 200 L 680 200" class="trace-bg" />
+    <path class="trace" d="M0 380 H240 L280 350 H520 L560 380 H800"/>
+    <path class="trace" d="M0 420 H800"/>
+    <path class="trace" d="M0 350 H180 L220 380"/>
+    <path class="pulse-low"   d="M0 380 H240 L280 350 H520 L560 380 H800"/>
+    <path class="pulse-low b" d="M0 420 H800"/>
+    <path class="pulse-low c" d="M0 350 H180 L220 380"/>
+    <circle class="via" cx="240" cy="380" r="6"/><circle class="via" cx="560" cy="380" r="6"/>
+    <circle class="via" cx="280" cy="350" r="6"/><circle class="via" cx="520" cy="350" r="6"/>
+    <text class="lbl" x="18" y="466">T0 / T1 · AUTONOMOUS</text>
   </g>
 
-  <!-- The Interactive Lock Mechanism -->
-  <g class="lock-container">
-    <!-- Shield Wall -->
-    <line x1="430" y1="150" x2="430" y2="250" stroke="#ef4444" stroke-width="6" stroke-dasharray="20 5" stroke-linecap="round" class="shield-wall" />
-    <line x1="570" y1="150" x2="570" y2="250" stroke="#ef4444" stroke-width="6" stroke-dasharray="20 5" stroke-linecap="round" class="shield-wall" />
-    
-    <!-- Data trace trying to pass -->
-    <path d="M 100 200 L 400 200 L 430 200 L 570 200 L 680 200" class="t3-trace" />
-
-    <!-- Left Gear Assembly -->
-    <g class="gear-left" style="transform-origin: 470px 200px;">
-      <g style="animation: gearSpin 6s linear infinite; transform-origin: 470px 200px;">
-        <circle cx="470" cy="200" r="30" class="gear" />
-        <circle cx="470" cy="200" r="20" class="gear-inner" />
-        <path d="M 455 185 L 485 215 M 485 185 L 455 215" stroke="#475569" stroke-width="3" />
-      </g>
-    </g>
-
-    <!-- Right Gear Assembly -->
-    <g class="gear-right" style="transform-origin: 530px 200px;">
-      <g style="animation: gearSpinReverse 6s linear infinite; transform-origin: 530px 200px;">
-        <circle cx="530" cy="200" r="30" class="gear" />
-        <circle cx="530" cy="200" r="20" class="gear-inner" />
-        <path d="M 515 185 L 545 215 M 545 185 L 515 215" stroke="#475569" stroke-width="3" />
-      </g>
-    </g>
-
-    <!-- Center Core -->
-    <circle cx="500" cy="200" r="15" class="core-red" />
-    
-    <!-- Text Elements -->
-    <text x="500" y="270" font-family="monospace" font-size="14px" font-weight="bold" text-anchor="middle" class="alert-msg" style="animation: alertText 2s infinite;">[ T3: RED TEAM REVIEW REQUIRED ]</text>
-    <text x="500" y="270" class="approve-msg">ACCESS GRANTED: HITL APPROVED</text>
-    <text x="500" y="290" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Hover over the lock to simulate human approval</text>
+  <!-- ===== T3 upper track ===== -->
+  <g>
+    <path class="trace" d="M0 150 H160 L200 120 H340 M460 120 H600 L640 150 H800"/>
+    <circle class="via" cx="160" cy="150" r="6"/><circle class="via" cx="640" cy="150" r="6"/>
+    <path class="pulse-blocked" d="M0 150 H160 L200 120 H330"/>
+    <circle class="stall-dot" cx="322" cy="120" r="5"/>
+    <circle class="stall-dot" cx="304" cy="120" r="4" style="animation-delay:.3s"/>
+    <circle class="stall-dot" cx="288" cy="120" r="3" style="animation-delay:.6s"/>
+    <path class="pulse-approved" d="M0 150 H160 L200 120 H600 L640 150 H800"/>
+    <text class="lbl" x="18" y="96">T3 · HITL REQUIRED</text>
   </g>
 
+  <!-- ===== Security gate ===== -->
+  <g>
+    <rect x="336" y="52" width="128" height="136" rx="10" fill="url(#steel)" stroke="#3d5a80" stroke-width="2"/>
+    <rect x="336" y="52" width="128" height="14" rx="7" fill="#22344f"/>
+    <circle class="halt-ring" cx="400" cy="120" r="52"/>
+    <!-- sliding doors -->
+    <g class="door door-l"><rect x="344" y="104" width="52" height="32" rx="3" fill="#22344f" stroke="#5d84b0" stroke-width="1.5"/>
+      <path d="M352 112 h34 M352 120 h34 M352 128 h34" stroke="#3d5a80" stroke-width="2"/></g>
+    <g class="door door-r"><rect x="404" y="104" width="52" height="32" rx="3" fill="#22344f" stroke="#5d84b0" stroke-width="1.5"/>
+      <path d="M414 112 h34 M414 120 h34 M414 128 h34" stroke="#3d5a80" stroke-width="2"/></g>
+    <!-- interlocking gears -->
+    <use href="#gearShape" class="gear"     x="368" y="76"/>
+    <use href="#gearShape" class="gear rev" x="432" y="76" transform="scale(.8)" transform-origin="432 76"/>
+    <!-- core -->
+    <circle class="core-green" cx="400" cy="162" r="14" fill="url(#coreG)" filter="url(#glowGreen)"/>
+    <circle class="core-red"   cx="400" cy="162" r="14" fill="url(#coreR)" filter="url(#glowRed)"/>
+    <circle cx="400" cy="162" r="19" fill="none" stroke="#3d5a80" stroke-width="2"/>
+  </g>
 </svg>
