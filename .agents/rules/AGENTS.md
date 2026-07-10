@@ -52,7 +52,7 @@ trigger: always_on
 - **T1 (auto-proceed + checkpoint commit first)**: single-file edits matching an approved plan.
 - **T2 (batched approval)**: multi-file refactors, dependency changes, skill/lexicon writes.
 - **T3 (explicit HITL, mandatory Red Team questionnaire)**: schema migrations, deletions, external-code injection, anything touching auth/payments/secrets.
-- `[HARD CONSTRAINT - QUESTION BATCHING]`: Accumulate T2 approvals and present ONE consolidated questionnaire per phase. Never fire more than one interrupt per phase.
+- `[HARD CONSTRAINT - QUESTION BATCHING]`: Accumulate T2 approvals and present a consolidated questionnaire. 
 
 ## 13. Context Engineering & File Naming
 - `[HARD CONSTRAINT - NAMING SYNTAX]`: All new files must be entirely lowercase. Do not use spaces or special characters. Use underscores `_` to separate main concepts, and hyphens `-` to separate words within a concept (e.g., `2026-07-10_auth-module_v2.ts`). **EXCEPTION**: Platform-mandated configuration files (`AGENTS.md`, `EVOLUTION.md`, `SKILL.md`) MUST remain uppercase to trigger system routing.
