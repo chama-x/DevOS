@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes slideIn {
+        0% { transform: translateX(-50px); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateX(50px); opacity: 0; }
+      }
+      @keyframes pulseRed {
+        0%, 100% { fill: #ef4444; filter: drop-shadow(0 0 5px #ef4444); }
+        50% { fill: #991b1b; filter: drop-shadow(0 0 2px #ef4444); }
+      }
+      @keyframes unlockHover {
+        100% { fill: #10b981; filter: drop-shadow(0 0 8px #10b981); transform: translateY(-5px); }
+      }
+      .bg { fill: #0f172a; rx: 12; }
+      .path-line { stroke: #334155; stroke-width: 4; stroke-dasharray: 6; }
+      .data-packet-green { fill: #10b981; animation: slideIn 2s infinite linear; }
+      .data-packet-red { fill: #ef4444; animation: slideIn 2.5s infinite linear reverse; }
+      
+      .lock-body { fill: #334155; transition: all 0.3s ease; }
+      .lock-shackle { fill: none; stroke: #334155; stroke-width: 8; transition: all 0.3s ease; }
+      .lock-group { transform-origin: 500px 100px; cursor: pointer; }
+      .lock-group:hover .lock-body { animation: unlockHover 0.5s forwards; }
+      .lock-group:hover .lock-shackle { stroke: #10b981; transform: translateY(-10px); }
+      
+      .t3-alert { animation: pulseRed 1.5s infinite; font-family: system-ui, sans-serif; font-weight: bold; font-size: 14px; text-anchor: middle; }
+    </style>
+  </defs>
+  
+  <rect width="600" height="200" class="bg" />
+  
+  <!-- T0/T1 Safe Lane -->
+  <text x="50" y="60" fill="#94a3b8" font-family="sans-serif" font-weight="bold">T0 / T1 Auto-Proceed</text>
+  <line x1="50" y1="80" x2="350" y2="80" class="path-line" />
+  <circle cx="200" cy="80" r="8" class="data-packet-green" style="animation-delay: 0s" />
+  <circle cx="200" cy="80" r="8" class="data-packet-green" style="animation-delay: 1s" />
+  
+  <!-- T3 Restricted Lane -->
+  <text x="50" y="140" fill="#94a3b8" font-family="sans-serif" font-weight="bold">T3 Restricted Action</text>
+  <line x1="50" y1="160" x2="450" y2="160" class="path-line" />
+  <circle cx="300" cy="160" r="8" class="data-packet-red" />
+  
+  <!-- The T3 Lock -->
+  <g class="lock-group" transform="translate(430, 110)">
+    <!-- Shackle -->
+    <path d="M 15 25 L 15 15 A 15 15 0 0 1 45 15 L 45 25" class="lock-shackle" />
+    <!-- Body -->
+    <rect x="5" y="25" width="50" height="40" rx="4" class="lock-body" />
+    <circle cx="30" cy="45" r="5" fill="#0f172a" />
+    <text x="30" y="85" class="t3-alert">HITL REQUIRED</text>
+    <text x="30" y="105" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">(Hover to Approve)</text>
+  </g>
+  
+</svg>

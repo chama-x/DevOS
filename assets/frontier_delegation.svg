@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes sendPacket {
+        0% { transform: translate(0, 0) scale(1); opacity: 0; }
+        20% { transform: translate(0, 0) scale(1); opacity: 1; fill: #10b981; }
+        50% { transform: translate(250px, -60px) scale(0.5); opacity: 1; }
+        60% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes receivePayload {
+        0%, 50% { transform: translate(250px, -60px) scale(0.5); opacity: 0; }
+        60% { transform: translate(250px, -60px) scale(0.5); opacity: 1; fill: #8b5cf6; }
+        90% { transform: translate(0, 0) scale(1); opacity: 1; }
+        100% { opacity: 0; }
+      }
+      @keyframes cloudPulse {
+        0%, 100% { filter: drop-shadow(0 0 5px #3b82f6); }
+        50% { filter: drop-shadow(0 0 15px #8b5cf6); }
+      }
+      .bg { fill: #0f172a; rx: 12; }
+      .node-local { fill: #1e293b; stroke: #3b82f6; stroke-width: 2; rx: 8; }
+      .node-cloud { fill: #1e293b; stroke: #8b5cf6; stroke-width: 3; rx: 20; animation: cloudPulse 4s infinite; }
+      .packet { animation: sendPacket 4s infinite; rx: 2; }
+      .payload { animation: receivePayload 4s infinite; rx: 4; }
+    </style>
+  </defs>
+  
+  <rect width="600" height="200" class="bg" />
+  
+  <!-- Local IDE Agent -->
+  <g transform="translate(80, 100)">
+    <rect x="-50" y="-30" width="100" height="60" class="node-local" />
+    <circle cx="-25" cy="0" r="10" fill="#3b82f6" />
+    <text x="5" y="4" fill="#cbd5e1" font-family="sans-serif" font-size="12px" font-weight="bold">AgentOS</text>
+    <text x="0" y="50" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Local IDE (4k context)</text>
+  </g>
+
+  <!-- Cloud Frontier Model -->
+  <g transform="translate(480, 70)">
+    <rect x="-80" y="-40" width="160" height="80" class="node-cloud" />
+    <circle cx="-50" cy="0" r="15" fill="#8b5cf6" />
+    <circle cx="50" cy="0" r="15" fill="#8b5cf6" />
+    <text x="0" y="5" fill="#ffffff" font-family="sans-serif" font-size="14px" font-weight="bold" text-anchor="middle">Frontier Model</text>
+    <text x="0" y="65" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Cloud (128k context)</text>
+  </g>
+
+  <!-- Network Traffic -->
+  <g transform="translate(150, 100)">
+    <!-- Send Handoff Packet -->
+    <rect x="0" y="0" width="20" height="10" class="packet" />
+    <!-- Receive Big Code Payload -->
+    <rect x="0" y="-20" width="40" height="40" class="payload" />
+  </g>
+
+  <!-- Connecting Line -->
+  <path d="M 130 100 Q 300 130 400 70" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6" />
+
+</svg>

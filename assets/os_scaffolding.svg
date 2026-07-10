@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes checkPop {
+        0% { transform: scale(0); opacity: 0; }
+        50% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes fileSpawn {
+        0% { transform: translateY(20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; filter: drop-shadow(0 0 5px #10b981); }
+      }
+      .bg { fill: #0f172a; rx: 12; }
+      .checkbox { fill: none; stroke: #475569; stroke-width: 2; rx: 2; }
+      .check-mark { fill: none; stroke: #10b981; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .file-box { fill: #1e293b; stroke: #10b981; stroke-width: 2; rx: 4; }
+      
+      .c1 { animation: checkPop 0.3s forwards; animation-delay: 0.5s; opacity: 0; }
+      .c2 { animation: checkPop 0.3s forwards; animation-delay: 1.5s; opacity: 0; }
+      .c3 { animation: checkPop 0.3s forwards; animation-delay: 2.5s; opacity: 0; }
+      
+      .f1 { animation: fileSpawn 0.5s forwards; animation-delay: 0.8s; opacity: 0; }
+      .f2 { animation: fileSpawn 0.5s forwards; animation-delay: 1.8s; opacity: 0; }
+      .f3 { animation: fileSpawn 0.5s forwards; animation-delay: 2.8s; opacity: 0; }
+      
+      .hover-zone:hover * { animation-play-state: running; }
+      /* Pause animations until hover */
+      .c1, .c2, .c3, .f1, .f2, .f3 { animation-play-state: paused; }
+    </style>
+  </defs>
+  
+  <rect width="600" height="200" class="bg hover-zone" />
+  <text x="300" y="180" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Hover to simulate User Questionnaire input</text>
+
+  <g transform="translate(100, 40)" class="hover-zone">
+    <!-- Questionnaire Panel -->
+    <text x="0" y="-10" fill="#cbd5e1" font-family="sans-serif" font-size="14px" font-weight="bold">Missing OS Files. Scaffold?</text>
+    
+    <!-- Item 1 -->
+    <rect x="0" y="10" width="16" height="16" class="checkbox" />
+    <path d="M 3 18 L 7 22 L 15 12" class="check-mark c1" />
+    <text x="30" y="23" fill="#94a3b8" font-family="sans-serif" font-size="12px">worklog.md</text>
+    
+    <!-- Item 2 -->
+    <rect x="0" y="40" width="16" height="16" class="checkbox" />
+    <path d="M 3 48 L 7 52 L 15 42" class="check-mark c2" />
+    <text x="30" y="53" fill="#94a3b8" font-family="sans-serif" font-size="12px">business_context.md</text>
+    
+    <!-- Item 3 -->
+    <rect x="0" y="70" width="16" height="16" class="checkbox" />
+    <path d="M 3 78 L 7 82 L 15 72" class="check-mark c3" />
+    <text x="30" y="83" fill="#94a3b8" font-family="sans-serif" font-size="12px">user_lexicon.md</text>
+  </g>
+
+  <!-- Scaffolding Output Area -->
+  <g transform="translate(400, 40)" class="hover-zone">
+    <text x="40" y="-10" fill="#10b981" font-family="sans-serif" font-size="14px" font-weight="bold">Generated Workspace</text>
+    
+    <g transform="translate(0, 10)" class="f1">
+      <rect x="0" y="0" width="140" height="20" class="file-box" />
+      <text x="10" y="14" fill="#ffffff" font-family="monospace" font-size="11px">📝 worklog.md</text>
+    </g>
+    
+    <g transform="translate(0, 40)" class="f2">
+      <rect x="0" y="0" width="140" height="20" class="file-box" />
+      <text x="10" y="14" fill="#ffffff" font-family="monospace" font-size="11px">🏢 business_context.md</text>
+    </g>
+    
+    <g transform="translate(0, 70)" class="f3">
+      <rect x="0" y="0" width="140" height="20" class="file-box" />
+      <text x="10" y="14" fill="#ffffff" font-family="monospace" font-size="11px">📖 user_lexicon.md</text>
+    </g>
+  </g>
+
+</svg>

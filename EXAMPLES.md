@@ -6,6 +6,8 @@ Real-world code and execution examples demonstrating the core principles of Agen
 
 ## 1. Risk-Tiered Autonomy
 
+<img src="assets/risk_tiered.svg" alt="Risk-Tiered Autonomy Visualization" />
+
 ### Example: Modifying Authentication Flow
 
 **User Request:** "Update the login function to require a 2FA token."
@@ -32,6 +34,8 @@ Approve? (Yes / No / Modify)
 
 ## 2. Idempotency & The Recovery Kernel
 
+<img src="assets/idempotency.svg" alt="Idempotency Visualization" />
+
 ### Example: Replacing a block of code
 
 **User Request:** "Change the sorting algorithm in the table component to use QuickSort."
@@ -54,6 +58,8 @@ If it fails on the first try due to a mismatch:
 
 ## 3. Transactional Memory Compression
 
+<img src="assets/memory_compression.svg" alt="Memory Compression Visualization" />
+
 ### Example: Long-running Chat Session
 
 **User Context:** The user has been working for 3 hours. The `worklog.md` is now 5,000 tokens long.
@@ -73,6 +79,8 @@ When `worklog.md` > 4,000 tokens, it triggers:
 
 ## 4. Frontier Delegation
 
+<img src="assets/frontier_delegation.svg" alt="Frontier Delegation Visualization" />
+
 ### Example: Massive Architectural Rewrite
 
 **User Request:** "Rewrite this entire monolithic Express.js backend into a microservices architecture." (100k+ tokens required)
@@ -91,6 +99,8 @@ They attempt to do it all in one prompt response. They output 3,000 lines of cod
 ---
 
 ## 5. OS Scaffolding
+
+<img src="assets/os_scaffolding.svg" alt="OS Scaffolding Visualization" />
 
 ### Example: Starting a brand new project
 
