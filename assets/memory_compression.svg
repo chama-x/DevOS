@@ -1,4 +1,4 @@
-<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Transactional Memory Compression">
+<svg width="720" height="450" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Transactional Memory Compression">
   <style>
     /* Master transaction: 10s. intake/distill → append → verify → truncate → commit */
 
