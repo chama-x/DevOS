@@ -1,0 +1,20 @@
+flowchart LR
+
+subgraph 0["business-map"]
+subgraph 1["test-run"]
+subgraph 2["src"]
+subgraph 3["app"]
+4["layout.tsx"]
+5["globals.css"]
+6["page.tsx"]
+end
+subgraph 7["components"]
+8["LorryTracker.tsx"]
+9["LorryTracker.module.css"]
+end
+end
+end
+end
+4-->5
+6-->8
+8-->9
