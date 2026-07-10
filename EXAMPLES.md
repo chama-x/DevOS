@@ -91,8 +91,8 @@ They attempt to do it all in one prompt response. They output 3,000 lines of cod
 **✅ What AgentOS Does (Supervisor / Worker MAS)**
 ```
 1. [AgentOS]: Recognizes this is a massive generation task.
-2. [AgentOS]: Prepares a "Handoff Packet" (scrubbing `.env` secrets).
-3. [AgentOS]: Tells the user: "Feed this packet to a Frontier Model (like Claude 3.5 Sonnet / GLM-4). Paste the output back here."
+2. [AgentOS]: Prepares a "Handoff Prompt" (scrubbing `.env` secrets).
+3. [AgentOS]: Tells the user: "Feed this prompt to a Frontier Model (like Claude Fable 5 / GLM-5.2 or any frontier model that exists todate (not banned by China or USA lol)). Paste the output back here."
 4. [AgentOS]: Receives the code, checks out a new git branch, injects the code *verbatim*, and presents the git diff for review.
 ```
 
