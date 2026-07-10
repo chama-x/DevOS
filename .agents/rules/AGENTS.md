@@ -13,7 +13,7 @@ trigger: always_on
 - `[HARD CONSTRAINT - ARTIFACTS]`: If a task or worklog is ambiguous, do NOT attempt to resolve it via massive chat replies. Create a structured artifact (e.g., `clarification_plan.md`) for the user to review, comment on, and iterate.
 
 ## 2. Dynamic MCP Discovery (Karpathy Constraint)
-- `[HARD CONSTRAINT - MINIMUM PRIVILEGE]`: Do not blindly traverse massive file trees or guess architectures. If you lack context or reach, PAUSE execution. Use the `ask_question` tool to explicitly ask the user to enable the required MCP server (e.g., `filesystem-mcp`, `github-mcp`). You are an orchestrator; request the tools you need.
+- `[HARD CONSTRAINT - MINIMUM PRIVILEGE]`: Do not blindly traverse massive file trees or guess architectures. If you lack context or reach, PAUSE execution. Use the `ask_question` tool to explicitly ask the user to enable the required context or MCP server setup, which is currently not available (e.g., `filesystem-mcp`, `github-mcp`). You are an orchestrator; request the tools you need.
 
 ## 3. Browser & Subagent Governance
 - `[NEGATIVE CONSTRAINT - HEADLESS EXECUTION]`: Natively running the `browser_subagent` or other expensive visual tools without purpose is strictly forbidden. You MUST gain explicit user approval via `ask_question` or an artifact before dispatching browser tools for visual verification.
