@@ -2,9 +2,10 @@
   <style>
     .bg { fill: #060814; }
     .grid { stroke: #121830; stroke-width: 1; }
-    .text-title { font-family: monospace; font-size: 14px; fill: #5d84b0; font-weight: bold; letter-spacing: 2px; }
-    .text-number { font-family: sans-serif; font-size: 52px; font-weight: 800; fill: #ffffff; }
-    .text-unit { font-family: monospace; font-size: 16px; fill: #38bdf8; font-weight: bold; }
+    .text-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 16px; fill: #8a9fc4; font-weight: 500; letter-spacing: -0.3px; }
+    .text-number { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 56px; font-weight: 700; fill: #ffffff; letter-spacing: -2px; }
+    .text-unit { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 18px; fill: #38bdf8; font-weight: 500; letter-spacing: -0.5px; }
+    .text-benefit { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; fill: #22ff88; font-weight: 600; letter-spacing: -0.2px; }
     
     .bar-bg { fill: #10162a; stroke: #1e294c; stroke-width: 2; rx: 8; }
     .bar-fill { fill: url(#agentGradient); rx: 6; }
@@ -38,14 +39,14 @@
   <rect x="0" y="0" width="800" height="3" fill="url(#glowLine)" opacity="0.6"/>
 
   <!-- Left Side: AgentOS Footprint -->
-  <text class="text-title" x="40" y="50">AGENTOS CONTEXT FOOTPRINT</text>
-  <text class="text-number" x="40" y="105">4.5K <tspan fill="#4a658a" font-size="32">- 8.5K</tspan></text>
-  <text class="text-unit" x="40" y="130">TOKENS REQUIRED</text>
+  <text class="text-title" x="40" y="50">AgentOS footprint.</text>
+  <text class="text-number" x="40" y="105">4.5K <tspan fill="#4a658a" font-size="36">- 8.5K</tspan></text>
+  <text class="text-unit" x="40" y="130">tokens used.</text>
 
   <!-- Right Side: Total Window -->
-  <text class="text-title" x="540" y="50" fill="#4a658a">STANDARD LLM WINDOW</text>
+  <text class="text-title" x="540" y="50" fill="#6d83a3">Modern LLM capacity.</text>
   <text class="text-number" x="540" y="105" fill="#4a658a">200K</text>
-  <text class="text-unit" x="540" y="130" fill="#2d3f5e">CAPACITY</text>
+  <text class="text-unit" x="540" y="130" fill="#3f5a82">tokens available.</text>
 
   <!-- Visual Capacity Bar -->
   <g transform="translate(40, 160)">
@@ -59,9 +60,9 @@
     <path d="M180 0 V24 M360 0 V24 M540 0 V24" stroke="#1e294c" stroke-width="2" stroke-dasharray="2 4"/>
   </g>
 
-  <!-- Connecting label showing the % overhead -->
+  <!-- Connecting label showing the benefit -->
   <path d="M55 150 L55 140 L280 140" fill="none" stroke="#22ff88" stroke-width="1.5" opacity="0.6" stroke-dasharray="4 4"/>
-  <text font-family="monospace" font-size="11" font-weight="bold" fill="#22ff88" x="290" y="144" opacity="0.8">ONLY ~3% OVERHEAD</text>
+  <text class="text-benefit" x="290" y="144" opacity="0.9">Leaves 96% for your ideas.</text>
   
   <circle cx="55" cy="150" r="3" fill="#22ff88"/>
 </svg>
