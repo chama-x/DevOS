@@ -1,0 +1,67 @@
+<svg width="800" height="220" viewBox="0 0 800 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AgentOS Context Footprint">
+  <style>
+    .bg { fill: #060814; }
+    .grid { stroke: #121830; stroke-width: 1; }
+    .text-title { font-family: monospace; font-size: 14px; fill: #5d84b0; font-weight: bold; letter-spacing: 2px; }
+    .text-number { font-family: sans-serif; font-size: 52px; font-weight: 800; fill: #ffffff; }
+    .text-unit { font-family: monospace; font-size: 16px; fill: #38bdf8; font-weight: bold; }
+    
+    .bar-bg { fill: #10162a; stroke: #1e294c; stroke-width: 2; rx: 8; }
+    .bar-fill { fill: url(#agentGradient); rx: 6; }
+    
+    .pulse-glow { animation: pulse 3s ease-in-out infinite alternate; }
+    @keyframes pulse {
+      0% { filter: drop-shadow(0 0 8px rgba(34, 255, 136, 0.4)); }
+      100% { filter: drop-shadow(0 0 16px rgba(34, 255, 136, 0.8)); }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="agentGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee" />
+      <stop offset="1" stop-color="#22ff88" />
+    </linearGradient>
+    <linearGradient id="glowLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1e294c"/>
+      <stop offset=".5" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#1e294c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect class="bg" width="800" height="220" />
+  
+  <!-- Subtle Grid -->
+  <path class="grid" d="M0 55 H800 M0 110 H800 M0 165 H800 M200 0 V220 M400 0 V220 M600 0 V220" opacity="0.5"/>
+
+  <!-- Top Decorative Line -->
+  <rect x="0" y="0" width="800" height="3" fill="url(#glowLine)" opacity="0.6"/>
+
+  <!-- Left Side: AgentOS Footprint -->
+  <text class="text-title" x="40" y="50">AGENTOS CONTEXT FOOTPRINT</text>
+  <text class="text-number" x="40" y="105">4.5K <tspan fill="#4a658a" font-size="32">- 8.5K</tspan></text>
+  <text class="text-unit" x="40" y="130">TOKENS REQUIRED</text>
+
+  <!-- Right Side: Total Window -->
+  <text class="text-title" x="540" y="50" fill="#4a658a">STANDARD LLM WINDOW</text>
+  <text class="text-number" x="540" y="105" fill="#4a658a">200K</text>
+  <text class="text-unit" x="540" y="130" fill="#2d3f5e">CAPACITY</text>
+
+  <!-- Visual Capacity Bar -->
+  <g transform="translate(40, 160)">
+    <!-- Base 200k Bar (720px wide) -->
+    <rect class="bar-bg" width="720" height="24" />
+    
+    <!-- AgentOS 4.5k-8.5k (Roughly ~3-4% of 200k = ~28px wide) -->
+    <rect class="bar-fill pulse-glow" width="30" height="20" x="2" y="2" />
+    
+    <!-- Ticks representing 50k, 100k, 150k blocks -->
+    <path d="M180 0 V24 M360 0 V24 M540 0 V24" stroke="#1e294c" stroke-width="2" stroke-dasharray="2 4"/>
+  </g>
+
+  <!-- Connecting label showing the % overhead -->
+  <path d="M55 150 L55 140 L280 140" fill="none" stroke="#22ff88" stroke-width="1.5" opacity="0.6" stroke-dasharray="4 4"/>
+  <text font-family="monospace" font-size="11" font-weight="bold" fill="#22ff88" x="290" y="144" opacity="0.8">ONLY ~3% OVERHEAD</text>
+  
+  <circle cx="55" cy="150" r="3" fill="#22ff88"/>
+</svg>
