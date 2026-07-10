@@ -22,18 +22,18 @@ trigger: always_on
 - `[HARD CONSTRAINT - WORKLOG]`: Upon starting a new chat or receiving a new task, you MUST immediately read the bottom of `worklog.md` (in the project root) to establish session continuity and align with the current running goal. If `worklog.md` is completely missing, refer to `[HARD CONSTRAINT - OS SCAFFOLDING]`.
 
 ## 5. Hierarchical Discovery
-- `[HARD CONSTRAINT - LOCAL RULES]`: This repository uses hierarchical context routing. Before modifying code in any subdirectory (e.g., `src/`), you MUST check for and read any local `.agents.md` files located in that directory. They take precedence over global rules.
+- `[HARD CONSTRAINT - LOCAL RULES]`: This repository uses hierarchical context routing. Before modifying code in any subdirectory (e.g., `src/`), you MUST check for and read any local `.agents.md or .sub-agent.md` files located in that directory. They take precedence over global rules. Ask the user to set up, create sub-agent files, and align with user feedback if local rules do not exist, using the `ask_question` tool purposefully and with a proper understanding.
 
 ## 6. Code Navigation (The `grep_search` Mandate)
 - `[NEGATIVE CONSTRAINT - NAVIGATION]`: Do not traverse directories blindly using `list_dir`. You MUST use the native `grep_search` tool as your primary method to find function definitions and component structures instantly.
 
 ## 7. Initialization & Project Isolation
-- `[HARD CONSTRAINT - SYSTEM ACKNOWLEDGMENT]`: Upon starting a new conversation, your very first message to the user MUST explicitly acknowledge that the framework is active with a useful status header, e.g., *"AgentOS active | worklog: <last entry summary> | pending: <open items>"*. Do not use theatrical greetings.
+- `[HARD CONSTRAINT - SYSTEM ACKNOWLEDGMENT]`: **Upon starting a new conversation**, your very first message to the user MUST explicitly acknowledge that the framework is active with a useful status header, e.g., *"AgentOS active | worklog: <last entry summary> | pending: <open items>"*. Do not use theatrical greetings.
 - `[HARD CONSTRAINT - OS SCAFFOLDING]`: If core state files (e.g., `worklog.md`, `.agents/rules/business_context.md`) are missing upon initialization, you MUST NOT silently ignore this. You MUST immediately trigger a multi-select questionnaire (`ask_question` with `is_multi_select: true`) listing the missing files and asking the user which ones you should scaffold.
 - `[HARD CONSTRAINT - BUSINESS CONTEXT]`: This `.agents` folder is a portable framework. You are domain-blind by default. Upon starting a task, you MUST use `view_file` to read `.agents/rules/business_context.md` to map the business entities. If the file is missing, refer to `[HARD CONSTRAINT - OS SCAFFOLDING]`.
 
 ## 8. Asynchronous Orchestration & Dependencies
-- `[HARD CONSTRAINT - ASYNC]`: When executing long terminal commands (e.g., builds, package installs), you MUST use the `WaitMsBeforeAsync` parameter to send the process to the background. You MUST then use the `schedule` tool to set a wakeup timer or wait for the system notification. Do not hang the execution thread.
+- `[HARD CONSTRAINT - ASYNC]`: When executing long terminal commands (e.g., builds, package installs), you MUST use the `WaitMsBeforeAsync` parameter to send the process to the background.
 
 ## 9. The Editing & UI Pipeline
 - `[HARD CONSTRAINT - SURGICAL EDITS]`: When modifying existing files, you are prohibited from guessing the existing text. You MUST execute `view_file` or `grep_search` to pull the exact target lines into your context first. You MUST then copy those exact lines into the `TargetContent` field of your edit tool to guarantee a non-destructive match.
