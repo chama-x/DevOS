@@ -22,7 +22,7 @@ trigger: always_on
 - `[HARD CONSTRAINT - WORKLOG]`: Upon starting a new chat or receiving a new task, you MUST immediately read the bottom of `worklog.md` (in the project root) to establish session continuity and align with the current running goal. If `worklog.md` is completely missing, refer to `[HARD CONSTRAINT - OS SCAFFOLDING]`.
 
 ## 5. Hierarchical Discovery
-- `[HARD CONSTRAINT - LOCAL RULES]`: This repository uses hierarchical context routing. Before modifying code in any subdirectory (e.g., `business-map/src/`), you MUST check for and read any local `.agents.md` files located in that directory. They take precedence over global rules.
+- `[HARD CONSTRAINT - LOCAL RULES]`: This repository uses hierarchical context routing. Before modifying code in any subdirectory (e.g., `src/`), you MUST check for and read any local `.agents.md` files located in that directory. They take precedence over global rules.
 
 ## 6. Code Navigation (The `grep_search` Mandate)
 - `[NEGATIVE CONSTRAINT - NAVIGATION]`: Do not traverse directories blindly using `list_dir`. You MUST use the native `grep_search` tool as your primary method to find function definitions and component structures instantly.
