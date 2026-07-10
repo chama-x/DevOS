@@ -6,6 +6,10 @@ Modern IDEs ship with powerful base LLM agents, but in their default state, they
 
 We engineered a **Custom AgentOS Context Framework** that sits above the IDE agent. The moment a "fresh" agent wakes up in this environment, it is instantly transformed by local configuration files into a **Self-Governing, Risk-Tiered Supervisor**.
 
+<div align="center">
+  <img src="assets/context_footprint.svg" alt="AgentOS Context Footprint">
+</div>
+
 ## Core Features
 
 ### 1. Risk-Tiered Autonomy
