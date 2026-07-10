@@ -162,8 +162,12 @@
     <g class="door door-r"><rect x="404" y="104" width="52" height="32" rx="3" fill="#22344f" stroke="#5d84b0" stroke-width="1.5"/>
       <path d="M414 112 h34 M414 120 h34 M414 128 h34" stroke="#3d5a80" stroke-width="2"/></g>
     <!-- interlocking gears -->
-    <use href="#gearShape" class="gear"     x="368" y="76"/>
-    <use href="#gearShape" class="gear rev" x="432" y="76" transform="scale(.8)" transform-origin="432 76"/>
+    <g transform="translate(368 76)">
+      <use href="#gearShape" class="gear" />
+    </g>
+    <g transform="translate(432 76) scale(.8)">
+      <use href="#gearShape" class="gear rev" />
+    </g>
     <!-- core -->
     <circle class="core-green" cx="400" cy="162" r="14" fill="url(#coreG)" filter="url(#glowGreen)"/>
     <circle class="core-red"   cx="400" cy="162" r="14" fill="url(#coreR)" filter="url(#glowRed)"/>

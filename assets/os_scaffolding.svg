@@ -130,7 +130,8 @@
 
   <!-- ===== Constructor drone ===== -->
   <g class="drone">
-    <g class="drone-bob" transform="translate(150 130)">
+    <g transform="translate(150 130)">
+      <g class="drone-bob">
       <!-- lasers (anchored below emitter) -->
       <g transform="translate(0 34)">
         <polygon class="laser laser-1" points="-3,0 3,0 10,178 -10,178" fill="url(#laserG)" filter="url(#glowG5)"/>
@@ -153,6 +154,7 @@
       <circle cx="0" cy="34" r="4.5" fill="#22ff88" filter="url(#glowG5)"/>
       <circle cx="-18" cy="12" r="2.5" fill="#ffb020" class="led a" filter="url(#glowC5)"/>
       <circle cx="18" cy="12" r="2.5" fill="#22d3ee" class="led c" filter="url(#glowC5)"/>
+      </g>
     </g>
   </g>
 </svg>

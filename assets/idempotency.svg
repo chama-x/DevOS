@@ -134,7 +134,8 @@
               stroke="#7688ad" stroke-width="3" stroke-linecap="round"/>
         <circle cx="150" cy="310" r="5" fill="#0d1226"/>
       </g>
-      <g class="forearm" transform="translate(138 296)">
+      <g transform="translate(138 296)">
+        <g class="forearm">
         <rect x="10" y="4" width="160" height="22" rx="10" fill="url(#metal)" stroke="#5b6b8c" stroke-width="2"/>
         <rect x="40" y="8" width="60" height="14" rx="6" fill="#182236"/>
         <g class="arm-lights">
@@ -152,6 +153,7 @@
         <!-- welding beam -->
         <line class="beam" x1="210" y1="15" x2="390" y2="-58"/>
         <line class="beam beam-core" x1="210" y1="15" x2="390" y2="-58"/>
+        </g>
       </g>
     </g>
     <g class="spark"><circle cx="590" cy="238" r="3"/><circle cx="598" cy="228" r="2"/><circle cx="584" cy="248" r="2.5"/></g>
