@@ -66,6 +66,8 @@
       78% { opacity: .8; } 90% { opacity: 0; transform: translateY(-40px) scale(1.6); }
       100% { opacity: 0; }
     }
+    .truncate-lbl { opacity: 0; animation: truncLbl 10s linear infinite; }
+    @keyframes truncLbl { 0%,78% {opacity:0;} 80%,92% {opacity:1; transform:scale(1.1);} 94%,100% {opacity:0;} }
   </style>
 
   <defs>
@@ -156,8 +158,8 @@
 
   <!-- ===== Output rail / committed ledger ===== -->
   <g>
-    <path d="M548 250 H780" stroke="#1c2040" stroke-width="10" stroke-linecap="round"/>
-    <path class="energy-line" d="M548 250 H780" stroke="#7c3aed" stroke-width="3" fill="none" filter="url(#glowP)"/>
+    <path d="M548 250 H700" stroke="#1c2040" stroke-width="10" stroke-linecap="round"/>
+    <path class="energy-line" d="M548 250 H700" stroke="#7c3aed" stroke-width="3" fill="none" filter="url(#glowP)"/>
     <rect x="700" y="196" width="72" height="108" rx="10" fill="url(#hull)" stroke="#4c4f78" stroke-width="2"/>
     <rect x="712" y="210" width="48" height="10" rx="3" fill="#0b0e22"/>
     <rect x="712" y="228" width="48" height="10" rx="3" fill="#0b0e22"/>
@@ -168,4 +170,12 @@
   <!-- machine plinth -->
   <rect x="330" y="386" width="200" height="18" rx="6" fill="url(#hull)" stroke="#3b3f63"/>
   <path d="M380 386 L400 368 h60 l20 18" fill="none" stroke="#3b3f63" stroke-width="3"/>
+
+  <!-- ===== Semantic Labels ===== -->
+  <g font-family="monospace" font-size="13" font-weight="bold" letter-spacing="1">
+    <text x="30" y="196" fill="#38bdf8">1. WORKLOG (4K TOKENS)</text>
+    <text x="336" y="90" fill="#a78bfa">2. SNAPSHOT &amp; DISTILL</text>
+    <text x="608" y="174" fill="#22ff88">3. APPEND ARCHIVE</text>
+    <text class="truncate-lbl" x="30" y="316" fill="#ff2244" style="transform-origin: 30px 316px;">4. VERIFY &amp; TRUNCATE</text>
+  </g>
 </svg>
