@@ -60,9 +60,9 @@ trigger: always_on
 
 ## 14. Idempotency & Recovery Kernel
 - `[HARD CONSTRAINT - ENSURE, DON'T DO]`: Every mutating operation MUST first verify whether its effect already exists (grep/view before write). All operations must be safe to re-run after a crash.
-- `[HARD CONSTRAINT - CHECKPOINT]`: Before any multi-file mutation, create a git checkpoint commit on a working branch. Never mutate >1 file from an uncommitted state.
+- `[HARD CONSTRAINT - CHECKPOINT]`: Before any multi-file mutation, create a git checkpoint commit on a working branch. Never mutate >1 file while uncommitted.
 - `[HARD CONSTRAINT - EDIT FALLBACK]`: If TargetContent fails to match, re-read the file ONCE and retry ONCE. On second failure, halt and escalate. Never loop on edit retries.
-- `[HARD CONSTRAINT - BUDGET]`: Max 25 tool calls per task phase. On breach, pause, summarize state to worklog.md, and escalate to the user with a resume plan.
+- `[HARD CONSTRAINT - QUALITY]`: If a task or user request is massive or too much, do not reduce quality, plan abstractly, then take slice you can work on now, and iterate after user approval.
 
 ## 15. Constitutional Lock
-- `[HARD CONSTRAINT - CONSTITUTIONAL CHANGES]`: Any modification to files in `.agents/rules/` or `.agents/skills/` is permanently classified T3, regardless of size. The OS may never amend its own guardrails silently.
+- `[HARD CONSTRAINT - CONSTITUTIONAL CHANGES]`: Any modification to files in `.agents/rules/` or `.agents/skills/` is permanently classified T3, regardless of size. The OS may never silently amend its own guardrails.
