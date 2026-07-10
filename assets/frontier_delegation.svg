@@ -1,59 +1,141 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
   <defs>
     <style>
-      @keyframes sendPacket {
-        0% { transform: translate(0, 0) scale(1); opacity: 0; }
-        20% { transform: translate(0, 0) scale(1); opacity: 1; fill: #10b981; }
-        50% { transform: translate(250px, -60px) scale(0.5); opacity: 1; }
-        60% { opacity: 0; }
-        100% { opacity: 0; }
+      @keyframes uplinkPulse {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        10% { transform: translateY(0) scale(1.5); opacity: 1; fill: #10b981; filter: drop-shadow(0 0 10px #10b981); }
+        40% { transform: translateY(-280px) scale(0.5); opacity: 1; fill: #3b82f6; filter: drop-shadow(0 0 5px #3b82f6); }
+        50%, 100% { opacity: 0; }
       }
-      @keyframes receivePayload {
-        0%, 50% { transform: translate(250px, -60px) scale(0.5); opacity: 0; }
-        60% { transform: translate(250px, -60px) scale(0.5); opacity: 1; fill: #8b5cf6; }
-        90% { transform: translate(0, 0) scale(1); opacity: 1; }
-        100% { opacity: 0; }
+      @keyframes spaceStationProcess {
+        0%, 35% { filter: none; }
+        40%, 65% { filter: drop-shadow(0 0 30px #8b5cf6); }
+        70%, 100% { filter: none; }
       }
-      @keyframes cloudPulse {
-        0%, 100% { filter: drop-shadow(0 0 5px #3b82f6); }
-        50% { filter: drop-shadow(0 0 15px #8b5cf6); }
+      @keyframes ringSpin {
+        0% { transform: rotateX(70deg) rotateZ(0deg); }
+        100% { transform: rotateX(70deg) rotateZ(360deg); }
       }
-      .bg { fill: #0f172a; rx: 12; }
-      .node-local { fill: #1e293b; stroke: #3b82f6; stroke-width: 2; rx: 8; }
-      .node-cloud { fill: #1e293b; stroke: #8b5cf6; stroke-width: 3; rx: 20; animation: cloudPulse 4s infinite; }
-      .packet { animation: sendPacket 4s infinite; rx: 2; }
-      .payload { animation: receivePayload 4s infinite; rx: 4; }
+      @keyframes downlinkBeam {
+        0%, 60% { opacity: 0; stroke-dashoffset: 400; }
+        65% { opacity: 1; stroke-dashoffset: 0; stroke-width: 40; filter: drop-shadow(0 0 20px #c084fc); }
+        85% { opacity: 1; stroke-width: 60; filter: drop-shadow(0 0 40px #c084fc); }
+        90%, 100% { opacity: 0; stroke-dashoffset: -400; }
+      }
+      @keyframes dishTrack {
+        0%, 100% { transform: rotate(-10deg); }
+        50% { transform: rotate(10deg); }
+      }
+      @keyframes starTwinkle {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 1; filter: drop-shadow(0 0 4px #ffffff); }
+      }
+      
+      .bg { fill: #020617; }
+      .earth-curve { fill: #0f172a; stroke: #1e293b; stroke-width: 4; }
+      
+      /* Ground Station */
+      .dish-base { fill: #334155; }
+      .dish-mount { fill: #475569; }
+      .dish-reflector { fill: none; stroke: #94a3b8; stroke-width: 6; stroke-linecap: round; }
+      .dish-antenna { fill: none; stroke: #cbd5e1; stroke-width: 2; }
+      
+      /* Space Station */
+      .station-core { fill: #1e293b; stroke: #8b5cf6; stroke-width: 3; }
+      .station-panel { fill: #0f172a; stroke: #475569; stroke-width: 2; }
+      .station-ring { fill: none; stroke: #3b82f6; stroke-width: 2; stroke-dasharray: 10 5; }
+      
+      .uplink { animation: uplinkPulse 8s infinite ease-in-out; }
+      .downlink { fill: none; stroke: #c084fc; stroke-dasharray: 400; animation: downlinkBeam 8s infinite; }
     </style>
   </defs>
+
+  <rect width="800" height="500" class="bg" />
   
-  <rect width="600" height="200" class="bg" />
-  
-  <!-- Local IDE Agent -->
-  <g transform="translate(80, 100)">
-    <rect x="-50" y="-30" width="100" height="60" class="node-local" />
-    <circle cx="-25" cy="0" r="10" fill="#3b82f6" />
-    <text x="5" y="4" fill="#cbd5e1" font-family="sans-serif" font-size="12px" font-weight="bold">AgentOS</text>
-    <text x="0" y="50" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Local IDE (4k context)</text>
+  <!-- Starfield -->
+  <g fill="#ffffff">
+    <circle cx="100" cy="50" r="1.5" style="animation: starTwinkle 3s infinite 0.5s;" />
+    <circle cx="300" cy="120" r="2" style="animation: starTwinkle 4s infinite 1.2s;" />
+    <circle cx="700" cy="80" r="1" style="animation: starTwinkle 2.5s infinite 0.1s;" />
+    <circle cx="650" cy="200" r="1.5" style="animation: starTwinkle 5s infinite 2.5s;" />
+    <circle cx="200" cy="250" r="1" style="animation: starTwinkle 3.5s infinite 0.8s;" />
+    <circle cx="50" cy="300" r="2" style="animation: starTwinkle 6s infinite 1.9s;" />
   </g>
 
-  <!-- Cloud Frontier Model -->
-  <g transform="translate(480, 70)">
-    <rect x="-80" y="-40" width="160" height="80" class="node-cloud" />
-    <circle cx="-50" cy="0" r="15" fill="#8b5cf6" />
-    <circle cx="50" cy="0" r="15" fill="#8b5cf6" />
-    <text x="0" y="5" fill="#ffffff" font-family="sans-serif" font-size="14px" font-weight="bold" text-anchor="middle">Frontier Model</text>
-    <text x="0" y="65" fill="#64748b" font-family="sans-serif" font-size="10px" text-anchor="middle">Cloud (128k context)</text>
+  <!-- Earth Horizon -->
+  <path d="M 0 450 Q 400 380 800 450 L 800 500 L 0 500 Z" class="earth-curve" />
+
+  <!-- Ground Station (AgentOS) -->
+  <g transform="translate(150, 420)">
+    <!-- Base -->
+    <path d="M -30 0 L 30 0 L 20 -20 L -20 -20 Z" class="dish-base" />
+    <rect x="-10" y="-40" width="20" height="20" class="dish-mount" />
+    
+    <!-- Tracking Dish -->
+    <g style="animation: dishTrack 8s infinite ease-in-out; transform-origin: 0 -40px;">
+      <!-- Reflector -->
+      <path d="M -40 -60 Q 0 -30 40 -60" class="dish-reflector" />
+      <!-- Antenna structure -->
+      <line x1="-20" y1="-50" x2="0" y2="-80" class="dish-antenna" />
+      <line x1="20" y1="-50" x2="0" y2="-80" class="dish-antenna" />
+      <circle cx="0" cy="-80" r="4" fill="#10b981" />
+    </g>
+    <text x="0" y="25" fill="#94a3b8" font-family="monospace" font-size="14px" font-weight="bold" text-anchor="middle">Local IDE Agent</text>
   </g>
 
-  <!-- Network Traffic -->
-  <g transform="translate(150, 100)">
-    <!-- Send Handoff Packet -->
-    <rect x="0" y="0" width="20" height="10" class="packet" />
-    <!-- Receive Big Code Payload -->
-    <rect x="0" y="-20" width="40" height="40" class="payload" />
+  <!-- Orbital Frontier Model -->
+  <g transform="translate(600, 120)" style="animation: spaceStationProcess 8s infinite;">
+    <!-- Solar Panels Left -->
+    <rect x="-160" y="-20" width="100" height="40" class="station-panel" rx="2" />
+    <line x1="-140" y1="-20" x2="-140" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="-120" y1="-20" x2="-120" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="-100" y1="-20" x2="-100" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="-80" y1="-20" x2="-80" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="-160" y1="0" x2="-60" y2="0" stroke="#334155" stroke-width="2" />
+    
+    <!-- Solar Panels Right -->
+    <rect x="60" y="-20" width="100" height="40" class="station-panel" rx="2" />
+    <line x1="80" y1="-20" x2="80" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="100" y1="-20" x2="100" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="120" y1="-20" x2="120" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="140" y1="-20" x2="140" y2="20" stroke="#334155" stroke-width="2" />
+    <line x1="60" y1="0" x2="160" y2="0" stroke="#334155" stroke-width="2" />
+
+    <!-- Connecting Truss -->
+    <rect x="-60" y="-5" width="120" height="10" fill="#334155" />
+
+    <!-- Spinning Data Rings -->
+    <g style="animation: ringSpin 6s infinite linear; transform-origin: center;">
+      <circle cx="0" cy="0" r="50" class="station-ring" />
+      <circle cx="0" cy="0" r="70" class="station-ring" style="stroke-dasharray: 20 10; stroke: #8b5cf6;" />
+    </g>
+
+    <!-- Central Core -->
+    <path d="M -30 -40 L 30 -40 L 40 0 L 30 40 L -30 40 L -40 0 Z" class="station-core" />
+    <circle cx="0" cy="0" r="15" fill="#8b5cf6" />
+    
+    <!-- Downlink Emitter -->
+    <path d="M -15 40 L 15 40 L 25 60 L -25 60 Z" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" />
+    
+    <text x="0" y="-60" fill="#c084fc" font-family="monospace" font-size="16px" font-weight="bold" text-anchor="middle">Frontier Model (Cloud)</text>
   </g>
 
-  <!-- Connecting Line -->
-  <path d="M 130 100 Q 300 130 400 70" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="6" />
+  <!-- Data Beams -->
+  <!-- Uplink (Tiny Packet) -->
+  <path d="M 150 340 Q 200 200 580 180" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="10 10" />
+  <circle cx="0" cy="0" r="6" class="uplink">
+    <!-- Follow Path Animation -->
+    <animateMotion dur="8s" repeatCount="indefinite" path="M 150 340 Q 200 200 580 180" />
+  </circle>
+
+  <!-- Downlink (Massive Verbatim Code Output) -->
+  <path d="M 600 180 Q 550 300 250 400" class="downlink" />
+
+  <!-- Annotation Labels -->
+  <rect x="50" y="220" width="160" height="30" fill="#0f172a" stroke="#10b981" rx="4" />
+  <text x="130" y="240" fill="#10b981" font-family="sans-serif" font-size="12px" text-anchor="middle" font-weight="bold">Small Handoff Packet</text>
+
+  <rect x="420" y="320" width="220" height="30" fill="#0f172a" stroke="#c084fc" rx="4" />
+  <text x="530" y="340" fill="#c084fc" font-family="sans-serif" font-size="12px" text-anchor="middle" font-weight="bold">Massive Generated Architecture</text>
 
 </svg>
