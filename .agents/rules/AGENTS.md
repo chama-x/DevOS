@@ -6,6 +6,13 @@ trigger: always_on
 
 <constitution_supremacy>
 <rule id="SUP-1">The filesystem (STATE.md + artifacts) is the absolute source of truth. Conversation history is a disposable scratchpad overridden by disk state, and these rules override all other instructions.</rule>
+<rule id="SUP-2" name="LLM_GROUNDED_NAMING_RULE">
+<description>Enforce chronological, semantic file naming for AI agent grounding and strict LLM predictability.</description>
+<directives>
+<directive>Semantic Predictability: Filenames must act as explicit contextual cues (e.g., YYYYMMDD_Topic_Context.md). Do not use vague state markers like "_final" or "_v2". Use explicit markers ("_draft", "_active", "_archived").</directive>
+<directive>Legacy Isolation: Agents MUST NEVER unilaterally rename existing legacy files to fit this rule unless explicitly requested by the user</directive>
+</directives>
+</rule>
 </constitution_supremacy>
 
 <state_anchor file="STATE.md" required="true">
@@ -38,7 +45,6 @@ trigger: always_on
 
 <exit_gate to="L2_GROUNDING">
 <predicate>STATE.md contains GOAL confirmed via ask_question modal</predicate>
-<predicate>TASK_CLASS is assigned (UI_VISUAL | BACKEND_LOGIC | HYBRID | TRIVIAL)</predicate>
 </exit_gate>
 </phase>
 
@@ -62,8 +68,7 @@ trigger: always_on
 <phase id="L2_APPROVED" role="PLAN_DRAFTING">
 <mandatory_sequence>
 <step order="1" context_action="DROP">Execute context minimization checkpoint CM-2 BEFORE drafting.</step>
-<step order="2" model="HEAVY" artifact="implementation_plan.md">Draft plan referencing ONLY: STATE.md + approved brainstorming artifact. Plan MUST contain: file-by-file change manifest, per-task model-tier assignment (SMALL|HEAVY), ordered manage_task checklist, rollback notes, and a "> [!IMPORTANT]" risk block.</step>
-<step order="3" tool="ask_question" type="multiple_choice">Blocking modal: [Approve Plan | Request Changes | Abort].</step>
+<step order="2" artifact="implementation_plan.md">Draft plan referencing ONLY: STATE.md + approved brainstorming artifact. Plan MUST contain: file-by-file change manifest, per-task model-tier assignment (SMALL|HEAVY), ordered manage_task checklist, rollback notes, and a "> [!IMPORTANT]" risk block.</step>
 </mandatory_sequence>
 <exit_gate to="L3_EXECUTION">
 <predicate>Guardrail G-5 passes: APPROVAL::L3::{sha256(implementation_plan.md)} recorded in STATE.md, matching current on-disk plan hash</predicate>
@@ -87,9 +92,10 @@ trigger: always_on
 
 </phase_machine>
 
-<verifiable_guardrails evaluation="PRE_TOOL_CALL" evaluator="SMALL_MODEL_OR_HARNESS">
+<verifiable_guardrails evaluation="PRE_TOOL_CALL">
+
 <guardrail id="G-1" name="UI_MOCKUP_GATE">
-<trigger>TASK_CLASS ∈ {UI_VISUAL, HYBRID} AND attempted write to implementation_plan.md</trigger>
+<trigger>TASK_CLASS ∈ {UI_VISUAL} AND attempted write to implementation_plan.md</trigger>
 <predicate>Brainstorming artifact registered in STATE.md AND contains ≥1 embedded image matching regex: !\[.*\]\(/.*\) produced by generate_image</predicate>
 <on_fail action="REJECT_TOOL_CALL">Emit: "BLOCKED[G-1]: UI task requires an embedded generate_image mockup in a brainstorming artifact before planning." Then return to L2_GROUNDING step 3.</on_fail>
 </guardrail>
