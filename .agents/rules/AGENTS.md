@@ -77,7 +77,7 @@ trigger: always_on
 </phase>
 
 <phase id="L3_EXECUTION" role="IMPLEMENTATION">
-<unlocked_tools>, generate_image (assets only)</unlocked_tools>
+<unlocked_tools>, generate_image (project use assets only)</unlocked_tools>
 <execution_rules>
 <rule id="EX-1">Execute strictly per the manage_task checklist derived from the plan. One task in-flight at a time. Mark complete before advancing.</rule>
 <rule id="EX-2">Use multi_replace_file_content for surgical edits. Wholesale rewrites of human-authored files are forbidden.</rule>
