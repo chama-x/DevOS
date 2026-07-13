@@ -1,40 +1,47 @@
 ---
 trigger: always_on
 ---
+<knowledge_graph_framework>
+  <project_name>Business Context & Routing</project_name>
 
-# Project Name: Business Context & Routing
+  <organization_profile>
+    <company>[Company Name]</company>
+    <core_business>[Describe the business]</core_business>
+    <key_personnel>
+      <person name="[Name]" role="[Role]" />
+    </key_personnel>
+  </organization_profile>
 
-# Business & Data Context
+  <methodology name="joint_brain">
+    <description>
+      We are modeling this business not as flat files, but as an Enterprise Knowledge Graph (Spider Web Map).
+      To maintain high accuracy without hallucinations, you must strictly map and query data using this vocabulary:
+    </description>
+    
+    <core_pillars>
+      <pillar name="[Pillar 1]">[Description]</pillar>
+      <pillar name="[Pillar 2]">[Description]</pillar>
+    </core_pillars>
 
-## Organization Profile
-- **Company**: [Company Name]
-- **Core Business**: [Describe the business]
-- **Key Personnel**:
-  - **[Name]**: [Role]
+    <entity_types>
+      <entity type="user">[Description]</entity>
+      <entity type="system">[Description]</entity>
+    </entity_types>
 
-## The Joint Brain Methodology (Knowledge Graph Framework)
+    <edge_types>
+      <edge type="manages">Person to System</edge>
+      <edge type="flows_to">Data flowing from one service to another</edge>
+    </edge_types>
 
-We are modeling this business not as flat files, but as an **Enterprise Knowledge Graph (Spider Web Map)**.
-To maintain high accuracy without hallucinations, you must strictly map and query data using this vocabulary:
+    <domain_rules>
+      <rule>Never assume data is clean or perfectly structured. Always think in terms of the Knowledge Graph (Who + What + How) before touching the codebase.</rule>
+      <rule>Always rely on fuzzy matching and robust error handling when building data extraction pipelines.</rule>
+    </domain_rules>
+  </methodology>
 
-### 1. The Core Pillars
-The business is separated into these autonomous areas:
-- **[Pillar 1]**: [Description]
-- **[Pillar 2]**: [Description]
-
-### 2. The Entity Types (Nodes)
-Always categorize things into these buckets:
-- `user`: [Description]
-- `system`: [Description]
-
-### 3. The Connections (Edges)
-Never assume a relationship. Prove it using these edge types:
-- `manages`: Person to System
-- `flows_to`: Data flowing from one service to another
-
-## Working with this Domain
-Never assume data is clean or perfectly structured. Always think in terms of the **Knowledge Graph** (Who + What + How) before touching the codebase. Always rely on fuzzy matching and robust error handling when building data extraction pipelines.
-
-## Technology Stack Mandates
-For this specific project, the following tech stack rules apply locally:
-- `[NEGATIVE CONSTRAINT - DEPENDENCIES]`: DO NOT use `npm` or `yarn`. `pnpm` is the permanently mandated package manager. Next.js is the mandated web application framework (do not default to standard React or Vite for web apps).
+  <technology_stack_mandates>
+    <rule type="negative_constraint" category="dependencies">
+      DO NOT use npm or yarn. pnpm is the permanently mandated package manager. Next.js is the mandated web application framework (do not default to standard React or Vite for web apps).
+    </rule>
+  </technology_stack_mandates>
+</knowledge_graph_framework>
