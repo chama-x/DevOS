@@ -2,6 +2,13 @@
 
 ![AgentOS Architecture](assets/CortanaAgentOS.jpg)
 
+## What's New: AgentOS Control Plane Dashboard 🚀
+To open the dashboard, simply right-click `.agents/agentos-dashboard.html` and select **"Open with Live Server"** in your IDE.
+
+<div align="center">
+  <img src="assets/dashboard_launch.svg" alt="Launch AgentOS Dashboard" width="620">
+</div>
+
 Modern IDEs ship with powerful base LLM agents, but in their default state, they are essentially stateless chatbots with terminal access. They suffer from "Idempotency Neglect" (breaking code by retrying bad edits), context bloat (memory exhaustion), and "God Model" syndrome (trying to solve 100k-token problems in a 4k-token window).
 
 We engineered a **Custom AgentOS Context Framework** that sits above the IDE agent. The moment a "fresh" agent wakes up in this environment, it is instantly transformed by local configuration files into a **Self-Governing, Risk-Tiered Supervisor**.
@@ -39,8 +46,6 @@ A premium dark-mode dashboard (`agentos-dashboard.html`) is built directly insid
 - **State Anchor & Question Logs**: Visualizes the phase-machine timeline alongside interactive question histories and security approval tokens.
 - **Telemetry Ledger**: High-fidelity run lists documenting all tool execution runs and outcomes.
 - **Memory Root**: User Lexicon definitions, rejected proposals, and compression snapshot timelines.
-
-To open the dashboard, simply right-click `.agents/agentos-dashboard.html` and select **"Open with Live Server"** in your IDE.
 
 ## Installation
 Just drop the `.agents` folder into the root of your workspace, and your agent will instantly transform into the V2 Supervisor!
