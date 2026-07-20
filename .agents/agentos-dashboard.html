@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgentOS — Control Plane</title>
+
+  <!-- ============================================================
+     SECTION 1: DESIGN SYSTEM  (CSS Custom Properties + Components)
+     ============================================================ -->
+  <style>
+    /* ---------- 1.1 Design Tokens ---------- */
+    :root {
+      /* Surfaces */
+      --bg-deep: #0a0e27;
+      --bg-raised: #10152e;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-bg-hover: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-strong: rgba(255, 255, 255, 0.14);
+
+      /* Accents */
+      --accent-blue: #3b82f6;
+      --accent-blue-soft: rgba(59, 130, 246, 0.15);
+      --accent-green: #10b981;
+      --accent-green-soft: rgba(16, 185, 129, 0.15);
+      --accent-amber: #f59e0b;
+      --accent-amber-soft: rgba(245, 158, 11, 0.15);
+      --accent-rose: #f43f5e;
+      --accent-rose-soft: rgba(244, 63, 94, 0.15);
+      --accent-violet: #8b5cf6;
+      --accent-violet-soft: rgba(139, 92, 246, 0.15);
+      --accent-cyan: #06b6d4;
+      --accent-cyan-soft: rgba(6, 182, 212, 0.15);
+
+      /* Text */
+      --text-hi: rgba(255, 255, 255, 0.95);
+      --text-mid: rgba(255, 255, 255, 0.65);
+      --text-low: rgba(255, 255, 255, 0.40);
+
+      /* Type */
+      --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      --font-mono: "SF Mono", "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+      /* Spacing (4px base) */
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-8: 32px;
+      --sp-10: 40px;
+      --sp-12: 48px;
+
+      /* Radii */
+      --r-sm: 8px;
+      --r-md: 12px;
+      --r-lg: 16px;
+      --r-xl: 20px;
+      --r-full: 999px;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+      --dur-fast: 160ms;
+      --dur-med: 320ms;
+      --dur-slow: 560ms;
+
+      /* Depth */
+      --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+      --shadow-2: 0 4px 12px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.25);
+      --shadow-3: 0 12px 40px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+
+      --sidebar-w: 248px;
+    }
+
+    /* ---------- 1.2 Reset / Base ---------- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--bg-deep);
+      color: var(--text-hi);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--accent-blue-soft);
+    }
+
+    /* Ambient gradient orbs */
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      border-radius: 50%;
+      z-index: 0;
+      filter: blur(120px);
+      opacity: 0.35;
+      pointer-events: none;
+      animation: orbFloat 24s var(--ease-in-out) infinite alternate;
+    }
+
+    body::before {
+      width: 560px;
+      height: 560px;
+      top: -180px;
+      right: -120px;
+      background: radial-gradient(circle, #1e3a8a, transparent 70%);
+    }
+
+    body::after {
+      width: 480px;
+      height: 480px;
+      bottom: -160px;
+      left: 120px;
+      background: radial-gradient(circle, #4c1d95, transparent 70%);
+      animation-delay: -12s;
+    }
+
+    @keyframes orbFloat {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(-60px, 40px) scale(1.12);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    /* ---------- 1.3 Layout ---------- */
+    .app {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: var(--sp-6) var(--sp-4);
+      background: rgba(10, 14, 39, 0.72);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-right: 1px solid var(--glass-border);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-2) var(--sp-3) var(--sp-6);
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--r-md);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 15px;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .logo-text small {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-low);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: 10px var(--sp-3);
+      border-radius: var(--r-md);
+      color: var(--text-mid);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: var(--glass-bg-hover);
+      color: var(--text-hi);
+    }
+
+    .nav-item.active {
+      background: var(--accent-blue-soft);
+      color: #93c5fd;
+    }
+
+    .nav-item.active::before {
+      content: "";
+      position: absolute;
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 18px;
+      border-radius: 2px;
+      background: var(--accent-blue);
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--r-full);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-mid);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: var(--sp-3);
+      font-size: 11px;
+      color: var(--text-low);
+      line-height: 1.6;
+    }
+
+    .fs-cap {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .fs-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+    }
+
+    .fs-dot.ok {
+      background: var(--accent-green);
+      box-shadow: 0 0 8px var(--accent-green);
+    }
+
+    .main {
+      padding: var(--sp-8) var(--sp-10);
+      max-width: 1280px;
+      width: 100%;
+    }
+
+    /* ---------- 1.4 Components ---------- */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .view-header {
+      margin-bottom: var(--sp-8);
+      animation: fadeInUp var(--dur-slow) var(--ease-out) both;
+    }
+
+    .view-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .view-header p {
+      color: var(--text-mid);
+      margin-top: var(--sp-2);
+      font-size: 14px;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: var(--sp-6);
+      box-shadow: var(--shadow-1);
+      transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-med) var(--ease-out), background var(--dur-fast) var(--ease-out);
+      animation: fadeInUp var(--dur-slow) var(--ease-out) both;
+      animation-delay: calc(var(--stagger, 0) * 60ms);
+    }
+
+    .glass-card.hoverable:hover {
+      border-color: var(--glass-border-strong);
+      background: var(--glass-bg-hover);
+      transform: translateY(-2px);
+      cursor: pointer;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--sp-4);
+      margin-bottom: var(--sp-6);
+    }
+
+    .bento .span-2 {
+      grid-column: span 2;
+    }
+
+    .bento .span-4 {
+      grid-column: span 4;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-top: var(--sp-2);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-low);
+      font-weight: 600;
+    }
+
+    .stat-delta {
+      font-size: 12px;
+      margin-top: var(--sp-2);
+      color: var(--text-mid);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--r-full);
+      border: 1px solid transparent;
+    }
+
+    .badge-blue {
+      background: var(--accent-blue-soft);
+      color: #93c5fd;
+    }
+
+    .badge-green {
+      background: var(--accent-green-soft);
+      color: #6ee7b7;
+    }
+
+    .badge-amber {
+      background: var(--accent-amber-soft);
+      color: #fcd34d;
+    }
+
+    .badge-rose {
+      background: var(--accent-rose-soft);
+      color: #fda4af;
+    }
+
+    .badge-violet {
+      background: var(--accent-violet-soft);
+      color: #c4b5fd;
+    }
+
+    .badge-cyan {
+      background: var(--accent-cyan-soft);
+      color: #67e8f9;
+    }
+
+    .badge-gray {
+      background: var(--glass-bg);
+      color: var(--text-mid);
+      border-color: var(--glass-border);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 16px;
+      border-radius: var(--r-md);
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-bg);
+      color: var(--text-hi);
+      transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    }
+
+    .btn:hover {
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-strong);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-mid);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text-hi);
+      background: var(--glass-bg);
+    }
+
+    .btn-danger {
+      background: var(--accent-rose-soft);
+      border-color: transparent;
+      color: #fda4af;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .input,
+    .search-input {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--text-hi);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: 10px 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    }
+
+    .input:focus,
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px var(--accent-blue-soft);
+    }
+
+    .input::placeholder {
+      color: var(--text-low);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--sp-6);
+      animation: fadeInUp var(--dur-slow) var(--ease-out) both;
+      animation-delay: 60ms;
+    }
+
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-low);
+      pointer-events: none;
+    }
+
+    .search-wrap .search-input {
+      padding-left: 38px;
+    }
+
+    .chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--r-full);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+      font-family: var(--font-ui);
+    }
+
+    .chip:hover {
+      color: var(--text-hi);
+      border-color: var(--glass-border-strong);
+    }
+
+    .chip.active {
+      background: var(--accent-blue-soft);
+      color: #93c5fd;
+      border-color: rgba(59, 130, 246, 0.35);
+    }
+
+    /* Grid of skills */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--sp-4);
+    }
+
+    .skill-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: var(--sp-2);
+      letter-spacing: -0.01em;
+    }
+
+    .skill-card p {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.55;
+      margin-bottom: var(--sp-3);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .skill-meta {
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+    }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: var(--sp-1);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: var(--sp-1);
+      border-radius: var(--r-md);
+      width: fit-content;
+      margin-bottom: var(--sp-6);
+    }
+
+    .tab {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border: none;
+      background: transparent;
+      color: var(--text-mid);
+      border-radius: var(--r-sm);
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+
+    .tab.active {
+      background: var(--accent-blue);
+      color: white;
+      box-shadow: 0 2px 10px rgba(59, 130, 246, 0.4);
+    }
+
+    .tab:not(.active):hover {
+      color: var(--text-hi);
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      padding: var(--sp-3);
+      color: var(--text-low);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--glass-border);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    th:hover {
+      color: var(--text-mid);
+    }
+
+    td {
+      padding: var(--sp-3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-mid);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr {
+      transition: background var(--dur-fast) var(--ease-out);
+    }
+
+    tbody tr:hover {
+      background: var(--glass-bg);
+    }
+
+    td:first-child {
+      color: var(--text-hi);
+      font-weight: 500;
+    }
+
+    /* Phase pipeline */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+      margin: var(--sp-4) 0;
+    }
+
+    .phase-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--r-full);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--text-low);
+    }
+
+    .phase-pill.done {
+      color: var(--accent-green);
+      border-color: rgba(16, 185, 129, 0.3);
+    }
+
+    .phase-pill.current {
+      color: #93c5fd;
+      background: var(--accent-blue-soft);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.25);
+      animation: pulse 2.4s var(--ease-in-out) infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+      }
+
+      50% {
+        box-shadow: 0 0 26px rgba(59, 130, 246, 0.45);
+      }
+    }
+
+    .pipeline-arrow {
+      color: var(--text-low);
+      font-size: 12px;
+    }
+
+    /* Markdown render surface */
+    .md-body {
+      line-height: 1.7;
+      font-size: 14px;
+      color: var(--text-mid);
+    }
+
+    .md-body h1,
+    .md-body h2,
+    .md-body h3 {
+      color: var(--text-hi);
+      letter-spacing: -0.01em;
+      margin: var(--sp-6) 0 var(--sp-3);
+    }
+
+    .md-body h1 {
+      font-size: 22px;
+    }
+
+    .md-body h2 {
+      font-size: 18px;
+    }
+
+    .md-body h3 {
+      font-size: 15px;
+    }
+
+    .md-body h1:first-child,
+    .md-body h2:first-child {
+      margin-top: 0;
+    }
+
+    .md-body p {
+      margin-bottom: var(--sp-3);
+    }
+
+    .md-body ul,
+    .md-body ol {
+      margin: 0 0 var(--sp-3) var(--sp-5);
+    }
+
+    .md-body li {
+      margin-bottom: var(--sp-1);
+    }
+
+    .md-body code {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 2px 6px;
+      border-radius: 5px;
+      color: #93c5fd;
+    }
+
+    .md-body pre {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-4);
+      overflow-x: auto;
+      margin-bottom: var(--sp-4);
+    }
+
+    .md-body pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-hi);
+    }
+
+    .md-body blockquote {
+      border-left: 3px solid var(--accent-blue);
+      padding: var(--sp-2) var(--sp-4);
+      margin-bottom: var(--sp-3);
+      background: var(--glass-bg);
+      border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    }
+
+    .md-body table {
+      margin-bottom: var(--sp-4);
+    }
+
+    .md-body strong {
+      color: var(--text-hi);
+    }
+
+    .md-alert {
+      border-radius: var(--r-md);
+      padding: var(--sp-4);
+      margin-bottom: var(--sp-4);
+      border: 1px solid;
+      font-size: 13px;
+    }
+
+    .md-alert-title {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: var(--sp-2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .md-alert.note {
+      border-color: rgba(59, 130, 246, 0.3);
+      background: var(--accent-blue-soft);
+    }
+
+    .md-alert.note .md-alert-title {
+      color: #93c5fd;
+    }
+
+    .md-alert.tip {
+      border-color: rgba(16, 185, 129, 0.3);
+      background: var(--accent-green-soft);
+    }
+
+    .md-alert.tip .md-alert-title {
+      color: #6ee7b7;
+    }
+
+    .md-alert.warning {
+      border-color: rgba(245, 158, 11, 0.3);
+      background: var(--accent-amber-soft);
+    }
+
+    .md-alert.warning .md-alert-title {
+      color: #fcd34d;
+    }
+
+    .md-alert.caution {
+      border-color: rgba(244, 63, 94, 0.3);
+      background: var(--accent-rose-soft);
+    }
+
+    .md-alert.caution .md-alert-title {
+      color: #fda4af;
+    }
+
+    .md-alert.important {
+      border-color: rgba(139, 92, 246, 0.3);
+      background: var(--accent-violet-soft);
+    }
+
+    .md-alert.important .md-alert-title {
+      color: #c4b5fd;
+    }
+
+    /* Bar chart (CSS only) */
+    .chart {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--sp-2);
+      height: 120px;
+      padding-top: var(--sp-4);
+    }
+
+    .chart-bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+      background: linear-gradient(180deg, var(--accent-blue), rgba(59, 130, 246, 0.2));
+      min-height: 6px;
+      position: relative;
+      transition: filter var(--dur-fast) var(--ease-out);
+      animation: growBar var(--dur-slow) var(--ease-out) both;
+      transform-origin: bottom;
+    }
+
+    .chart-bar:hover {
+      filter: brightness(1.35);
+    }
+
+    .chart-bar::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: -22px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 10px;
+      color: var(--text-low);
+      white-space: nowrap;
+    }
+
+    @keyframes growBar {
+      from {
+        transform: scaleY(0);
+      }
+
+      to {
+        transform: scaleY(1);
+      }
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: var(--sp-6);
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--glass-border);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: var(--sp-5);
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 0 4px var(--accent-blue-soft);
+    }
+
+    .timeline-item h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .timeline-item p {
+      font-size: 13px;
+      color: var(--text-mid);
+      margin-top: var(--sp-1);
+    }
+
+    .timeline-item time {
+      font-size: 11px;
+      color: var(--text-low);
+      font-family: var(--font-mono);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: grid;
+      place-items: center;
+      background: rgba(5, 8, 22, 0.7);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--dur-med) var(--ease-out);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      width: min(860px, 92vw);
+      max-height: 86vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-raised);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--r-xl);
+      box-shadow: var(--shadow-3);
+      transform: translateY(24px) scale(0.97);
+      transition: transform var(--dur-med) var(--ease-drawer);
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--sp-5) var(--sp-6);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .modal-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .modal-body {
+      padding: var(--sp-4) var(--sp-6);
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-4) var(--sp-6);
+      border-top: 1px solid var(--glass-border);
+    }
+
+    .editor {
+      width: 100%;
+      min-height: 380px;
+      resize: vertical;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-hi);
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      padding: var(--sp-4);
+      outline: none;
+      tab-size: 2;
+    }
+
+    .editor:focus {
+      border-color: var(--accent-blue);
+    }
+
+    /* Detail panel (slide-in) */
+    .detail-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(440px, 90vw);
+      z-index: 90;
+      background: var(--bg-raised);
+      border-left: 1px solid var(--glass-border-strong);
+      box-shadow: var(--shadow-3);
+      padding: var(--sp-8) var(--sp-6);
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform var(--dur-med) var(--ease-drawer);
+    }
+
+    .detail-panel.open {
+      transform: translateX(0);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: var(--sp-6);
+      right: var(--sp-6);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      background: var(--bg-raised);
+      border: 1px solid var(--glass-border-strong);
+      border-radius: var(--r-md);
+      padding: var(--sp-3) var(--sp-5);
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: var(--shadow-2);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform var(--dur-med) var(--ease-drawer), opacity var(--dur-med) var(--ease-out);
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast .t-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+    }
+
+    .toast.error .t-dot {
+      background: var(--accent-rose);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: var(--sp-12);
+      color: var(--text-low);
+    }
+
+    .empty-state h3 {
+      font-size: 15px;
+      color: var(--text-mid);
+      margin-bottom: var(--sp-2);
+    }
+
+    .empty-state code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    /* Shimmer skeleton */
+    .skeleton {
+      height: 80px;
+      border-radius: var(--r-md);
+      background: linear-gradient(90deg, var(--glass-bg) 25%, var(--glass-bg-hover) 50%, var(--glass-bg) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s linear infinite;
+    }
+
+    @keyframes shimmer {
+      from {
+        background-position: 200% 0;
+      }
+
+      to {
+        background-position: -200% 0;
+      }
+    }
+
+    /* Section headers */
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-low);
+      margin: var(--sp-6) 0 var(--sp-4);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .bento {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .bento .span-2,
+      .bento .span-4 {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        z-index: 50;
+        transform: translateX(-100%);
+        transition: transform var(--dur-med) var(--ease-drawer);
+        width: var(--sidebar-w);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        padding: var(--sp-6) var(--sp-4);
+      }
+
+      .menu-btn {
+        display: grid !important;
+      }
+    }
+
+    .menu-btn {
+      display: none;
+      position: fixed;
+      top: var(--sp-4);
+      left: var(--sp-4);
+      z-index: 60;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: var(--r-md);
+      background: var(--bg-raised);
+      border: 1px solid var(--glass-border-strong);
+      color: var(--text-hi);
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<!-- ============================================================
+     SECTION 2: STRUCTURE
+     ============================================================ -->
+
+<body>
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <div class="logo-mark">A</div>
+        <div class="logo-text">AgentOS<small>Control Plane</small></div>
+      </div>
+      <a class="nav-item" href="#dashboard" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="9" rx="1" />
+          <rect x="14" y="3" width="7" height="5" rx="1" />
+          <rect x="14" y="12" width="7" height="9" rx="1" />
+          <rect x="3" y="16" width="7" height="5" rx="1" />
+        </svg>
+        Dashboard
+      </a>
+      <a class="nav-item" href="#skills" data-view="skills">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
+        </svg>
+        Skills <span class="nav-badge" id="skillCountBadge">—</span>
+      </a>
+      <a class="nav-item" href="#rules" data-view="rules">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" />
+        </svg>
+        Rules
+      </a>
+      <a class="nav-item" href="#state" data-view="state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 3" />
+        </svg>
+        State
+      </a>
+      <a class="nav-item" href="#telemetry" data-view="telemetry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12h4l3-8 4 16 3-8h4" />
+        </svg>
+        Telemetry
+      </a>
+      <a class="nav-item" href="#memory" data-view="memory">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16v14H8l-4 4V4z" />
+        </svg>
+        Memory
+      </a>
+      <div class="sidebar-footer">
+        <span class="fs-cap"><span class="fs-dot" id="fsDot"></span><span id="fsCapText">Detecting write
+            capability…</span></span>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- View: Dashboard -->
+      <section class="view" id="view-dashboard">
+        <div class="view-header">
+          <h1>System Overview</h1>
+          <p>Live snapshot of the agent operating system, sourced from <code
+              style="font-family:var(--font-mono);font-size:12px">.agents/</code></p>
+        </div>
+        <div class="bento" id="dashStats"></div>
+        <div class="glass-card" style="--stagger:4">
+          <div class="section-title" style="margin-top:0">Recent Runs</div>
+          <div id="dashRecentRuns">
+            <div class="skeleton"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Skills -->
+      <section class="view" id="view-skills">
+        <div class="view-header">
+          <h1>Skills Registry</h1>
+          <p>Searchable index of registered agent skills</p>
+        </div>
+        <div class="toolbar">
+          <div class="search-wrap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="7" />
+              <path d="M21 21l-4.3-4.3" />
+            </svg>
+            <input class="search-input" id="skillSearch" placeholder="Search skills…" autocomplete="off" />
+          </div>
+          <div id="categoryChips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </div>
+        <div class="skill-grid" id="skillGrid"></div>
+      </section>
+
+      <!-- View: Rules -->
+      <section class="view" id="view-rules">
+        <div class="view-header">
+          <h1>Rule Files</h1>
+          <p>Governing documents for routing, agents, evolution, and business logic</p>
+        </div>
+        <div class="tab-bar" id="ruleTabs"></div>
+        <div class="glass-card">
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:16px">
+            <button class="btn btn-ghost" id="ruleRawBtn">View Raw</button>
+            <button class="btn" id="ruleEditBtn">✎ Edit</button>
+          </div>
+          <div class="md-body" id="ruleContent">
+            <div class="skeleton"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: State -->
+      <section class="view" id="view-state">
+        <div class="view-header">
+          <h1>Execution State</h1>
+          <p>Current phase, goal and decision log from STATE.md</p>
+        </div>
+        <div class="glass-card" style="margin-bottom:16px">
+          <div class="section-title" style="margin-top:0">Phase Pipeline</div>
+          <div class="pipeline" id="phasePipeline"></div>
+        </div>
+        <div class="bento" style="grid-template-columns:repeat(2,1fr)">
+          <div class="glass-card" style="--stagger:1">
+            <div class="section-title" style="margin-top:0">Current Goal</div>
+            <div class="md-body" id="stateGoal"></div>
+          </div>
+          <div class="glass-card" style="--stagger:2">
+            <div class="section-title" style="margin-top:0">Question Log</div>
+            <div class="timeline" id="questionLog"></div>
+          </div>
+        </div>
+        <div class="glass-card" style="--stagger:3">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div class="section-title" style="margin:0">Full STATE.md</div>
+            <button class="btn" id="stateEditBtn">✎ Edit</button>
+          </div>
+          <div class="md-body" id="stateFull" style="margin-top:16px"></div>
+        </div>
+      </section>
+
+      <!-- View: Telemetry -->
+      <section class="view" id="view-telemetry">
+        <div class="view-header">
+          <h1>Telemetry</h1>
+          <p>Run history parsed from telemetry/runs.md</p>
+        </div>
+        <div class="bento" style="grid-template-columns:repeat(3,1fr)" id="teleStats"></div>
+        <div class="glass-card" style="--stagger:3;margin-bottom:16px">
+          <div class="section-title" style="margin-top:0">Duration by Run (min)</div>
+          <div class="chart" id="teleChart"></div>
+          <div style="height:24px"></div>
+        </div>
+        <div class="glass-card" style="--stagger:4">
+          <div class="section-title" style="margin-top:0">Run Log <span
+              style="font-weight:400;text-transform:none;letter-spacing:0">— click headers to sort</span></div>
+          <div style="overflow-x:auto">
+            <table id="teleTable"></table>
+          </div>
+        </div>
+      </section>
+
+      <!-- View: Memory -->
+      <section class="view" id="view-memory">
+        <div class="view-header">
+          <h1>Memory</h1>
+          <p>Lexicon, rejected proposals and archived context</p>
+        </div>
+        <div class="glass-card" style="margin-bottom:16px">
+          <div class="section-title" style="margin-top:0">Lexicon</div>
+          <div style="overflow-x:auto">
+            <table id="lexiconTable"></table>
+          </div>
+        </div>
+        <div class="bento" style="grid-template-columns:repeat(2,1fr)">
+          <div class="glass-card" style="--stagger:1">
+            <div class="section-title" style="margin-top:0">Rejected Proposals</div>
+            <div id="rejectedList"></div>
+          </div>
+          <div class="glass-card" style="--stagger:2">
+            <div class="section-title" style="margin-top:0">Archive Timeline</div>
+            <div class="timeline" id="archiveTimeline"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Skill detail panel -->
+  <aside class="detail-panel" id="detailPanel"></aside>
+
+  <!-- Edit modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3 id="modalTitle">file.md</h3>
+        <button class="btn btn-ghost" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <textarea class="editor" id="modalEditor" spellcheck="false"></textarea>
+      </div>
+      <div class="modal-footer">
+        <div style="display:flex;gap:8px">
+          <button class="btn" id="undoBtn" title="Undo">↩ Undo</button>
+          <button class="btn" id="redoBtn" title="Redo">↪ Redo</button>
+          <button class="btn btn-ghost" id="gitCmdBtn">Copy git command</button>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn" id="modalCancel">Cancel</button>
+          <button class="btn btn-primary" id="modalSave">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"><span class="t-dot"></span><span id="toastMsg"></span></div>
+
+  <!-- ============================================================
+     SECTION 3: APPLICATION LOGIC
+     ============================================================ -->
+  <script>
+    'use strict';
+
+    /* ══════════════════════════════════════════════════════════════
+       MODULE: Utils
+       ══════════════════════════════════════════════════════════════ */
+    const $ = (sel, el = document) => el.querySelector(sel);
+    const $$ = (sel, el = document) => [...el.querySelectorAll(sel)];
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: MarkdownRenderer — focused subset parser, no deps
+         Handles: headings, bold/italic, inline+block code, blockquotes,
+         GitHub alerts, ul/ol lists, tables, hr, links.
+         ══════════════════════════════════════════════════════════════ */
+      const MarkdownRenderer = (() => {
+        const ALERTS = { NOTE: 'note', TIP: 'tip', WARNING: 'warning', CAUTION: 'caution', IMPORTANT: 'important' };
+
+        function inline(text) {
+          let s = esc(text);
+          s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+          s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+          s = s.replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>');
+          s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#93c5fd">$1</a>');
+          return s;
+        }
+
+        function table(lines) {
+          const rows = lines.map(l => l.replace(/^\||\|$/g, '').split('|').map(c => c.trim()));
+          const head = rows[0], body = rows.slice(2);
+          let h = '<table><thead><tr>' + head.map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>';
+          body.forEach(r => { h += '<tr>' + r.map(c => `<td>${inline(c)}</td>`).join('') + '</tr>'; });
+          return h + '</tbody></table>';
+        }
+
+        function render(md) {
+          if (!md) return '';
+          const lines = md.replace(/\r\n/g, '\n').split('\n');
+          let html = '', i = 0;
+
+          while (i < lines.length) {
+            const line = lines[i];
+
+            // fenced code block
+            if (/^```/.test(line)) {
+              const buf = []; i++;
+              while (i < lines.length && !/^```/.test(lines[i])) buf.push(lines[i++]);
+              i++;
+              html += `<pre><code>${esc(buf.join('\n'))}</code></pre>`;
+              continue;
+            }
+            // GitHub alert
+            const alertMatch = line.match(/^>\s*\[!(NOTE|TIP|WARNING|CAUTION|IMPORTANT)\]/);
+            if (alertMatch) {
+              const kind = ALERTS[alertMatch[1]]; const buf = []; i++;
+              while (i < lines.length && /^>/.test(lines[i])) buf.push(lines[i++].replace(/^>\s?/, ''));
+              html += `<div class="md-alert ${kind}"><div class="md-alert-title">${alertMatch[1]}</div>${render(buf.join('\n'))}</div>`;
+              continue;
+            }
+            // blockquote
+            if (/^>\s?/.test(line)) {
+              const buf = [];
+              while (i < lines.length && /^>\s?/.test(lines[i])) buf.push(lines[i++].replace(/^>\s?/, ''));
+              html += `<blockquote>${render(buf.join('\n'))}</blockquote>`;
+              continue;
+            }
+            // table
+            if (/^\|/.test(line) && /^\|[\s\-:|]+\|$/.test(lines[i + 1] || '')) {
+              const buf = [];
+              while (i < lines.length && /^\|/.test(lines[i])) buf.push(lines[i++]);
+              html += table(buf);
+              continue;
+            }
+            // heading
+            const h = line.match(/^(#{1,6})\s+(.*)/);
+            if (h) { html += `<h${h[1].length}>${inline(h[2])}</h${h[1].length}>`; i++; continue; }
+            // hr
+            if (/^(-{3,}|\*{3,})$/.test(line.trim())) { html += '<hr style="border:none;border-top:1px solid var(--glass-border);margin:20px 0">'; i++; continue; }
+            // lists
+            if (/^\s*[-*]\s+/.test(line) || /^\s*\d+\.\s+/.test(line)) {
+              const ordered = /^\s*\d+\./.test(line);
+              const re = ordered ? /^\s*\d+\.\s+/ : /^\s*[-*]\s+/;
+              let items = [];
+              while (i < lines.length && re.test(lines[i])) items.push(`<li>${inline(lines[i++].replace(re, ''))}</li>`);
+              html += `<${ordered ? 'ol' : 'ul'}>${items.join('')}</${ordered ? 'ol' : 'ul'}>`;
+              continue;
+            }
+            // blank
+            if (!line.trim()) { i++; continue; }
+            // paragraph — merge consecutive text lines
+            const buf = [];
+            while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|>|```|\||\s*[-*]\s|\s*\d+\.\s)/.test(lines[i])) buf.push(lines[i++]);
+            html += `<p>${inline(buf.join(' '))}</p>`;
+          }
+          return html;
+        }
+        return { render, inline };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: DemoData — embedded fallback so the dashboard is
+         fully functional even without a .agents/ directory.
+         ══════════════════════════════════════════════════════════════ */
+      const DemoData = {
+        registry: {
+          version: "1.4.0",
+          skills: [
+            { name: "apple-design", description: "Apple HIG-grade visual polish: optical spacing, depth hierarchy, restrained motion curves.", tags: ["design", "ios"] },
+            { name: "emil-design-eng", description: "Design engineering patterns: micro-interactions, easing discipline, perceived performance.", tags: ["design", "frontend"] },
+            { name: "erp-ledger-sync", description: "Bi-directional sync between ERP general ledger and external accounting APIs.", tags: ["erp", "integration"] },
+            { name: "motion-choreography", description: "Staggered reveal systems, FLIP transitions, spring-physics parameter tuning.", tags: ["motion", "frontend"] },
+            { name: "cms-schema-builder", description: "Generates headless CMS content models from product briefs.", tags: ["cms"] },
+            { name: "devops-pipeline-audit", description: "CI/CD pipeline security and cache-efficiency review.", tags: ["devops"] },
+            { name: "ux-heuristic-review", description: "Nielsen heuristic evaluation with severity-ranked findings.", tags: ["ux"] },
+            { name: "meta-skill-composer", description: "Combines registered skills into composite execution plans.", tags: ["meta"] },
+            { name: "web-perf-forensics", description: "LCP/CLS/INP diagnosis with waterfall interpretation.", tags: ["web", "performance"] },
+            { name: "apple-typography", description: "SF Pro optical sizing, Dynamic Type ramps, tracking tables.", tags: ["apple", "design"] }
+          ]
+        },
+        state: `# STATE.md
+
+## Phase
+BUILD
+
+## Goal
+Ship the AgentOS control-plane dashboard as a single offline-capable HTML file with full read visibility into \`.agents/\` and Chromium write-back.
+
+## Question Log
+- 2025-06-01 — Should telemetry parse failures block dashboard load? → No, degrade to empty state.
+- 2025-06-03 — Single file vs. bundled app? → Single file; Live Server workflow is a hard constraint.
+- 2025-06-05 — Write-back strategy for Safari? → Download fallback, documented in UI.
+
+## Approvals
+- [x] Architecture plan
+- [x] Design token system
+- [ ] Final visual QA
+`,
+        telemetry: `# Runs
+
+| Run | Task | Model | Duration (min) | Status |
+|-----|------|-------|----------------|--------|
+| R-014 | Registry migration | heavy | 42 | success |
+| R-013 | Telemetry parser | small | 11 | success |
+| R-012 | Rules refactor | heavy | 58 | partial |
+| R-011 | Lexicon dedupe | small | 7 | success |
+| R-010 | State machine audit | heavy | 33 | failed |
+`,
+        rules: {
+          ROUTING: `# ROUTING.md\n\nRules governing task → model tier assignment.\n\n> [!IMPORTANT]\n> All destructive operations route to **heavy** tier with mandatory approval gate.\n\n## Tiers\n- **heavy** — architecture, multi-file edits, irreversible ops\n- **small** — lookups, formatting, single-file diffs\n\n## Escalation\n1. Small model flags uncertainty\n2. Context snapshot attached\n3. Heavy model resumes with full state`,
+          AGENTS: `# AGENTS.md\n\n## Active Agents\n\n| Agent | Role | Trust |\n|-------|------|-------|\n| planner | Decomposition | high |\n| builder | Execution | medium |\n| critic | Review gate | high |\n\n> [!NOTE]\n> The critic agent has veto power over builder output.`,
+          EVOLUTION: `# EVOLUTION.md\n\n## Skill Lifecycle\n1. Proposal → \`memory/proposals/\`\n2. Trial period (5 runs minimum)\n3. Promotion to registry **or** archive to rejected\n\n> [!WARNING]\n> Skills failing 3 consecutive runs are auto-suspended.`,
+          BUSINESS: `# BUSINESS.md\n\n## Constraints\n- Client-facing output requires human review\n- No PII enters telemetry\n- Cost ceiling: track heavy-tier minutes per run\n\n> [!TIP]\n> Batch small-tier tasks to reduce context-load overhead.`
+        },
+        lexicon: `| Term | Definition |\n|------|------------|\n| run | One complete task execution cycle |\n| gate | Human approval checkpoint |\n| tier | Model capability class (heavy/small) |\n| skill | Registered reusable capability |`,
+        rejected: [
+          { name: "auto-deploy-prod", reason: "Violates approval-gate constraint", date: "2025-05-12" },
+          { name: "self-modifying-rules", reason: "Evolution policy requires human sign-off", date: "2025-05-20" }
+        ],
+        archive: [
+          { title: "v1.3 registry snapshot", date: "2025-05-28", note: "Pre-migration backup, 54 skills" },
+          { title: "Q2 telemetry rollup", date: "2025-05-01", note: "38 runs archived" },
+          { title: "Initial STATE bootstrap", date: "2025-04-10", note: "Phase: DISCOVER" }
+        ]
+      };
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: DataLoader — fetch .agents/* with cache + fallback.
+         Abstraction layer: every consumer gets structured objects,
+         never raw fetch responses. Source (live vs demo) is tracked.
+         ══════════════════════════════════════════════════════════════ */
+      const DataLoader = (() => {
+        const cache = new Map();
+        let usedFallback = false;
+
+        async function fetchText(path) {
+          if (cache.has(path)) return cache.get(path);
+          try {
+            const res = await fetch(path, { cache: 'no-store' });
+            if (!res.ok) throw new Error(res.status);
+            const text = await res.text();
+            cache.set(path, text);
+            return text;
+          } catch {
+            usedFallback = true;
+            return null;
+          }
+        }
+
+        function invalidate(path) { cache.delete(path); }
+
+        async function loadSkillsRegistry() {
+          const raw = await fetchText('skills_registry.json');
+          if (raw) {
+            try {
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed)) {
+                return { version: "1.0.0", skills: parsed };
+              }
+              return parsed;
+            } catch { /* fall through */ }
+          }
+          return DemoData.registry;
+        }
+
+        async function loadStateFile() {
+          const raw = (await fetchText('STATE.md')) ?? DemoData.state;
+          return { raw, ...parseState(raw) };
+        }
+
+         function parseState(md) {
+          const section = name => {
+            const re = new RegExp(`##\\s+${name}\\s*\\n([\\s\\S]*?)(?=\\n##\\s|$)`, 'i');
+            const m = md.match(re);
+            return m ? m[1].trim() : '';
+          };
+          
+          const qLines = section('Question Log').split('\n');
+          const questions = [];
+          let currentQ = null;
+          for (let line of qLines) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('- **2026-') || trimmed.startsWith('- **2025-')) {
+              if (currentQ) questions.push(currentQ);
+              const m = trimmed.match(/^-\s*\*\*(.*?)\*\*:\s*(.*)/);
+              currentQ = {
+                date: m ? m[1].substring(0, 10) : '2026-07-20',
+                text: m ? m[2] : trimmed.replace(/^-\s*\*\*.*?\*\*:\s*/, ''),
+                answer: ''
+              };
+            } else if (trimmed.startsWith('- **Answer**:') || trimmed.startsWith('- Answer:') || trimmed.startsWith('**Answer**:')) {
+              if (currentQ) {
+                currentQ.answer = trimmed.replace(/.*Answer\*\*:\s*/, '').replace(/.*Answer:\s*/, '');
+              }
+            }
+          }
+          if (currentQ) questions.push(currentQ);
+
+          return {
+            phase: section('Phase').split('\n')[0].trim() || 'UNKNOWN',
+            goal: section('Goal'),
+            questions: questions,
+            approvals: section('Approvals')
+          };
+        }
+
+        async function loadTelemetry() {
+          const raw = (await fetchText('telemetry/runs.md')) ?? DemoData.telemetry;
+          return parseMdTable(raw);
+        }
+
+        function parseMdTable(md) {
+          const lines = md.split('\n').filter(l => /^\|/.test(l.trim()));
+          if (lines.length < 3) return { headers: [], rows: [] };
+          const parse = l => l.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+          return { headers: parse(lines[0]), rows: lines.slice(2).map(parse) };
+        }
+
+        async function loadRulesFile(name) {
+          let filename = name;
+          if (name === 'ROUTING') filename = 'SKILL_ROUTING';
+          if (name === 'BUSINESS') filename = 'business_context';
+          const raw = await fetchText(`rules/${filename}.md`);
+          return raw ?? DemoData.rules[name] ?? `# ${name}\n\n_File not found._`;
+        }
+
+        async function loadMemoryFiles() {
+          const lexRaw = (await fetchText('memory/user_lexicon.md')) ?? DemoData.lexicon;
+          return {
+            lexicon: parseMdTable(lexRaw),
+            rejected: DemoData.rejected,   // structured demo; live parsing follows same table pattern
+            archive: DemoData.archive
+          };
+        }
+
+        return {
+          loadSkillsRegistry, loadStateFile, loadTelemetry, loadRulesFile, loadMemoryFiles,
+          invalidate, isFallback: () => usedFallback
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: SkillCategorizer — keyword → category mapping
+         ══════════════════════════════════════════════════════════════ */
+      const SkillCategorizer = (() => {
+        const MAP = [
+          { cat: 'Apple', kw: ['apple', 'ios', 'hig', 'sf pro'], badge: 'badge-gray' },
+          { cat: 'Motion', kw: ['motion', 'animation', 'transition', 'spring'], badge: 'badge-violet' },
+          { cat: 'ERP', kw: ['erp', 'ledger', 'accounting', 'invoice'], badge: 'badge-amber' },
+          { cat: 'UX', kw: ['ux', 'heuristic', 'usability'], badge: 'badge-rose' },
+          { cat: 'DevOps', kw: ['devops', 'ci/cd', 'pipeline', 'deploy'], badge: 'badge-green' },
+          { cat: 'CMS', kw: ['cms', 'content model', 'headless'], badge: 'badge-cyan' },
+          { cat: 'Meta', kw: ['meta', 'composer', 'composite'], badge: 'badge-violet' },
+          { cat: 'Web', kw: ['web', 'frontend', 'perf', 'design'], badge: 'badge-blue' },
+        ];
+        function categorize(skill) {
+          const hay = `${skill.name} ${skill.description} ${(skill.tags || []).join(' ')}`.toLowerCase();
+          for (const m of MAP) if (m.kw.some(k => hay.includes(k))) return m;
+          return { cat: 'General', badge: 'badge-gray' };
+        }
+        return { categorize, categories: () => ['All', ...MAP.map(m => m.cat), 'General'] };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: VersionManager — per-file in-memory undo/redo
+         ══════════════════════════════════════════════════════════════ */
+      const VersionManager = (() => {
+        const MAX = 50;
+        const stacks = new Map(); // path -> { undo:[], redo:[] }
+
+        const stack = p => { if (!stacks.has(p)) stacks.set(p, { undo: [], redo: [] }); return stacks.get(p); };
+
+        function snapshot(path, content) {
+          const s = stack(path);
+          if (s.undo.at(-1)?.content === content) return;
+          s.undo.push({ content, timestamp: Date.now() });
+          if (s.undo.length > MAX) s.undo.shift();
+          s.redo.length = 0;
+        }
+        function undo(path, current) {
+          const s = stack(path);
+          if (!s.undo.length) return null;
+          s.redo.push({ content: current, timestamp: Date.now() });
+          return s.undo.pop().content;
+        }
+        function redo(path, current) {
+          const s = stack(path);
+          if (!s.redo.length) return null;
+          s.undo.push({ content: current, timestamp: Date.now() });
+          return s.redo.pop().content;
+        }
+        const gitCommand = path => `git add ${path} && git commit -m "chore(agents): update ${path.split('/').pop()} via dashboard"`;
+
+        return {
+          snapshot, undo, redo, gitCommand,
+          canUndo: p => stack(p).undo.length > 0,
+          canRedo: p => stack(p).redo.length > 0
+        };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: FileSaver — File System Access API w/ download fallback
+         ══════════════════════════════════════════════════════════════ */
+      const FileSaver = (() => {
+        const supported = 'showSaveFilePicker' in window;
+
+        async function save(path, content) {
+          if (supported) {
+            try {
+              const handle = await window.showSaveFilePicker({
+                suggestedName: path.split('/').pop(),
+                types: [{ description: 'Text', accept: { 'text/plain': ['.md', '.json', '.txt'] } }]
+              });
+              const w = await handle.createWritable();
+              await w.write(content); await w.close();
+              return { ok: true, method: 'fs-api' };
+            } catch (e) {
+              if (e.name === 'AbortError') return { ok: false, method: 'cancelled' };
+              // fall through to download
+            }
+          }
+          const blob = new Blob([content], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = Object.assign(document.createElement('a'), { href: url, download: path.split('/').pop() });
+          a.click(); URL.revokeObjectURL(url);
+          return { ok: true, method: 'download' };
+        }
+        return { save, supported };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: Toast
+         ══════════════════════════════════════════════════════════════ */
+      const Toast = (() => {
+        let timer;
+        function show(msg, isError = false) {
+          const t = $('#toast');
+          $('#toastMsg').textContent = msg;
+          t.classList.toggle('error', isError);
+          t.classList.add('show');
+          clearTimeout(timer);
+          timer = setTimeout(() => t.classList.remove('show'), 3200);
+        }
+        return { show };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: Modal — file editor with version integration
+         ══════════════════════════════════════════════════════════════ */
+      const Modal = (() => {
+        let currentPath = null, onSaved = null;
+        const overlay = () => $('#modalOverlay');
+        const editor = () => $('#modalEditor');
+
+        function open(path, content, savedCb) {
+          currentPath = path; onSaved = savedCb;
+          $('#modalTitle').textContent = path;
+          editor().value = content;
+          VersionManager.snapshot(path, content);
+          syncButtons();
+          overlay().classList.add('open');
+          setTimeout(() => editor().focus(), 320);
+        }
+        function close() { overlay().classList.remove('open'); currentPath = null; }
+        function syncButtons() {
+          $('#undoBtn').disabled = !VersionManager.canUndo(currentPath);
+          $('#redoBtn').disabled = !VersionManager.canRedo(currentPath);
+        }
+
+        function bind() {
+          $('#modalClose').onclick = $('#modalCancel').onclick = close;
+          overlay().onclick = e => { if (e.target === overlay()) close(); };
+          document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+
+          editor().addEventListener('input', debounce(() => {
+            if (currentPath) { VersionManager.snapshot(currentPath, editor().value); syncButtons(); }
+          }, 900));
+
+          $('#undoBtn').onclick = () => {
+            const prev = VersionManager.undo(currentPath, editor().value);
+            if (prev !== null) { editor().value = prev; syncButtons(); }
+          };
+          $('#redoBtn').onclick = () => {
+            const next = VersionManager.redo(currentPath, editor().value);
+            if (next !== null) { editor().value = next; syncButtons(); }
+          };
+          $('#gitCmdBtn').onclick = async () => {
+            await navigator.clipboard.writeText(VersionManager.gitCommand(currentPath));
+            Toast.show('Git command copied to clipboard');
+          };
+          $('#modalSave').onclick = async () => {
+            const result = await FileSaver.save(currentPath, editor().value);
+            if (result.method === 'cancelled') return;
+            DataLoader.invalidate(currentPath);
+            Toast.show(result.method === 'fs-api' ? `Saved ${currentPath}` : `Downloaded — replace ${currentPath} manually`);
+            onSaved?.(editor().value);
+            close();
+          };
+        }
+        return { open, bind };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: Views — one renderer per view, lazy-loaded once
+         ══════════════════════════════════════════════════════════════ */
+      const Views = (() => {
+        const loaded = new Set();
+
+        /* ---- Dashboard ---- */
+        async function dashboard() {
+          const [reg, state, tele] = await Promise.all([
+            DataLoader.loadSkillsRegistry(), DataLoader.loadStateFile(), DataLoader.loadTelemetry()
+          ]);
+          const successRate = tele.rows.length
+            ? Math.round(tele.rows.filter(r => /success/i.test(r.join(' '))).length / tele.rows.length * 100) : 0;
+
+          $('#dashStats').innerHTML = [
+            { label: 'Skills Registered', value: reg.skills.length, delta: `registry v${reg.version || '—'}`, stag: 0 },
+            { label: 'Current Phase', value: state.phase, delta: 'from STATE.md', stag: 1 },
+            { label: 'Total Runs', value: tele.rows.length, delta: 'telemetry/runs.md', stag: 2 },
+            { label: 'Success Rate', value: successRate + '%', delta: 'across all logged runs', stag: 3 },
+          ].map(s => `
+      <div class="glass-card" style="--stagger:${s.stag}">
+        <div class="stat-label">${esc(s.label)}</div>
+        <div class="stat-value">${esc(s.value)}</div>
+        <div class="stat-delta">${esc(s.delta)}</div>
+      </div>`).join('');
+
+          $('#dashRecentRuns').innerHTML = renderTable(tele.headers, tele.rows.slice(0, 5));
+          $('#skillCountBadge').textContent = reg.skills.length;
+        }
+
+        /* ---- Skills ---- */
+        let allSkills = [], activeCat = 'All';
+        async function skills() {
+          const reg = await DataLoader.loadSkillsRegistry();
+          allSkills = reg.skills.map(s => ({ ...s, _cat: SkillCategorizer.categorize(s) }));
+          $('#skillCountBadge').textContent = allSkills.length;
+
+          const cats = ['All', ...new Set(allSkills.map(s => s._cat.cat))];
+          $('#categoryChips').innerHTML = cats.map(c =>
+            `<button class="chip ${c === activeCat ? 'active' : ''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
+          $$('#categoryChips .chip').forEach(ch => ch.onclick = () => {
+            activeCat = ch.dataset.cat;
+            $$('#categoryChips .chip').forEach(x => x.classList.toggle('active', x === ch));
+            renderSkillGrid();
+          });
+          renderSkillGrid();
+        }
+
+        function renderSkillGrid() {
+          const q = $('#skillSearch').value.trim().toLowerCase();
+          const list = allSkills.filter(s =>
+            (activeCat === 'All' || s._cat.cat === activeCat) &&
+            (!q || `${s.name} ${s.description}`.toLowerCase().includes(q)));
+
+          $('#skillGrid').innerHTML = list.length ? list.map((s, i) => `
+      <div class="glass-card hoverable skill-card" style="--stagger:${Math.min(i, 8)}" data-skill="${esc(s.name)}">
+        <h3>${esc(s.name)}</h3>
+        <p>${esc(s.description)}</p>
+        <div class="skill-meta">
+          <span class="badge ${s._cat.badge}">${esc(s._cat.cat)}</span>
+          ${(s.tags || []).slice(0, 3).map(t => `<span class="badge badge-gray">${esc(t)}</span>`).join('')}
+        </div>
+      </div>`).join('')
+            : `<div class="empty-state span-4"><h3>No skills match</h3>Try clearing search or filters.</div>`;
+
+          $$('#skillGrid .skill-card').forEach(card => card.onclick = () => openSkillDetail(card.dataset.skill));
+        }
+
+        async function openSkillDetail(name) {
+          const s = allSkills.find(x => x.name === name);
+          if (!s) return;
+          $('#detailPanel').innerHTML = `
+      <button class="btn btn-ghost" id="detailClose" style="margin-bottom:24px">← Close</button>
+      <span class="badge ${s._cat.badge}">${esc(s._cat.cat)}</span>
+      <h2 style="margin:12px 0;letter-spacing:-0.02em">${esc(s.name)}</h2>
+      <div class="md-body"><p>${esc(s.description)}</p></div>
+      <div style="margin:24px 0; display:flex; gap:12px;">
+        <button class="btn" id="detailEditBtn">✎ Edit Skill Source</button>
+      </div>
+      <div class="section-title">Documentation (SKILL.md)</div>
+      <div class="md-body" id="detailDocContent"><div class="skeleton"></div></div>
+      <div class="section-title">Tags</div>
+      <div class="skill-meta">${(s.tags || []).map(t => `<span class="badge badge-gray">${esc(t)}</span>`).join('') || '<span style="color:var(--text-low);font-size:13px">None</span>'}</div>
+      <div class="section-title">Registry Path</div>
+      <div class="section-title">Registry Path</div>
+      <code style="font-family:var(--font-mono);font-size:12px;color:#93c5fd">skills/${esc(s.path)}</code>`;
+          
+          $('#detailPanel').classList.add('open');
+          $('#detailClose').onclick = () => $('#detailPanel').classList.remove('open');
+
+          let skillMd = '';
+          try {
+            const res = await fetch(`skills/${s.path}`, { cache: 'no-store' });
+            if (res.ok) {
+              skillMd = await res.text();
+              $('#detailDocContent').innerHTML = MarkdownRenderer.render(skillMd);
+            } else {
+              throw new Error();
+            }
+          } catch {
+            $('#detailDocContent').innerHTML = `<p style="color:var(--text-low);font-style:italic;">No SKILL.md source document found at path.</p>`;
+          }
+
+          $('#detailEditBtn').onclick = () => {
+            Modal.open(`skills/${s.path}`, skillMd, async (newVal) => {
+              skillMd = newVal;
+              $('#detailDocContent').innerHTML = MarkdownRenderer.render(skillMd);
+            });
+          };
+        }
+
+        /* ---- Rules ---- */
+        const RULE_FILES = ['ROUTING', 'AGENTS', 'EVOLUTION', 'BUSINESS'];
+        let activeRule = 'ROUTING', rawMode = false, currentRuleContent = '';
+
+        async function rules() {
+          $('#ruleTabs').innerHTML = RULE_FILES.map(r =>
+            `<button class="tab ${r === activeRule ? 'active' : ''}" data-rule="${r}">${r}</button>`).join('');
+          $$('#ruleTabs .tab').forEach(t => t.onclick = () => {
+            activeRule = t.dataset.rule;
+            $$('#ruleTabs .tab').forEach(x => x.classList.toggle('active', x === t));
+            loadRule();
+          });
+          $('#ruleRawBtn').onclick = () => { rawMode = !rawMode; $('#ruleRawBtn').textContent = rawMode ? 'View Rendered' : 'View Raw'; paintRule(); };
+          $('#ruleEditBtn').onclick = () => {
+            let filename = activeRule;
+            if (activeRule === 'ROUTING') filename = 'SKILL_ROUTING';
+            if (activeRule === 'BUSINESS') filename = 'business_context';
+            Modal.open(`rules/${filename}.md`, currentRuleContent,
+              v => { currentRuleContent = v; paintRule(); });
+          };
+          await loadRule();
+        }
+        async function loadRule() {
+          $('#ruleContent').innerHTML = '<div class="skeleton"></div>';
+          currentRuleContent = await DataLoader.loadRulesFile(activeRule);
+          paintRule();
+        }
+        function paintRule() {
+          $('#ruleContent').innerHTML = rawMode
+            ? `<pre><code>${esc(currentRuleContent)}</code></pre>`
+            : MarkdownRenderer.render(currentRuleContent);
+        }
+
+        /* ---- State ---- */
+        const PHASES = ['DISCOVER', 'PLAN', 'BUILD', 'REVIEW', 'SHIP'];
+        async function state() {
+          const st = await DataLoader.loadStateFile();
+          const idx = PHASES.indexOf(st.phase.toUpperCase());
+
+          $('#phasePipeline').innerHTML = PHASES.map((p, i) => {
+            const cls = i < idx ? 'done' : i === idx ? 'current' : '';
+            const icon = i < idx ? '✓' : i === idx ? '●' : '○';
+            return `<div class="phase-pill ${cls}">${icon} ${p}</div>${i < PHASES.length - 1 ? '<span class="pipeline-arrow">→</span>' : ''}`;
+          }).join('');
+
+          $('#stateGoal').innerHTML = MarkdownRenderer.render(st.goal || '_No goal set._');
+          $('#questionLog').innerHTML = st.questions.length ? st.questions.map(q => `
+      <div class="timeline-item">
+        ${q.date ? `<time>${esc(q.date)}</time>` : ''}
+        <h4>${MarkdownRenderer.inline(q.text)}</h4>
+        ${q.answer ? `<p style="color:var(--accent-green);font-family:var(--font-mono);font-size:12px;margin-top:4px">↳ ${MarkdownRenderer.inline(q.answer)}</p>` : ''}
+      </div>`).join('') : '<p style="color:var(--text-low);font-size:13px">No questions logged.</p>';
+          $('#stateFull').innerHTML = MarkdownRenderer.render(st.raw);
+          $('#stateEditBtn').onclick = () => Modal.open('STATE.md', st.raw, () => { loaded.delete('state'); render('state'); });
+        }
+
+        /* ---- Telemetry ---- */
+        let teleData = null, sortCol = -1, sortAsc = true;
+        async function telemetry() {
+          teleData = await DataLoader.loadTelemetry();
+          const rows = teleData.rows;
+          const durIdx = teleData.headers.findIndex(h => /duration/i.test(h));
+          const statusIdx = teleData.headers.findIndex(h => /status/i.test(h));
+          const durations = rows.map(r => parseFloat(r[durIdx]) || 0);
+          const total = durations.reduce((a, b) => a + b, 0);
+          const success = rows.filter(r => /success/i.test(r[statusIdx] || '')).length;
+
+          $('#teleStats').innerHTML = [
+            { label: 'Total Runs', value: rows.length },
+            { label: 'Total Minutes', value: total },
+            { label: 'Successful', value: `${success}/${rows.length}` },
+          ].map((s, i) => `<div class="glass-card" style="--stagger:${i}">
+      <div class="stat-label">${s.label}</div><div class="stat-value">${esc(s.value)}</div></div>`).join('');
+
+          const max = Math.max(...durations, 1);
+          $('#teleChart').innerHTML = rows.map((r, i) =>
+            `<div class="chart-bar" style="height:${(durations[i] / max) * 100}%;animation-delay:${i * 70}ms"
+        data-label="${esc(r[0])}" title="${esc(r[0])}: ${durations[i]} min"></div>`).join('');
+
+          paintTeleTable();
+        }
+        function paintTeleTable() {
+          let rows = [...teleData.rows];
+          if (sortCol >= 0) rows.sort((a, b) => {
+            const [x, y] = [a[sortCol], b[sortCol]];
+            const [nx, ny] = [parseFloat(x), parseFloat(y)];
+            const cmp = (!isNaN(nx) && !isNaN(ny)) ? nx - ny : String(x).localeCompare(String(y));
+            return sortAsc ? cmp : -cmp;
+          });
+          $('#teleTable').innerHTML =
+            `<thead><tr>${teleData.headers.map((h, i) =>
+              `<th data-col="${i}">${esc(h)} ${sortCol === i ? (sortAsc ? '↑' : '↓') : ''}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(r => `<tr>${r.map((c, i) =>
+                `<td>${i === r.length - 1 ? statusBadge(c) : esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+          $$('#teleTable th').forEach(th => th.onclick = () => {
+            const col = +th.dataset.col;
+            sortAsc = sortCol === col ? !sortAsc : true;
+            sortCol = col;
+            paintTeleTable();
+          });
+        }
+        function statusBadge(s) {
+          const map = { success: 'badge-green', partial: 'badge-amber', failed: 'badge-rose' };
+          const cls = map[String(s).toLowerCase()] || 'badge-gray';
+          return `<span class="badge ${cls}">${esc(s)}</span>`;
+        }
+
+        /* ---- Memory ---- */
+        async function memory() {
+          const mem = await DataLoader.loadMemoryFiles();
+          $('#lexiconTable').innerHTML =
+            `<thead><tr>${mem.lexicon.headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+       <tbody>${mem.lexicon.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+          $('#rejectedList').innerHTML = mem.rejected.map(r => `
+      <div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <strong style="font-size:14px">${esc(r.name)}</strong>
+          <span class="badge badge-rose">rejected</span>
+        </div>
+        <p style="font-size:13px;color:var(--text-mid);margin-top:6px">${esc(r.reason)}</p>
+        <time style="font-size:11px;color:var(--text-low);font-family:var(--font-mono)">${esc(r.date)}</time>
+      </div>`).join('');
+          $('#archiveTimeline').innerHTML = mem.archive.map(a => `
+      <div class="timeline-item">
+        <time>${esc(a.date)}</time>
+        <h4>${esc(a.title)}</h4>
+        <p>${esc(a.note)}</p>
+      </div>`).join('');
+        }
+
+        /* ---- Shared table renderer ---- */
+        function renderTable(headers, rows) {
+          if (!rows.length) return `<div class="empty-state"><h3>No data</h3>Expected <code>telemetry/runs.md</code></div>`;
+          return `<table><thead><tr>${headers.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead>
+      <tbody>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+        }
+
+        const renderers = { dashboard, skills, rules, state, telemetry, memory };
+        async function render(view, force = false) {
+          if (!force && loaded.has(view)) return;
+          loaded.add(view);
+          try { await renderers[view]?.(); }
+          catch (e) { console.error(`[Views] ${view} failed:`, e); Toast.show(`Failed to render ${view}`, true); }
+        }
+        return { render };
+      })();
+
+      /* ══════════════════════════════════════════════════════════════
+         MODULE: Router — hash-based, lazy view loading
+         ══════════════════════════════════════════════════════════════ */
+      const Router = (() => {
+        const VIEWS = ['dashboard', 'skills', 'rules', 'state', 'telemetry', 'memory'];
+
+        function navigate() {
+          const view = (location.hash.replace('#', '') || 'dashboard');
+          const target = VIEWS.includes(view) ? view : 'dashboard';
+          VIEWS.forEach(v => $(`#view-${v}`)?.classList.toggle('active', v === target));
+          $$('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === target));
+          $('#detailPanel').classList.remove('open');
+          $('#sidebar').classList.remove('open');
+          Views.render(target);
+        }
+        function init() {
+          window.addEventListener('hashchange', navigate);
+          navigate();
+        }
+        return { init };
+      })();
+
+/* ══════════════════════════════════════════════════════════════
+   BOOTSTRAP
+   ══════════════════════════════════════════════════════════════ */
+(function bootstrap() {
+        // Capability indicator
+        const dot = $('#fsDot'), cap = $('#fsCapText');
+        if (FileSaver.supported) { dot.classList.add('ok'); cap.textContent = 'Write-back enabled (FS Access API)'; }
+        else { cap.textContent = 'Read-only — edits download as files'; }
+
+        // Skill search
+        $('#skillSearch').addEventListener('input', debounce(() => {
+          // Re-render grid using cached data via Views' internal state
+          const evt = new Event('rerender'); // trigger through re-render path
+          Views.render('skills', true);
+        }, 200));
+
+        // Mobile menu
+        $('#menuBtn').onclick = () => $('#sidebar').classList.toggle('open');
+
+        Modal.bind();
+        Router.init();
+
+        // Preload skill count for badge even if user starts elsewhere
+        DataLoader.loadSkillsRegistry().then(r => $('#skillCountBadge').textContent = r.skills.length);
+      })();
+  </script>
+</body>
+
+</html>

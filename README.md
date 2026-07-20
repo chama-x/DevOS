@@ -31,5 +31,16 @@ When a task requires extreme logic (40k+ tokens), the OS triggers a handoff pack
 ### 5. Constitutional Lock & OS Scaffolding
 The agent cannot rewrite its own guardrails. Any edit to the `.agents/rules/` directory is permanently classified as a **T3 action**. Additionally, if core files are missing on startup, the agent will automatically trigger a multi-select questionnaire to scaffold the workspace.
 
+### 6. Control Plane Dashboard
+A premium dark-mode dashboard (`agentos-dashboard.html`) is built directly inside the `.agents/` folder. It provides a visual interface for:
+- **System Overview**: Live tracking of the current active phase from `STATE.md`, recent telemetry runs, and active skill count.
+- **Skills Explorer**: Interactive cards for all 62 skills, filterable by tags, with live search and markdown rendering of `SKILL.md` documents. Includes an inline editor with direct-save (File System Access API) and fallback download capabilities.
+- **Rules Configurator**: Tabbed editor and viewer for core system configurations (`SKILL_ROUTING.md`, `AGENTS.md`, `EVOLUTION.md`, `business_context.md`).
+- **State Anchor & Question Logs**: Visualizes the phase-machine timeline alongside interactive question histories and security approval tokens.
+- **Telemetry Ledger**: High-fidelity run lists documenting all tool execution runs and outcomes.
+- **Memory Root**: User Lexicon definitions, rejected proposals, and compression snapshot timelines.
+
+To open the dashboard, simply right-click `.agents/agentos-dashboard.html` and select **"Open with Live Server"** in your IDE.
+
 ## Installation
 Just drop the `.agents` folder into the root of your workspace, and your agent will instantly transform into the V2 Supervisor!
