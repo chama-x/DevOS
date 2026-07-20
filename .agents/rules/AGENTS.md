@@ -26,7 +26,7 @@ trigger: always_on
 <field name="APPROVAL_TOKENS" format="APPROVAL::{PHASE}::{sha256(artifact)}"/>
 <field name="GUARDRAIL_LEDGER" description="Pass/fail result per predicate G-1..G-6"/>
 </schema>
-<write_policy>Update STATE.md IMMEDIATELY after: every ask_question response, every phase transition, every artifact creation, every approval. A phase transition not recorded in STATE.md HAS NOT OCCURRED.</write_policy>
+<write_policy>Update STATE.md IMMEDIATELY after: every phase transition, every artifact creation, every approval. A phase transition not recorded in STATE.md HAS NOT OCCURRED.</write_policy>
 <cold_start_protocol>On any new session, crash, or context reset: read STATE.md FIRST. Before resuming L3 Execution, you MUST verify the target files on disk. If the physical codebase has already completed the task listed in STATE.md, you must update STATE.md to reflect reality (Reconciliation) before proceeding. Never trust in-context memory of phase.</cold_start_protocol>
 </state_anchor>
 
