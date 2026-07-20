@@ -1,0 +1,312 @@
+[
+  {
+    "path": "animation-vocabulary/SKILL.md",
+    "name": "animation-vocabulary",
+    "description": "Reverse-lookup glossary that turns a vague description of a web animation or motion effect into its exact term (the bouncy thing when a popover opens → Pop in; the iOS rubber-band scroll → Rubber-banding). Use when the user asks whats it called when…, or describes a motion effect without knowing its name and wants the right word to prompt an AI or designer with. For naming an effect, not designing or building one."
+  },
+  {
+    "path": "api-contract-tester/SKILL.md",
+    "name": "api-contract-tester",
+    "description": "Auto-generates contract tests from OpenAPI/GraphQL specs, detects breaking-change drift, spins up mock servers + multi-language clients."
+  },
+  {
+    "path": "apple-design/SKILL.md",
+    "name": "apple-design",
+    "description": "Apples approach to interface design and fluid, physical motion, translated for the web. Use when building or reviewing gesture-driven UI, spring animations, drag/swipe/sheet interactions, momentum and interruptible transitions, translucent materials and depth, typography (optical sizing, tracking, leading), reduced-motion, or the design foundations (feedback, spatial consistency, restraint) behind Apple-style interfaces."
+  },
+  {
+    "path": "architecture_lens/SKILL.md",
+    "name": "Architecture Lens (Mermaid)",
+    "description": "Automatically generates a Mermaid.js dependency graph of a codebase. Trigger this when you enter a new directory and need to see how the components and files connect before modifying them."
+  },
+  {
+    "path": "awwwards-animations/SKILL.md",
+    "name": "awwwards-animations",
+    "description": "Professional React animation skill for creating Awwwards/FWA-level animations using GSAP (useGSAP), Motion (Framer Motion), Anime.js, and Lenis. Use when building premium scroll experiences, custom cursors, page transitions, text animations, parallax effects, micro-interactions, or any animation that needs to be 60fps and award-worthy. Triggers on requests for smooth scroll, ScrollTrigger, magnetic effects, reveal animations, horizontal scroll, pin sections, stagger effects, useScroll, useTransform, integration with Three.js/WebGL, algorithmic art, mathematical art, generative art, fractals, L-systems, flow fields, strange attractors, sacred geometry, geometric puzzles, Dudeney dissections, tangram, tessellations, Penrose tiles, kinetic typography, glitch effects, text explosion, morphing text, circular text, brutalist design, minimalist animation, neo-brutalism, or design philosophy mixing. React-first approach with proper cleanup and hooks."
+  },
+  {
+    "path": "baymard-custom/SKILL.md",
+    "name": "baymard-custom",
+    "description": "Custom UX/UI evaluator that queries Baymard Institute research heuristics. Triggers when asked to review e-commerce UI, checkout flows, or product pages against Baymard standards."
+  },
+  {
+    "path": "context_router/SKILL.md",
+    "name": "Context Router",
+    "description": "Extracts YAML frontmatter from all project specifications. Trigger this to discover which SPEC files are relevant to a task. Do NOT use this for semantic code search; only use for reading YAML specifications."
+  },
+  {
+    "path": "devsecops-expert/SKILL.md",
+    "name": "devsecops-expert",
+    "description": "Senior-level CI/CD, IaC, Kubernetes, and GitOps skill. Triggers when setting up pipelines, securing infrastructure (Checkov, tfsec, Trivy), or implementing Sigstore/SLSA supply-chain signing."
+  },
+  {
+    "path": "emil-design-eng/SKILL.md",
+    "name": "emil-design-eng",
+    "description": "This skill encodes Emil Kowalskis philosophy on UI polish, component design, animation decisions, and the invisible details that make software feel great."
+  },
+  {
+    "path": "find-animation-opportunities/SKILL.md",
+    "name": "find-animation-opportunities",
+    "description": "Search a codebase or UI for places that dont animate but should, and reject everything that shouldnt. Read-only; it proposes motion with exact values, it does not implement it. Use when the user asks what could be animated here? or wants to make this feel more alive. For fixing existing animations, use improve-animations or review-animations instead."
+  },
+  {
+    "path": "frontier_delegation/SKILL.md",
+    "name": "Frontier Delegation (Split-Brain Architecture)",
+    "description": "Orchestrates cognitive delegation between the IDE agent (execution, wiring, verification) and a frontier reasoning model (algorithmic design, architectural innovation, constraint engineering). Trigger when a task demands novel algorithms, mathematical rigor, deep architectural decisions, or research-grounded design tradeoffs that exceed standard implementation patterns."
+  },
+  {
+    "path": "gsap/SKILL.md",
+    "name": "gsap",
+    "description": "Official GSAP skill for React and Next.js. Use when implementing, refactoring, or optimizing GSAP animations in React components or Next.js pages. This covers the useGSAP hook, ScrollTrigger, timelines, performance, and plugins (Flip, Draggable, SplitText, MorphSVG, etc.)."
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-content/SKILL.md",
+    "name": "hig-components-content",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-controls/SKILL.md",
+    "name": "hig-components-controls",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-dialogs/SKILL.md",
+    "name": "hig-components-dialogs",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-layout/SKILL.md",
+    "name": "hig-components-layout",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-menus/SKILL.md",
+    "name": "hig-components-menus",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-search/SKILL.md",
+    "name": "hig-components-search",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-status/SKILL.md",
+    "name": "hig-components-status",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-components-system/SKILL.md",
+    "name": "hig-components-system",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-foundations/SKILL.md",
+    "name": "hig-foundations",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-inputs/SKILL.md",
+    "name": "hig-inputs",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-patterns/SKILL.md",
+    "name": "hig-patterns",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-platforms/SKILL.md",
+    "name": "hig-platforms",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-project-context/SKILL.md",
+    "name": "hig-project-context",
+    "description": ">-"
+  },
+  {
+    "path": "hig-doctor/skills/hig-technologies/SKILL.md",
+    "name": "hig-technologies",
+    "description": ">-"
+  },
+  {
+    "path": "improve-animations/SKILL.md",
+    "name": "improve-animations",
+    "description": "Survey a codebases animation and motion code as a senior motion advisor, then produce a prioritized audit and self-contained implementation plans for other agents (or cheaper models) to execute. Read-only on source code — it plans improvements, it does not apply them. Use when the user asks to improve the animations, audit the motion, make this app feel better, or wants a roadmap of animation fixes rather than a review of a single diff."
+  },
+  {
+    "path": "motion-design/SKILL.md",
+    "name": "motion-design",
+    "description": ">"
+  },
+  {
+    "path": "odoo-discipline/skills/grill-me/SKILL.md",
+    "name": "grill-me",
+    "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when the user wants to stress-test a plan, get grilled on their design, or mentions grill me outside an Odoo-specific context."
+  },
+  {
+    "path": "odoo-discipline/skills/grill-with-docs/SKILL.md",
+    "name": "grill-with-docs",
+    "description": "Grilling session that challenges your plan against the existing domain model, sharpens terminology, and updates documentation (CONTEXT.md, ADRs) inline as decisions crystallise. Use when the user wants to stress-test a plan against their projects language and documented decisions."
+  },
+  {
+    "path": "odoo-discipline/skills/improve-codebase-architecture/SKILL.md",
+    "name": "improve-codebase-architecture",
+    "description": "Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo/SKILL.md",
+    "name": "odoo",
+    "description": "Odoo engineering workflows for addon development, codebase exploration, debugging, architecture/refactor review, manifest/docs sync, and routing to migration work. Use when the user mentions Odoo, addons, modules, manifests, models, XML views, security CSVs, record rules, Odoo shell, OWL/QWeb/assets, or when an Odoo codebase is detected."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-17.0/SKILL.md",
+    "name": "odoo-17.0",
+    "description": ">"
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-18.0/SKILL.md",
+    "name": "odoo-18.0",
+    "description": ">"
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-19.0/SKILL.md",
+    "name": "odoo-19.0",
+    "description": ">-"
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-code-review/SKILL.md",
+    "name": "odoo-code-review",
+    "description": "Review Odoo addon code for correctness, security, performance, migrations, tests, and official Odoo coding guidelines. Use when reviewing Odoo modules, diffs, pull requests, or changed files involving models, fields, XML views, data, controllers, reports, OWL/assets, manifests, access rules, record rules, or OCA migrations."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-code-tracer/SKILL.md",
+    "name": "odoo-code-tracer",
+    "description": "Trace Odoo execution flow from an entry point through controllers, button actions, cron jobs, model methods, overrides, computes, onchanges, constraints, database operations, security checks, and side effects. Use before implementation, during debugging, impact analysis, performance review, or code review when behavior depends on Odoo call chains."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-grill-me/SKILL.md",
+    "name": "odoo-grill-me",
+    "description": "Odoo-specific grilling session that stress-tests addon plans, migrations, model/view/security designs, OWL frontend changes, and verification strategy. Use when the user wants to be grilled on an Odoo plan/design, asks to stress-test an addon architecture, or mentions grill me in an Odoo context."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-idea-gates/SKILL.md",
+    "name": "odoo-idea-gates",
+    "description": "Odoo-aware idea validation for deciding whether a module, addon, app, or product should exist before implementation. Use when the user wants to validate an Odoo module idea, check whether a solution already exists, assess usefulness or buyer demand, narrow a wedge, or decide whether an addon is worth building."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-migration/SKILL.md",
+    "name": "odoo-migration",
+    "description": "End-to-end OCA module migration workflow for porting addons between Odoo major versions and preparing [MIG] pull requests. Use when migrating OCA modules, porting addons between Odoo versions, applying OCA migration checklists, resolving migration patch conflicts, or preparing versioned OCA migration PRs."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-owl/SKILL.md",
+    "name": "odoo-owl",
+    "description": "Odoo OWL frontend engineering guidance covering components, templates, reactivity, hooks, props, plugins, registries, debugging, assets, and OWL 1/2/3 migration. Use when working with Odoo frontend components, @odoo/owl, static/src JavaScript/XML templates, signals, proxy, props, t-on, t-ref, t-model, registries, plugins, or OWL migrations."
+  },
+  {
+    "path": "odoo-discipline/skills/odoo-test-writer/SKILL.md",
+    "name": "odoo-test-writer",
+    "description": "Create and improve Odoo custom module tests using the Odoo test framework. Use when the user asks to add tests, create TransactionCase/HttpCase tests, test Odoo business logic, mock external APIs, use Form helper, test access rules, test workflows, or improve Odoo test coverage."
+  },
+  {
+    "path": "odoo-discipline/skills/zoom-out/SKILL.md",
+    "name": "zoom-out",
+    "description": "Tell the agent to zoom out and give broader context or a higher-level perspective. Use when youre unfamiliar with a section of code or need to understand how it fits into the bigger picture."
+  },
+  {
+    "path": "odoo-patterns/SKILL.md",
+    "name": "odoo-development-skill",
+    "description": "Universal Odoo development skill based on strict OCA standards, covering versions 14-19. Includes agents for code review, upgrade analysis, and pattern discovery."
+  },
+  {
+    "path": "odoo-rl-rules/SKILL.md",
+    "name": "odoo-rl-rules",
+    "description": "Odoo CLI Reinforcement Learning rules layer. Triggers to enforce strict coding constraints, field naming conventions, and performance guidelines for Odoo module development."
+  },
+  {
+    "path": "payload-core/skills/cms-migration/SKILL.md",
+    "name": "cms-migration",
+    "description": "Use when user wants to migrate content from another CMS (WordPress, Contentful, Strapi, Sanity, Webflow, etc.) to Payload CMS"
+  },
+  {
+    "path": "payload-core/skills/payload/SKILL.md",
+    "name": "payload",
+    "description": "Use when working with Payload projects (payload.config.ts, collections, fields, hooks, access control, Payload API). Use when debugging validation errors, security issues, relationship queries, transactions, or hook behavior."
+  },
+  {
+    "path": "payload-ecommerce/SKILL.md",
+    "name": "payload-ecommerce",
+    "description": "Extends the core Payload CMS skill with e-commerce specific knowledge, such as handling carts, Stripe integrations, dynamic product variations, and tax calculations."
+  },
+  {
+    "path": "platform-design-skills/skills/android/SKILL.md",
+    "name": "android-design-guidelines",
+    "description": "Material Design 3 and Android platform guidelines. Use when building Android apps with Jetpack Compose or XML layouts, implementing Material You, navigation, or accessibility. Triggers on tasks involving Android UI, Compose components, dynamic color, or Material Design compliance."
+  },
+  {
+    "path": "platform-design-skills/skills/ios/SKILL.md",
+    "name": "ios-design-guidelines",
+    "description": "Apple Human Interface Guidelines for iPhone. Use when building, reviewing, or refactoring SwiftUI/UIKit interfaces for iOS. Triggers on tasks involving iPhone UI, iOS components, accessibility, Dynamic Type, Dark Mode, or HIG compliance."
+  },
+  {
+    "path": "platform-design-skills/skills/ipados/SKILL.md",
+    "name": "ipados-design-guidelines",
+    "description": "Apple Human Interface Guidelines for iPad. Use when building iPad-optimized interfaces, implementing multitasking, pointer support, keyboard shortcuts, or responsive layouts. Triggers on tasks involving iPad, Split View, Stage Manager, sidebar navigation, or trackpad support."
+  },
+  {
+    "path": "platform-design-skills/skills/macos/SKILL.md",
+    "name": "macos-design-guidelines",
+    "description": "Apple Human Interface Guidelines for Mac. Use when building macOS apps with SwiftUI or AppKit, implementing menu bars, toolbars, window management, or keyboard shortcuts. Triggers on tasks involving Mac UI, desktop apps, or Mac Catalyst."
+  },
+  {
+    "path": "platform-design-skills/skills/tvos/SKILL.md",
+    "name": "tvos-design-guidelines",
+    "description": "Apple Human Interface Guidelines for Apple TV. Use when building tvOS apps with focus-based navigation, Siri Remote input, or living room viewing experiences. Triggers on tasks involving Apple TV, tvOS, 10-foot UI, or media playback."
+  },
+  {
+    "path": "platform-design-skills/skills/visionos/SKILL.md",
+    "name": "visionos-design-guidelines",
+    "description": "Apple Human Interface Guidelines for Apple Vision Pro. Use when building spatial computing apps, implementing eye/hand input, or designing immersive experiences. Triggers on tasks involving visionOS, RealityKit, spatial UI, or mixed reality."
+  },
+  {
+    "path": "platform-design-skills/skills/watchos/SKILL.md",
+    "name": "watchos-design-guidelines",
+    "description": "Apple Human Interface Guidelines for Apple Watch. Use when building watchOS apps, complications, or workout features. Triggers on tasks involving Watch UI, Digital Crown, glanceable interfaces, or wrist-based interactions."
+  },
+  {
+    "path": "platform-design-skills/skills/web/SKILL.md",
+    "name": "web-design-guidelines",
+    "description": "Web platform design and accessibility guidelines. Use when building web interfaces, auditing accessibility, implementing responsive layouts, or reviewing web UI code. Triggers on tasks involving HTML, CSS, web components, WCAG compliance, responsive design, or web performance."
+  },
+  {
+    "path": "prisma-next/SKILL.md",
+    "name": "prisma-next",
+    "description": "Route a vague Prisma Next prompt to the right specific skill. Use for help me with Prisma Next, what is Prisma Next, explain Prisma Next, Im new to PN, where do I start, what can I do with Prisma Next, what can I do next with Prisma, just ran createprisma, tour of Prisma Next, Prisma Next overview, and comparison questions like Prisma Next vs Prisma 7, PN vs Drizzle, PN vs Kysely, PN vs TypeORM. Do NOT use when the prompt clearly matches a workflow skill — adoption / quickstart / first-touch orientation / brownfield introspection, schema / contract editing, migration authoring (db update / migration plan / migrate), migration review on deploy / concurrent migrations, queries / db.orm / db.sql / TypedSQL, Supabase / RLS / role binding, runtime / db.ts / middleware wiring, build / Vite plugin / Next.js plugin, debug / structured error envelopes / PN-* error codes, or feedback / bug report / feature request — load that sibling skill directly."
+  },
+  {
+    "path": "review-animations/SKILL.md",
+    "name": "review-animations",
+    "description": "Reviews animation and motion code against a high craft bar derived from Emil Kowalskis design engineering philosophy. Default to flagging; approval is earned."
+  },
+  {
+    "path": "ship/SKILL.md",
+    "name": "ship",
+    "description": "A pre-deployment release-readiness checklist skill. Triggers before deploying code to production to enforce tests, typecheck, secret scanning, and console.log sweeps."
+  },
+  {
+    "path": "tool-call-resilience/SKILL.md",
+    "name": "tool-call-resilience",
+    "description": "Teaches agents production-grade resilience patterns for their own tool calls — exponential backoff with jitter, circuit breakers, rate-limit handling."
+  },
+  {
+    "path": "top-design/SKILL.md",
+    "name": "top-design",
+    "description": "Create award-winning, immersive web experiences at the level of Awwwards-featured agencies. Use when the user mentions Awwwards quality, make my site stunning, scroll animations, parallax storytelling, cinematic web design, portfolio site, or brand experience. Also trigger when elevating a standard landing page into a memorable digital experience. Covers dramatic typography, purposeful motion, scroll-based composition, and performance-optimized animation. For foundational UI, see refactoring-ui. For type selection, see web-typography."
+  },
+  {
+    "path": "ux-heuristics/SKILL.md",
+    "name": "ux-heuristics",
+    "description": "Evaluate and improve interface usability using heuristic analysis. Use when the user mentions usability audit, users are confused, form usability, navigation problems, Nielsen heuristics, cognitive walkthrough, or is this easy to use. Also trigger when reviewing a design for usability issues, improving form-completion rates, or evaluating information architecture and navigation. Covers Krugs laws, Nielsens 10 heuristics, severity ratings, dark-pattern recognition, and accessibility. For visual design fixes, see refactoring-ui. For conversion-focused audits, see cro-methodology."
+  }
+]
