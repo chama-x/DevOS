@@ -85,6 +85,8 @@ Create an artifact named `frontier_delegation_prompt.md`.
 
 Use the template from `resources/frontier_prompt_template.md` as the structural backbone. The template is XML-first — this is not aesthetic, it is functional. Frontier-grade reasoning models with adaptive thinking process XML tags as semantic boundaries, not as formatting. They use these boundaries to separate role framing from context from constraints from output specifications, maintaining coherence across long, complex outputs.
 
+Make sure to include context on all necessary data points, APIs, internal data APIs, and adherance to current codebase envoirnment so fresh context frontier model can adhere to our setup here better.
+
 The packet has **seven XML sections** in this exact order:
 
 #### `<system>` — Role and Depth Signal
