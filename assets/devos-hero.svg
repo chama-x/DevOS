@@ -336,11 +336,11 @@
     <!-- Line 2 -->
     <text x="416" y="376" class="ui" font-size="13.5" fill="#e6edf3">
       <tspan fill="#f0883e" font-weight="500">HTML input only.'</tspan>
-      <tspan fill="#e6edf3"> I will add a native HTML</tspan>
+      <tspan fill="#e6edf3"> I will use a native HTML element:</tspan>
     </text>
 
     <!-- Line 3 with syntax-highlighted code -->
-    <text x="416" y="396" class="code" font-size="12.5">
+    <text x="416" y="396" class="code" font-size="13">
       <tspan fill="#8b949e">&lt;</tspan>
       <tspan fill="#79c0ff">input</tspan>
       <tspan fill="#c9d1d9"> </tspan>
@@ -348,7 +348,6 @@
       <tspan fill="#ff7b72">=</tspan>
       <tspan fill="#a5d6ff">'date'</tspan>
       <tspan fill="#8b949e">&gt;</tspan>
-      <tspan fill="#e6edf3" font-family="'Inter', sans-serif" font-size="13.5"> to the form.</tspan>
     </text>
 
     <!-- Success check icon -->

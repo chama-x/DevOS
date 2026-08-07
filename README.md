@@ -1,4 +1,4 @@
-![DevOS: Predictability Over Perfection](assets/devos-hero.svg?v=1786144484)
+![DevOS: Predictability Over Perfection](assets/devos-hero.svg?v=1786144556)
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
