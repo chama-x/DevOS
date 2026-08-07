@@ -29,6 +29,16 @@ vim .agents/rules/IDENTITY.md
 
 Los agentes IDE comienzan cada chat desde cero. DevOS les da una memoria — tus reglas, tu tarea, tu historial — para que dejen de adivinar y comiencen a construir.
 
+## DevOS frente a Prompts de archivo único (.cursorrules)
+
+| Característica | Archivo `.cursorrules` / Prompts únicos | DevOS |
+|---|---|---|
+| **Arquitectura** | Archivo gigante (sobrecarga el contexto) | 4 archivos modulares + enrutamiento dinámico |
+| **Memoria de Sesión** | Se reinicia en cada nuevo chat | Se conserva entre sesiones vía `worklog.md` |
+| **Uso de Tokens** | ~5.000+ tokens cargados siempre | ~700 tokens base; habilidades según demanda |
+| **Disciplina de Alcance** | Sugerencias suaves (el agente las ignora) | Restricciones estrictas con `GROUNDING.md` |
+| **Control de Autonomía** | Límites no definidos | Niveles explícitos declarados en `IDENTITY.md` |
+
 ## Características
 
 | Característica | Qué hace |

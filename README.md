@@ -47,6 +47,16 @@ vim .agents/rules/IDENTITY.md
 
 IDE agents start every chat from scratch. DevOS gives them a memory — your rules, your task, your history — so they stop guessing and start building.
 
+## DevOS vs. Single-File Prompts (.cursorrules)
+
+| Feature | Raw `.cursorrules` / Prompt Lists | DevOS |
+|---|---|---|
+| **Architecture** | Single giant file (causes context bloat) | 4 modular files + dynamic skill routing |
+| **Session Memory** | Resets on every new chat | Persisted across sessions via `worklog.md` |
+| **Token Budget** | ~5,000+ tokens loaded unconditionally | ~700 core tokens; skills load on-demand |
+| **Scope Discipline** | Soft suggestions (agents ignore them) | Hard constraints enforced by `GROUNDING.md` |
+| **Autonomy Control** | Undefined boundaries | Explicit autonomy levels set in `IDENTITY.md` |
+
 ## Features
 
 Beyond the four core files, DevOS is engineered for disciplined execution:
