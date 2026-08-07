@@ -1,46 +1,50 @@
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
-Simplemente copia la carpeta `.agents` en cualquier espacio de trabajo. El próximo agente que la abra leerá cuatro archivos antes de su primera respuesta — no será un simple chatbot genérico con acceso a la terminal.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.0.0-success.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
+[![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
 
-## Qué Hace
+> **DevOS — Dale a cualquier agente IDE las reglas, tarea actual e historial de tu proyecto en cuatro archivos.**
 
-Un agente IDE recién inicializado no conoce tu proyecto, tus estándares, tus patrones de error, ni lo que ocurrió ayer. DevOS cierra esas brechas con cuatro archivos:
-
-| Archivo | Qué Hace |
-|---|---|
-| `rules/IDENTITY.md` | Tu declaración sobre qué es el proyecto, cómo se ve el trabajo terminado, y dónde tiene autonomía el agente vs. dónde te mantienes en el ciclo de decisión. |
-| `rules/GROUNDING.md` | Calibración de comportamiento — cómo el agente implementa, se comunica, detecta sus propios errores e inicia cada sesión. |
-| `current.md` | En qué está trabajando el agente en este momento, qué no está tocando, y cuándo se considera terminado. |
-| `worklog.md` | Qué se hizo antes — para que la próxima sesión no comience desde cero. |
-
-Dos archivos de reglas se inyectan en cada conversación (~700 tokens). Dos archivos dinámicos se leen al inicio de cada sesión. Ese es todo el sistema.
+```text
+> Agent initialized.
+> Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
+> Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
+> Reading .agents/worklog.md... [Session history restored]
+> Ready. 
+```
 
 ![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
-## Instalación
+## Inicio Rápido
 
-Copia `.agents/` en la raíz de tu proyecto. Completa `rules/IDENTITY.md` para tu proyecto. Listo.
+```bash
+npx degit chama-x/DevOS/.agents .agents
+vim .agents/rules/IDENTITY.md
+# Reinicia tu agente IDE — ahora leerá el contexto de tu proyecto en cada chat.
+```
 
-## Qué Incluye
+## ¿Por qué DevOS?
 
-Más allá de los cuatro archivos principales, DevOS viene con:
+Los agentes IDE comienzan cada chat desde cero. DevOS les da una memoria — tus reglas, tu tarea, tu historial — para que dejen de adivinar y comiencen a construir.
 
-- **11 habilidades (skills) seleccionadas** — bucles de razonamiento específicos y restricciones de formato para tareas concretas, no simples documentos de referencia que el agente podría leer por encima.
-- **Calibración de habilidades** — el enrutamiento de SkillsBench carga solo las habilidades que una tarea necesita, en lugar de acumular las once en el contexto.
-- **Gobernanza de evolución** — los agentes proponen nuevas habilidades y vocabulario, pero solo el humano las aprueba.
-- **Compresión de contexto** — el archivado automático previene que los archivos de memoria crezcan sin límite.
-- **Diccionario semántico** — mapea tus atajos y preferencias hacia comportamientos deterministas del agente.
+## Características
 
-## Filosofía
+| Característica | Qué hace |
+|---|---|
+| **11 Habilidades** | Carga solo el bucle de razonamiento que necesita una tarea |
+| **Calibración** | Enruta las tareas a la habilidad correcta automáticamente |
+| **Gobernanza** | Los agentes proponen nuevas habilidades; tú apruebas |
+| **Compresión** | Archiva el historial antes de que crezca sin límite |
+| **Diccionario Semántico** | Mapea tus atajos hacia comportamientos deterministas |
 
-DevOS está construido sobre cuatro directivas respaldadas por evidencia:
+## Documentación y Comunidad
 
-1. **Pregunta, no asumas** — revela la incertidumbre antes de proceder (+3.7% éxito en tareas).
-2. **Implementación mínima viable** — el código más pequeño que funcione, sin abstracciones especulativas.
-3. **Disciplina de alcance** — toca solo lo que la tarea requiere (los agentes predeterminados triplican su tasa de errores graves en tareas de mantenimiento).
-4. **Define el éxito, luego itera** — saber cómo se ve el trabajo terminado antes de escribir código.
-
-Y un principio de diseño: **predictibilidad sobre perfección.** El humano no necesita un agente perfecto. Necesita uno cuyo comportamiento pueda aprender, cuyo alcance pueda verificar, y cuyos modos de fallo pueda compensar.
+Priorizamos la confianza, la predictibilidad y la colaboración.
+- [Changelog](CHANGELOG.md) - Historial de lanzamientos.
+- [Guía de Contribución](CONTRIBUTING.md) - Revisamos todos los PR. Comienza con issues `good first issue`.
+- [Código de Conducta](CODE_OF_CONDUCT.md) - Nuestros estándares.
 
 ## Estructura del Proyecto
 

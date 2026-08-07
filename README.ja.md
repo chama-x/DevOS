@@ -1,46 +1,50 @@
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
-`.agents` フォルダを任意のワークスペースにドロップするだけで、次に開いたエージェントは最初の応答の前に4つのファイルを読み込みます。もはやターミナルアクセスを持つだけの一般的なチャットボットではありません。
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.0.0-success.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
+[![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
 
-## DevOSが解決すること
+> **DevOS — 4つのファイルで、IDEエージェントにプロジェクトのルール、現在のタスク、および履歴を与えます。**
 
-初期状態のIDEエージェントは、あなたのプロジェクト、コーディング標準、よくある失敗パターン、昨日何が起きたかを知りません。DevOSは、4つのファイルでこれらのギャップを埋めます。
-
-| ファイル | 役割 |
-|---|---|
-| `rules/IDENTITY.md` | プロジェクトの目的、完成の定義、エージェントが自律的に行動してよい領域と人間が確認すべき領域を宣言します。 |
-| `rules/GROUNDING.md` | エージェントの行動の調整 — 実装方法、コミュニケーション、自身の間違いの検知、および各セッションの開始方法を規定します。 |
-| `current.md` | エージェントが現在何に取り組んでいるか、何に触れていないか、いつ完了するかを記録します。 |
-| `worklog.md` | 過去に何が行われたか — 次のセッションがゼロから始まらないようにします。 |
-
-2つのルールファイルはすべての会話に注入されます（約700トークン）。2つの動的ファイルはセッション開始時に読み込まれます。これがシステムのすべてです。
+```text
+> Agent initialized.
+> Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
+> Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
+> Reading .agents/worklog.md... [Session history restored]
+> Ready. 
+```
 
 ![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
-## インストール方法
+## クイックスタート
 
-`.agents/` をプロジェクトのルートにコピーし、プロジェクトに合わせて `rules/IDENTITY.md` を記入するだけです。
+```bash
+npx degit chama-x/DevOS/.agents .agents
+vim .agents/rules/IDENTITY.md
+# IDEエージェントを再起動します — これで毎回のチャットでプロジェクトのコンテキストを読み込みます。
+```
 
-## 同梱されている機能
+## なぜDevOSなのか？
 
-4つのコアファイルに加えて、DevOSには以下の機能が含まれています。
+IDEエージェントは毎回のチャットをゼロから始めます。DevOSは彼らに記憶（あなたのルール、タスク、履歴）を与えることで、推測をやめ、構築を始めさせます。
 
-- **11の厳選されたスキル** — エージェントが斜め読みするような一般的なリファレンスドキュメントではなく、特定のタスクに対する絞り込まれた推論ループと出力の制約。
-- **スキルの調整 (Skill calibration)** — 11個すべてをコンテキストに詰め込むのではなく、SkillsBenchのルーティングによってタスクに必要なスキルのみを読み込みます。
-- **ガバナンスと進化** — エージェントは新しいスキルや語彙を提案しますが、人間が承認した場合のみ適用されます。
-- **コンテキストの圧縮** — 自動アーカイブ機能により、メモリファイルが無限に肥大化するのを防ぎます。
-- **意味論的辞書 (Semantic dictionary)** — ユーザーの略語や好みをエージェントの決定論的な行動にマッピングします。
+## 機能
 
-## 哲学
+| 機能 | 役割 |
+|---|---|
+| **11のスキル** | タスクに必要な推論ループのみを読み込む |
+| **スキルの調整** | タスクを自動的に適切なスキルにルーティングする |
+| **ガバナンス** | エージェントが新しいスキルを提案し、あなたが承認する |
+| **コンテキスト圧縮** | 肥大化する前に履歴をアーカイブする |
+| **意味論的辞書** | あなたの略語を決定論的な行動にマッピングする |
 
-DevOSは、エビデンスに裏付けられた4つの原則に基づいて構築されています。
+## ドキュメントとコミュニティ
 
-1. **推測せず、質問する** — 実行する前に不確実性を表面化します（タスク成功率が3.7%向上）。
-2. **最小限の実行可能な実装** — 動作する最小のコードを書き、推測的な抽象化は行いません。
-3. **スコープの規律** — タスクに必要な部分にのみ触れます（デフォルトのエージェントはメンテナンスタスクにおいて破壊的変更率が3倍に跳ね上がります）。
-4. **成功を定義し、反復する** — コードを書く前に、完了した状態がどのようなものかを把握します。
-
-そして1つの設計原則： **完璧さよりも予測可能性。** 人間は完璧なエージェントを必要としていません。その行動を予測でき、スコープを検証でき、失敗の傾向を補うことができるエージェントを必要としています。
+私たちは信頼、予測可能性、コラボレーションを重視します。
+- [Changelog](CHANGELOG.md) - リリース履歴。
+- [Contributing Guidelines](CONTRIBUTING.md) - すべてのPRをレビューします。`good first issue`から始めてください。
+- [Code of Conduct](CODE_OF_CONDUCT.md) - コミュニティ標準。
 
 ## プロジェクト構造
 

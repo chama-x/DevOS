@@ -1,46 +1,50 @@
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
-将 `.agents` 文件夹放入任何工作区。接下来打开它的智能体（Agent）在给出第一次回复前会先读取四个文件——它不再是一个仅仅带有终端访问权限的通用聊天机器人。
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.0.0-success.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
+[![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
 
-## 它的作用
+> **DevOS — 用四个文件，让任何 IDE 智能体拥有你项目的规则、当前任务和历史记录。**
 
-一个刚启动的 IDE 智能体并不了解你的项目、你的规范、你的故障模式，或者昨天发生过什么。DevOS 通过四个文件来填补这些上下文空白：
-
-| 文件 | 作用 |
-|---|---|
-| `rules/IDENTITY.md` | 你的项目声明：项目是什么，完成的标准是什么，智能体在哪些方面拥有自主权，以及你在哪些方面需要保持知情和决策权。 |
-| `rules/GROUNDING.md` | 行为校准——规定智能体应如何实现代码、如何沟通、如何捕获自身的错误以及如何启动每个会话。 |
-| `current.md` | 智能体目前正在处理什么，哪些部分是不该碰的，以及何时算作完成。 |
-| `worklog.md` | 之前做了什么——以便下一次会话不会从零开始。 |
-
-每场对话都会注入两个规则文件（大约 700 tokens）。在会话开始时会读取两个动态文件。这就是整个系统的核心。
+```text
+> Agent initialized.
+> Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
+> Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
+> Reading .agents/worklog.md... [Session history restored]
+> Ready. 
+```
 
 ![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
-## 安装
+## 快速开始
 
-将 `.agents/` 复制到你的项目根目录。为你的项目填写 `rules/IDENTITY.md`。安装完成。
+```bash
+npx degit chama-x/DevOS/.agents .agents
+vim .agents/rules/IDENTITY.md
+# 重启你的 IDE 智能体 —— 它现在每次对话都会读取项目上下文。
+```
 
-## 包含的内容
+## 为什么选择 DevOS？
 
-除了这四个核心文件，DevOS 还附带：
+IDE 智能体每次对话都从零开始。DevOS 赋予它们记忆——你的规则、你的任务、你的历史——这样它们就不再瞎猜，而是直接开始工作。
 
-- **11 项精选技能 (Skills)** —— 针对特定任务的狭窄推理循环和输出约束，而不是智能体可能会随便扫一眼的通用参考文档。
-- **技能校准** —— SkillsBench 路由策略只加载任务所需的技能，而不是将全部 11 项技能堆叠进上下文中。
-- **演进治理** —— 智能体可以提出新的技能和词汇建议，但只有人类才能批准。
-- **上下文压缩** —— 自动归档功能防止记忆文件无限制地膨胀。
-- **语义字典** —— 将你的速记词和偏好映射到确定性的智能体行为上。
+## 功能特性
 
-## 理念
+| 特性 | 作用 |
+|---|---|
+| **11 项技能** | 仅加载任务所需的推理循环 |
+| **技能校准** | 自动将任务路由到正确的技能 |
+| **演进治理** | 智能体提出新技能，由你来批准 |
+| **上下文压缩** | 在历史记录无限膨胀前进行归档 |
+| **语义字典** | 将你的简写映射为确定性行为 |
 
-DevOS 建立在四项经过证据支持的指令之上：
+## 文档与社区
 
-1. **先问，不要猜** —— 在继续之前浮现并确认不确定性（任务成功率提升 3.7%）。
-2. **最小可行实现** —— 编写能让功能跑起来的最小代码，不进行投机性的抽象。
-3. **范围纪律** —— 只触碰任务需要的部分（默认智能体在维护任务中的破坏性变更率通常会翻三倍）。
-4. **先定义成功，再循环执行** —— 在写代码之前，要知道“完成”是什么样子的。
-
-以及一个设计原则：**可预测性高于完美。** 人类不需要一个完美的智能体。他们需要的是一个行为可以被学习、作用范围可以被验证、且其失败模式可以被补偿的智能体。
+我们重视信任、可预测性和协作。
+- [更新日志](CHANGELOG.md) - 查看发布历史。
+- [贡献指南](CONTRIBUTING.md) - 我们会审查每一个 PR，请从 `good first issue` 开始。
+- [行为准则](CODE_OF_CONDUCT.md) - 我们的社区标准。
 
 ## 项目结构
 
