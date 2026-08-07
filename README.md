@@ -6,9 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
 [![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
 
-**DevOS gives your AI coding agents persistent memory, behavioral discipline, and strict project boundaries.** 
-
-Drop the `.agents` folder into any workspace, and the next agent that opens it reads four files before its first response—transforming it from a generic chatbot into a predictable, context-aware engineering partner.
+> **DevOS — Give any IDE agent your project's rules, current task, and history in four files.**
 
 ```text
 > Agent initialized.
@@ -39,13 +37,15 @@ dynamic files are read on session start. That's the entire system.
 
 ## Quickstart
 
-The fastest way to install DevOS is to pull the `.agents` directory directly into your project root using `degit`:
-
 ```bash
 npx degit chama-x/DevOS/.agents .agents
+vim .agents/rules/IDENTITY.md
+# Restart your IDE agent — it now reads your project context every chat.
 ```
 
-Then, open `rules/IDENTITY.md` and define your project's boundaries. You're done.
+## Why DevOS?
+
+IDE agents start every chat from scratch. DevOS gives them a memory — your rules, your task, your history — so they stop guessing and start building.
 
 ## Features
 
@@ -53,17 +53,17 @@ Beyond the four core files, DevOS is engineered for disciplined execution:
 
 | Feature | How it works |
 |---|---|
-| **11 Curated Skills** | Narrow reasoning loops for specific tasks, replacing generic reference docs. |
-| **Skill Calibration** | Dynamic routing loads *only* what a task needs, preventing context overload. |
-| **Evolution Governance** | Agents can propose new rules and vocabulary, but only humans approve them. |
-| **Context Compression** | Automatic archiving keeps memory files from growing unbounded over time. |
-| **Semantic Dictionary** | Maps your shorthand preferences into deterministic agent behaviors. |
+| **11 Curated Skills** | Load only the reasoning loop a task needs |
+| **Skill Calibration** | Route tasks to the right skill automatically |
+| **Evolution Governance** | Agents propose new skills; you approve |
+| **Context Compression** | Archive history before it grows unbounded |
+| **Semantic Dictionary** | Map your shorthand to deterministic behavior |
 
 ## Documentation & Community
 
 We prioritize trust, predictability, and collaboration. 
 - [Changelog](CHANGELOG.md) - See our release history.
-- [Contributing Guidelines](CONTRIBUTING.md) - Learn how to add new Skills safely.
+- [Contributing Guidelines](CONTRIBUTING.md) - We review every PR. Start with an issue labeled `good first issue`.
 - [Code of Conduct](CODE_OF_CONDUCT.md) - Our community standards.
 
 
