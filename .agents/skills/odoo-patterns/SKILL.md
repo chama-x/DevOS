@@ -1,6 +1,7 @@
 ---
 name: odoo-development-skill
 description: Universal Odoo development skill based on strict OCA standards, covering versions 14-19. Includes agents for code review, upgrade analysis, and pattern discovery.
+last_verified: 2026-08-08
 ---
 
 # Odoo Development Skill (Universal)

@@ -1,26 +1,20 @@
 ---
 name: devsecops-expert
-description: Senior-level CI/CD, IaC, Kubernetes, and GitOps skill. Triggers when setting up pipelines, securing infrastructure (Checkov, tfsec, Trivy), or implementing Sigstore/SLSA supply-chain signing.
+description: Configuration profile for CI/CD pipelines. Enforces a strict sequence of security scans and checks.
 ---
 
-# DevSecOps Expert Skill
+# DevSecOps Pipeline Configuration
 
-You are a senior DevSecOps engineer. Follow these rules when designing or reviewing CI/CD pipelines, IaC, or Kubernetes manifests:
+This is a configuration profile, not a textbook. You already know how CI/CD tools work. When generating or auditing pipelines, enforce this exact structural sequence:
 
-## 1. Supply Chain Security (SLSA)
-*   **Sign Everything**: Artifacts, container images, and commits MUST be signed. Use Sigstore (Cosign) for container signing and OIDC for short-lived credentials.
-*   **Provenance**: Generate and verify SLSA provenance attestations for builds.
+## Mandatory Pipeline Sequence
+1. **Pre-Flight / Secret Scan:** (Trivy, TruffleHog, or Gitleaks). Must block the pipeline BEFORE any dependencies are downloaded or code is built.
+2. **Static Analysis & Linting:** (Checkov, tfsec for IaC; Semgrep or equivalent for code).
+3. **Build & Unit Tests.**
+4. **Artifact / Container Scanning:** (Trivy). Scan the final built image, not just the source.
+5. **Provenance:** Generate SLSA provenance and use Sigstore/Cosign for artifact signing.
 
-## 2. Infrastructure as Code (IaC) Scanning
-*   Never deploy Terraform or Kubernetes manifests without running static analysis.
-*   Use **Checkov** or **tfsec** for Terraform code.
-*   Use **Trivy** or **kube-linter** for Kubernetes manifests.
-
-## 3. CI/CD Principles (GitOps)
-*   **Immutable Deployments**: Always deploy artifacts built in CI, never from local machines.
-*   **Least Privilege Pipelines**: CI runners should only have the exact permissions needed via OIDC (e.g., AWS role assumption), not static long-lived API keys.
-*   **Shift Left**: Fail pipelines immediately if secrets are detected (e.g., using `trufflehog` or `gitleaks`) or if linting/security scans fail.
-
-## 4. Kubernetes Security Posture
-*   Enforce Pod Security Standards (Restricted). No privileged pods, drop all capabilities, enforce non-root execution.
-*   Implement Network Policies by default (deny-all ingress/egress, then allow-list).
+## Hard Constraints
+- **Fail-Fast:** Any High or Critical vulnerability must exit with code > 0 and fail the pipeline immediately.
+- **Least Privilege:** CI/CD runners must use OIDC (OpenID Connect) to authenticate to cloud providers (AWS, GCP, Azure). Long-lived static credentials are forbidden.
+- **Pinned Actions:** GitHub Actions or GitLab includes MUST be pinned to a specific commit SHA, not `@v2` or `@main`.

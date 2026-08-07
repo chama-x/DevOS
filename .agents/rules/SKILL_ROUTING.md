@@ -4,39 +4,39 @@ trigger: always_on
 
 # Skill Routing
 
-**13 skills. Max 2-3 per task. Load only when the skill adds something you don't already know.**
+**10 skills. Max 2-3 per task. Load only when the skill adds behavioral configuration or fills a specific knowledge gap.**
 
-Before loading any skill, ask: does this task need specialized knowledge that goes beyond my training? If no — skip the skill and work directly.
+> **Architectural Principle:** Skills are NOT textbooks. The model already knows general concepts (like Nielsen's heuristics, REST principles, or GSAP documentation). Skills exist ONLY to provide:
+> 1. **Configuration Profiles:** "Format the audit this specific way", "Use this specific sequence for deployment".
+> 2. **Gap Fillers:** "Here are the strict OCA naming conventions for Odoo that differ from official docs".
+> Do NOT load a skill just because the topic matches. Load it only if you need its specific constraints.
 
 ---
 
 ## Deployment & Infrastructure
 
-- **Shipping to production?** → `ship`
-- **CI/CD, Kubernetes, IaC, supply-chain security?** → `devsecops-expert`
+- **Shipping to production?** → `ship` (Enforces strict pre-deployment checklist sequence)
+- **CI/CD, Kubernetes, IaC, supply-chain security?** → `devsecops-expert` (Enforces specific pipeline sequence and tool constraints)
 
 ## Architecture & APIs
 
-- **Entering an unfamiliar codebase and need to map it before touching it?** → `architecture_lens`
-- **Testing OpenAPI/GraphQL contracts for drift?** → `api-contract-tester`
-- **Agent tool calls need retry/backoff/circuit-breaker patterns?** → `tool-call-resilience`
-- **Task requires novel algorithms, deep architectural tradeoffs, or mathematical rigor?** → `frontier_delegation`
+- **Entering an unfamiliar codebase and need to map it before touching it?** → `architecture_lens` (Configures Mermaid output depth and focus)
+- **Testing OpenAPI/GraphQL contracts for drift?** → `api-contract-tester` (Specific workflow for contract testing)
+- **Task requires novel algorithms, deep architectural tradeoffs, or mathematical rigor?** → `frontier_delegation` (Specific orchestration protocol)
 
 ## Databases & Backend
 
-- **Next.js + Prisma integration?** → `prisma-next`
+- **Next.js + Prisma integration?** → `prisma-next` (Specific Prisma patterns and deviations)
 
 ## Odoo
 
-- **Writing Odoo models, controllers, or OCA-standard code?** → `odoo-patterns` AND `odoo-rl-rules`
+- **Writing Odoo models, controllers, or OCA-standard code?** → `odoo-patterns` AND `odoo-rl-rules` (Bridges the gap between official Odoo docs and strict OCA conventions)
 - Do not load both unless you're actively reconciling OCA patterns with CLI constraints.
 
 ## UI & Animation
 
-- **Usability audit, form UX, dark patterns, Nielsen heuristics?** → `ux-heuristics`
-- **Standard web motion — transitions, micro-interactions, modals?** → `motion-design`
-- **GSAP in React/Next.js — ScrollTrigger, timelines, plugins?** → `gsap`
-- **Award-quality scroll experiences, custom cursors, 60fps parallax?** → `awwwards-animations` AND `gsap`
+- **GSAP in React/Next.js — ScrollTrigger, timelines, plugins?** → `gsap` (Configures GSAP architecture constraints for this project)
+- **Award-quality scroll experiences, custom cursors, 60fps parallax?** → `awwwards-animations` (Sets the quality bar and specific techniques to use/avoid)
 
 ---
 
