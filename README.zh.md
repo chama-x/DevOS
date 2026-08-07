@@ -1,6 +1,6 @@
 # DevOS
 
-![DevOS Architecture](assets/DevOS.jpg)
+![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 将 `.agents` 文件夹放入任何工作区。接下来打开它的智能体（Agent）在给出第一次回复前会先读取四个文件——它不再是一个仅仅带有终端访问权限的通用聊天机器人。
 
@@ -16,6 +16,8 @@
 | `worklog.md` | 之前做了什么——以便下一次会话不会从零开始。 |
 
 每场对话都会注入两个规则文件（大约 700 tokens）。在会话开始时会读取两个动态文件。这就是整个系统的核心。
+
+![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
 ## 安装
 

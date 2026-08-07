@@ -1,6 +1,6 @@
 # DevOS
 
-![DevOS Architecture](assets/DevOS.jpg)
+![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 Simplemente copia la carpeta `.agents` en cualquier espacio de trabajo. El próximo agente que la abra leerá cuatro archivos antes de su primera respuesta — no será un simple chatbot genérico con acceso a la terminal.
 
@@ -16,6 +16,8 @@ Un agente IDE recién inicializado no conoce tu proyecto, tus estándares, tus p
 | `worklog.md` | Qué se hizo antes — para que la próxima sesión no comience desde cero. |
 
 Dos archivos de reglas se inyectan en cada conversación (~700 tokens). Dos archivos dinámicos se leen al inicio de cada sesión. Ese es todo el sistema.
+
+![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
 ## Instalación
 

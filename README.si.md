@@ -1,6 +1,6 @@
 # DevOS
 
-![DevOS Architecture](assets/DevOS.jpg)
+![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 `.agents` ෆෝල්ඩරය ඕනෑම workspace එකකට එකතු කරන්න. ඊළඟට එය විවෘත කරන agent තම පළමු ප්‍රතිචාරයට පෙර ගොනු හතරක් කියවයි — එය terminal access සහිත සාමාන්‍ය chatbot කෙනෙකු පමණක් නොවේ.
 
@@ -16,6 +16,8 @@
 | `worklog.md` | මින් පෙර කළ දේ — මීළඟ session එක බිංදුවෙන් ආරම්භ නොවීම සඳහා. |
 
 රීති ගොනු දෙකක් සෑම සංවාදයකටම ඇතුළත් කෙරේ (~700 tokens). dynamic ගොනු දෙකක් session එක ආරම්භයේදී කියවනු ලැබේ. සම්පූර්ණ පද්ධතියම එයයි.
+
+![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
 ## ස්ථාපනය
 

@@ -1,6 +1,6 @@
 # DevOS
 
-![DevOS Architecture](assets/DevOS.jpg)
+![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 Drop the `.agents` folder into any workspace. The next agent that opens
 it reads four files before its first response — not a generic chatbot
@@ -21,6 +21,8 @@ with four files:
 
 Two rule files are injected into every conversation (~700 tokens). Two
 dynamic files are read on session start. That's the entire system.
+
+![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # DevOS
 
-![DevOS Architecture](assets/DevOS.jpg)
+![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 `.agents` フォルダを任意のワークスペースにドロップするだけで、次に開いたエージェントは最初の応答の前に4つのファイルを読み込みます。もはやターミナルアクセスを持つだけの一般的なチャットボットではありません。
 
@@ -16,6 +16,8 @@
 | `worklog.md` | 過去に何が行われたか — 次のセッションがゼロから始まらないようにします。 |
 
 2つのルールファイルはすべての会話に注入されます（約700トークン）。2つの動的ファイルはセッション開始時に読み込まれます。これがシステムのすべてです。
+
+![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
 ## インストール方法
 
