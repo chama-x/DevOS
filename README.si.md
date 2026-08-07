@@ -1,4 +1,4 @@
-![DevOS: Predictability Over Perfection](assets/devos-hero.svg?v=1786143843)
+![DevOS: Predictability Over Perfection](assets/devos-hero.svg?v=1786144399)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.0.0-success.svg)]()
@@ -15,7 +15,7 @@
 > Ready. 
 ```
 
-![DevOS 4-File Context Architecture](assets/devos-architecture.svg?v=1786143843)
+![DevOS 4-File Context Architecture](assets/devos-architecture.svg?v=1786144399)
 
 ## ඉක්මන් ආරම්භය
 

@@ -1,87 +1,299 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 550" width="1200" height="550">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
   <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Fira+Code:wght@400;500;600&amp;display=swap');
-      .bg { fill: #0d1117; }
-      .window-bg { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 12; }
-      .pane-bg { fill: #0d1117; rx: 8; stroke: #21262d; stroke-width: 1; }
-      
-      .title-main { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 700; fill: #e6edf3; letter-spacing: -0.5px; }
-      .title-sub { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #8b949e; }
-      .pane-title { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; fill: #c9d1d9; }
-      
-      .code-h2 { font-family: 'Fira Code', monospace; font-size: 18px; font-weight: 600; fill: #d2a8ff; }
-      .code-text { font-family: 'Fira Code', monospace; font-size: 16px; fill: #e6edf3; line-height: 1.6; }
-      
-      .chat-dim { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 400; fill: #8b949e; font-style: italic; }
-      .chat-alert { font-family: 'Fira Code', monospace; font-size: 15px; font-weight: 600; fill: #79c0ff; }
-      .chat-error { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; fill: #ff7b72; }
-      .chat-success { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; fill: #7ee787; }
-    </style>
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="15" stdDeviation="25" flood-color="#000000" flood-opacity="0.5"/>
+    <!-- Filters -->
+    <filter id="cardShadow" x="-12%" y="-12%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="14" flood-color="#000000" flood-opacity="0.4"/>
     </filter>
-    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#7ee787" flood-opacity="0.6"/>
+    <filter id="insetShadow" x="-5%" y="-5%" width="112%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="#000000" flood-opacity="0.3"/>
     </filter>
-    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#79c0ff" flood-opacity="0.6"/>
+    <filter id="glowCyan" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <filter id="glowCyanSoft" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="14"/>
+    </filter>
+    <filter id="glowGreen" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ambientBlur" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="55"/>
+    </filter>
+    <filter id="subtleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c2128"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="cardShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.025"/>
+      <stop offset="25%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="topAccentL" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#58a6ff" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="topAccentR" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3fb950" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#3fb950" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#3fb950" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="arrowStroke" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.4"/>
+      <stop offset="50%" stop-color="#79c0ff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="arrowHead" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#79c0ff"/>
+      <stop offset="100%" stop-color="#58a6ff"/>
+    </linearGradient>
+    <radialGradient id="orbCyan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#58a6ff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#58a6ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orbGreen" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#3fb950" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#3fb950" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.25"/>
+    </radialGradient>
+
+    <!-- Patterns -->
+    <pattern id="dotGrid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="11" cy="11" r="0.4" fill="#21262d" opacity="0.4"/>
+    </pattern>
+
+    <!-- Clip Paths -->
+    <clipPath id="clipLeft"><rect x="46" y="116" width="498" height="330" rx="10"/></clipPath>
+    <clipPath id="clipRight"><rect x="656" y="116" width="498" height="330" rx="10"/></clipPath>
   </defs>
 
-  <rect class="bg" width="1200" height="550" />
-  
-  <!-- Main Editor Window -->
-  <rect class="window-bg" x="100" y="60" width="1000" height="430" filter="url(#shadow)" />
-  
-  <!-- macOS Controls -->
-  <circle cx="125" cy="85" r="6" fill="#ff5f56" />
-  <circle cx="145" cy="85" r="6" fill="#ffbd2e" />
-  <circle cx="165" cy="85" r="6" fill="#27c93f" />
-  
-  <!-- Header -->
-  <text x="600" y="90" class="title-main" text-anchor="middle">Deterministic by Design</text>
-  
-  <!-- Divider Line -->
-  <line x1="100" y1="115" x2="1100" y2="115" stroke="#30363d" stroke-width="1.5" />
-  <line x1="600" y1="115" x2="600" y2="490" stroke="#30363d" stroke-width="1.5" />
-  
-  <!-- LEFT PANE: The Rule -->
-  <rect class="pane-bg" x="130" y="145" width="440" height="315" />
-  <text x="150" y="180" class="pane-title">📝 GROUNDING.md</text>
-  <line x1="130" y1="195" x2="570" y2="195" stroke="#21262d" stroke-width="1" />
-  
-  <text x="160" y="240" class="code-h2">## Scope Discipline</text>
-  <text x="160" y="275" class="code-text">&gt; Do not touch <tspan fill="#ff7b72">working code</tspan></text>
-  <text x="160" y="305" class="code-text">&gt; outside the assigned task scope.</text>
-  
-  <!-- Green Shield Icon (SVG Path) -->
-  <g transform="translate(160, 350) scale(1.5)" filter="url(#glow-green)">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M9 12l2 2 4-4" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap');
+    .inter { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; }
+    .mono  { font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', Consolas, 'Courier New', monospace; }
+  </style>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--                  BACKGROUND                  -->
+  <!-- ════════════════════════════════════════════ -->
+  <rect width="1200" height="500" fill="#0d1117"/>
+  <rect width="1200" height="500" fill="url(#dotGrid)" opacity="0.5"/>
+
+  <!-- Ambient orbs -->
+  <ellipse cx="290" cy="250" rx="260" ry="200" fill="url(#orbCyan)" filter="url(#ambientBlur)"/>
+  <ellipse cx="910" cy="250" rx="260" ry="200" fill="url(#orbGreen)" filter="url(#ambientBlur)"/>
+
+  <!-- Vignette -->
+  <rect width="1200" height="500" fill="url(#vignette)"/>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--                 LEFT CARD                    -->
+  <!-- ════════════════════════════════════════════ -->
+  <g>
+    <!-- Card body -->
+    <rect x="28" y="38" width="534" height="424" rx="16" fill="url(#cardGrad)" stroke="#30363d" stroke-width="1" filter="url(#cardShadow)"/>
+    <!-- Shine overlay -->
+    <rect x="28" y="38" width="534" height="424" rx="16" fill="url(#cardShine)"/>
+    <!-- Top accent glow -->
+    <rect x="28" y="38" width="534" height="2" rx="1" fill="url(#topAccentL)"/>
+
+    <!-- ── Badge ── -->
+    <rect x="50" y="56" width="72" height="22" rx="6" fill="#58a6ff" opacity="0.1"/>
+    <rect x="50" y="56" width="72" height="22" rx="6" fill="none" stroke="#58a6ff" stroke-width="0.6" opacity="0.35"/>
+    <text x="86" y="71.5" class="inter" font-size="9.5" font-weight="600" fill="#58a6ff" text-anchor="middle" letter-spacing="1.6">INPUT</text>
+
+    <!-- ── Title ── -->
+    <text x="50" y="101" class="inter" font-size="16" font-weight="600" fill="#e6edf3">The Context Constraint <tspan fill="#8b949e" font-weight="400" font-size="14.5">(GROUNDING.md)</tspan></text>
+
+    <!-- ── Code Block Container ── -->
+    <g clip-path="url(#clipLeft)">
+      <rect x="46" y="116" width="498" height="330" fill="#0d1117"/>
+      <!-- Top bar -->
+      <rect x="46" y="116" width="498" height="30" fill="#161b22"/>
+      <!-- Separator -->
+      <line x1="46" y1="146" x2="544" y2="146" stroke="#21262d" stroke-width="1"/>
+      <!-- Line number gutter -->
+      <rect x="46" y="146" width="42" height="300" fill="#080b10" opacity="0.5"/>
+      <line x1="88" y1="146" x2="88" y2="446" stroke="#21262d" stroke-width="0.5" opacity="0.4"/>
+    </g>
+    <rect x="46" y="116" width="498" height="330" rx="10" fill="none" stroke="#21262d" stroke-width="1" filter="url(#insetShadow)"/>
+
+    <!-- Window dots -->
+    <circle cx="66" cy="131" r="4.5" fill="#ff5f57" opacity="0.85"/>
+    <circle cx="82" cy="131" r="4.5" fill="#febc2e" opacity="0.85"/>
+    <circle cx="98" cy="131" r="4.5" fill="#28c840" opacity="0.85"/>
+
+    <!-- Filename -->
+    <text x="534" y="135.5" class="inter" font-size="11" font-weight="500" fill="#8b949e" text-anchor="end">GROUNDING.md</text>
+
+    <!-- ── Line Numbers ── -->
+    <text class="mono" font-size="11.5" fill="#484f58" text-anchor="end">
+      <tspan x="82" y="172">1</tspan>
+      <tspan x="82" y="198">2</tspan>
+      <tspan x="82" y="224">3</tspan>
+      <tspan x="82" y="250">4</tspan>
+      <tspan x="82" y="276">5</tspan>
+    </text>
+
+    <!-- ── Code Text ── -->
+    <!-- Line 1: ## Scope Discipline -->
+    <text x="100" y="172" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#ff7b72">## </tspan><tspan fill="#d2a8ff" font-weight="500">Scope Discipline</tspan>
+    </text>
+
+    <!-- Line 2: (blank) -->
+
+    <!-- Line 3: Never refactor adjacent code. -->
+    <text x="100" y="224" class="mono" font-size="12.5" fill="#c9d1d9">Never refactor adjacent code.</text>
+
+    <!-- Line 4: Fix only your own mess. -->
+    <!-- Subtle highlight behind the key constraint -->
+    <rect x="97" y="238" width="183" height="19" rx="3" fill="#58a6ff" opacity="0.04"/>
+    <text x="100" y="250" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#79c0ff">Fix only</tspan><tspan> your own mess.</tspan>
+    </text>
+
+    <!-- Line 5: Do not touch working systems outside the task scope. -->
+    <text x="100" y="276" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#79c0ff">Do not touch</tspan><tspan> working systems outside the task scope.</tspan>
+    </text>
+
+    <!-- Blinking cursor -->
+    <rect x="100" y="286" width="7.5" height="15" rx="1.5" fill="#58a6ff" opacity="0.75">
+      <animate attributeName="opacity" values="0.75;0;0.75" dur="1.1s" repeatCount="indefinite"/>
+    </rect>
   </g>
-  <text x="205" y="375" class="title-sub" fill="#7ee787">Strict Project Boundary Active</text>
 
 
-  <!-- RIGHT PANE: The Agent -->
-  <rect class="pane-bg" x="630" y="145" width="440" height="315" />
-  <text x="650" y="180" class="pane-title">🤖 Agent Execution Log</text>
-  <line x1="630" y1="195" x2="1070" y2="195" stroke="#21262d" stroke-width="1" />
-  
-  <!-- Chat Flow -->
-  <text x="660" y="240" class="chat-dim">Plan: Update the API route.</text>
-  <text x="660" y="270" class="chat-dim">Wait, I noticed the adjacent auth middleware</text>
-  <text x="660" y="295" class="chat-dim">is outdated. I will refactor it first...</text>
-  
-  <!-- The Interception -->
-  <rect x="650" y="325" width="400" height="40" fill="#1f2428" rx="6" stroke="#005cc5" stroke-width="1" />
-  <text x="665" y="350" class="chat-alert" filter="url(#glow-blue)">[!] INTERCEPTED BY GROUNDING.MD</text>
-  
-  <!-- The Save -->
-  <circle cx="670" cy="405" r="4" fill="#ff7b72" />
-  <text x="685" y="410" class="chat-error">Constraint violated. Action blocked.</text>
-  
-  <circle cx="670" cy="435" r="4" fill="#7ee787" />
-  <text x="685" y="440" class="chat-success">Reverting to assigned task scope.</text>
+  <!-- ════════════════════════════════════════════ -->
+  <!--              ARROW CONNECTOR                 -->
+  <!-- ════════════════════════════════════════════ -->
+  <g>
+    <!-- Wide ambient glow -->
+    <line x1="572" y1="250" x2="628" y2="250" stroke="#58a6ff" stroke-width="12" opacity="0.15" filter="url(#glowCyanSoft)"/>
+
+    <!-- Glow behind main line -->
+    <line x1="574" y1="250" x2="622" y2="250" stroke="#58a6ff" stroke-width="4" opacity="0.35" filter="url(#glowCyan)"/>
+
+    <!-- Main line -->
+    <line x1="574" y1="250" x2="618" y2="250" stroke="url(#arrowStroke)" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Arrowhead -->
+    <path d="M620,250 L632,250 L622,241 M622,259 L632,250" fill="none" stroke="url(#arrowHead)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" filter="url(#subtleGlow)"/>
+
+    <!-- Connection dots -->
+    <circle cx="568" cy="250" r="3" fill="#58a6ff" opacity="0.45"/>
+    <circle cx="568" cy="250" r="1.5" fill="#79c0ff" opacity="0.8"/>
+    <circle cx="636" cy="250" r="3" fill="#3fb950" opacity="0.45"/>
+    <circle cx="636" cy="250" r="1.5" fill="#7ee787" opacity="0.8"/>
+
+    <!-- Traveling dot animation -->
+    <circle r="2.5" fill="#79c0ff" opacity="0.9" filter="url(#subtleGlow)">
+      <animateMotion dur="2.5s" repeatCount="indefinite" keyTimes="0;0.4;0.6;1" keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1" calcMode="spline" path="M574,250 L628,250"/>
+      <animate attributeName="opacity" values="0;0.9;0.9;0" dur="2.5s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Label -->
+    <text x="600" y="278" class="inter" font-size="8" font-weight="700" fill="#58a6ff" text-anchor="middle" letter-spacing="2.5" opacity="0.5">APPLIES</text>
+  </g>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--                 RIGHT CARD                   -->
+  <!-- ════════════════════════════════════════════ -->
+  <g>
+    <!-- Card body -->
+    <rect x="638" y="38" width="534" height="424" rx="16" fill="url(#cardGrad)" stroke="#30363d" stroke-width="1" filter="url(#cardShadow)"/>
+    <!-- Shine overlay -->
+    <rect x="638" y="38" width="534" height="424" rx="16" fill="url(#cardShine)"/>
+    <!-- Top accent glow -->
+    <rect x="638" y="38" width="534" height="2" rx="1" fill="url(#topAccentR)"/>
+
+    <!-- ── Badge ── -->
+    <rect x="660" y="56" width="82" height="22" rx="6" fill="#3fb950" opacity="0.1"/>
+    <rect x="660" y="56" width="82" height="22" rx="6" fill="none" stroke="#3fb950" stroke-width="0.6" opacity="0.35"/>
+    <text x="701" y="71.5" class="inter" font-size="9.5" font-weight="600" fill="#3fb950" text-anchor="middle" letter-spacing="1.6">OUTPUT</text>
+
+    <!-- ── Title ── -->
+    <text x="660" y="101" class="inter" font-size="16" font-weight="600" fill="#e6edf3">The Agent Execution</text>
+
+    <!-- ── Terminal Container ── -->
+    <g clip-path="url(#clipRight)">
+      <rect x="656" y="116" width="498" height="330" fill="#0d1117"/>
+      <!-- Top bar -->
+      <rect x="656" y="116" width="498" height="30" fill="#161b22"/>
+      <!-- Separator -->
+      <line x1="656" y1="146" x2="1154" y2="146" stroke="#21262d" stroke-width="1"/>
+    </g>
+    <rect x="656" y="116" width="498" height="330" rx="10" fill="none" stroke="#21262d" stroke-width="1" filter="url(#insetShadow)"/>
+
+    <!-- Window dots -->
+    <circle cx="676" cy="131" r="4.5" fill="#ff5f57" opacity="0.85"/>
+    <circle cx="692" cy="131" r="4.5" fill="#febc2e" opacity="0.85"/>
+    <circle cx="708" cy="131" r="4.5" fill="#28c840" opacity="0.85"/>
+
+    <!-- Terminal title -->
+    <text x="1144" y="135.5" class="inter" font-size="11" font-weight="500" fill="#8b949e" text-anchor="end">agent — zsh</text>
+
+    <!-- ── Terminal Text ── -->
+    <!-- Line 1: Plan: Update the API route. -->
+    <text x="672" y="170" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#3fb950" font-weight="500">Plan:</tspan><tspan> Update the API route.</tspan>
+    </text>
+
+    <!-- Line 2: Wait, I noticed the adjacent auth middleware is outdated. -->
+    <!-- Subtle warning highlight -->
+    <rect x="669" y="182" width="468" height="19" rx="3" fill="#f0883e" opacity="0.03"/>
+    <text x="672" y="198" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#f0883e">Wait</tspan><tspan>, I noticed the adjacent auth middleware is outdated.</tspan>
+    </text>
+
+    <!-- Line 3: ❯ Checking GROUNDING.md constraint... -->
+    <text x="672" y="234" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#58a6ff" font-weight="500">❯</tspan><tspan fill="#79c0ff"> Checking </tspan><tspan fill="#d2a8ff">GROUNDING.md</tspan><tspan fill="#79c0ff"> constraint...</tspan>
+    </text>
+
+    <!-- Line 4: Constraint found: 'Fix only your own mess.' -->
+    <!-- Subtle highlight behind the matched constraint -->
+    <rect x="669" y="246" width="370" height="19" rx="3" fill="#7ee787" opacity="0.035"/>
+    <text x="672" y="260" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#f0883e" font-weight="500">Constraint found:</tspan><tspan> </tspan><tspan fill="#7ee787">'Fix only your own mess.'</tspan>
+    </text>
+
+    <!-- Line 5: ✓ I will leave the middleware alone. -->
+    <!-- Subtle success highlight -->
+    <rect x="669" y="280" width="335" height="19" rx="3" fill="#3fb950" opacity="0.04"/>
+    <text x="672" y="296" class="mono" font-size="12.5" fill="#c9d1d9">
+      <tspan fill="#3fb950" font-weight="500">✓</tspan><tspan fill="#3fb950"> I will leave the middleware alone.</tspan>
+    </text>
+
+    <!-- Blinking cursor -->
+    <rect x="672" y="306" width="7.5" height="15" rx="1.5" fill="#3fb950" opacity="0.75">
+      <animate attributeName="opacity" values="0.75;0;0.75" dur="1.1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+
+  <!-- ════════════════════════════════════════════ -->
+  <!--            DECORATIVE DETAILS                -->
+  <!-- ════════════════════════════════════════════ -->
+
+  <!-- Subtle corner accents -->
+  <path d="M28,60 L28,38 Q28,38 38,38" fill="none" stroke="#58a6ff" stroke-width="0.5" opacity="0.2"/>
+  <path d="M1172,60 L1172,38 Q1172,38 1162,38" fill="none" stroke="#3fb950" stroke-width="0.5" opacity="0.2"/>
+
+  <!-- Bottom-right watermark -->
+  <text x="1172" y="484" class="inter" font-size="8.5" font-weight="500" fill="#30363d" text-anchor="end" letter-spacing="1">REPOSITORY ARCHITECTURE</text>
 
 </svg>
