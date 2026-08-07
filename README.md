@@ -1,3 +1,6 @@
+<img width="1672" height="941" alt="devos cover" src="https://github.com/user-attachments/assets/af02e000-4f6f-4e57-8d0c-4262e41fc3a5" />
+
+
 ![DevOS: Predictability Over Perfection](assets/devos-hero-v2.svg)
 
 
