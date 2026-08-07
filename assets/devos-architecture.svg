@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap');
+      .bg { fill: #0d1117; }
+      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 12; }
+      .title { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; fill: #e6edf3; }
+      .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #8b949e; }
+      .code-bg { fill: #0d1117; rx: 6; }
+      .text-code { font-family: 'Fira Code', monospace; font-size: 14px; fill: #e6edf3; }
+      .text-chat { font-family: 'Inter', sans-serif; font-size: 15px; fill: #e6edf3; }
+      .arrow { fill: none; stroke: #58a6ff; stroke-width: 3; stroke-dasharray: 6 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="500" />
+  
+  <!-- Left Card: Input -->
+  <rect class="card" x="100" y="75" width="450" height="350" />
+  <text x="140" y="125" class="title">The Input</text>
+  <text x="140" y="150" class="subtitle">Plain English constraint in GROUNDING.md</text>
+  
+  <rect class="code-bg" x="130" y="180" width="390" height="180" />
+  <text x="150" y="220" class="text-code" fill="#ff7b72">## Scope Discipline</text>
+  <text x="150" y="250" class="text-code" fill="#a5d6ff">Never refactor adjacent code. </text>
+  <text x="150" y="275" class="text-code" fill="#a5d6ff">Fix only your own mess. Do not touch</text>
+  <text x="150" y="300" class="text-code" fill="#a5d6ff">working systems outside the task scope.</text>
+  
+  <!-- Arrow -->
+  <path class="arrow" d="M 570 250 L 630 250" />
+  <polygon points="635,250 625,245 625,255" fill="#58a6ff" />
+
+  <!-- Right Card: Output -->
+  <rect class="card" x="650" y="75" width="450" height="350" />
+  <text x="690" y="125" class="title">The Output</text>
+  <text x="690" y="150" class="subtitle">The agent halts a bad, unprompted action</text>
+  
+  <rect class="code-bg" x="680" y="180" width="390" height="180" />
+  <text x="700" y="215" class="text-code" fill="#8b949e">Plan: Update the API route.</text>
+  <text x="700" y="240" class="text-code" fill="#8b949e">Wait, I noticed the adjacent auth </text>
+  <text x="700" y="265" class="text-code" fill="#8b949e">middleware is outdated.</text>
+  
+  <text x="700" y="300" class="text-code" fill="#58a6ff">&gt; Checking GROUNDING.md constraint...</text>
+  <text x="700" y="330" class="text-code" fill="#ff7b72">"Fix only your own mess."</text>
+  <text x="700" y="330" class="text-code" fill="#e6edf3" dx="215">I will leave</text>
+  <text x="700" y="330" class="text-code" fill="#e6edf3" dy="25">the middleware alone.</text>
+</svg>
