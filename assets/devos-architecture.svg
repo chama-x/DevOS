@@ -1,47 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="1200" height="500">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 550" width="1200" height="550">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Fira+Code:wght@400;500&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Fira+Code:wght@400;500;600&amp;display=swap');
       .bg { fill: #0d1117; }
-      .card { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 12; }
-      .title { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; fill: #e6edf3; }
-      .subtitle { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #8b949e; }
-      .code-bg { fill: #0d1117; rx: 6; }
-      .text-code { font-family: 'Fira Code', monospace; font-size: 14px; fill: #e6edf3; }
-      .text-chat { font-family: 'Inter', sans-serif; font-size: 15px; fill: #e6edf3; }
-      .arrow { fill: none; stroke: #58a6ff; stroke-width: 3; stroke-dasharray: 6 6; }
+      .window-bg { fill: #161b22; stroke: #30363d; stroke-width: 1.5; rx: 12; }
+      .pane-bg { fill: #0d1117; rx: 8; stroke: #21262d; stroke-width: 1; }
+      
+      .title-main { font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 700; fill: #e6edf3; letter-spacing: -0.5px; }
+      .title-sub { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500; fill: #8b949e; }
+      .pane-title { font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; fill: #c9d1d9; }
+      
+      .code-h2 { font-family: 'Fira Code', monospace; font-size: 18px; font-weight: 600; fill: #d2a8ff; }
+      .code-text { font-family: 'Fira Code', monospace; font-size: 16px; fill: #e6edf3; line-height: 1.6; }
+      
+      .chat-dim { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 400; fill: #8b949e; font-style: italic; }
+      .chat-alert { font-family: 'Fira Code', monospace; font-size: 15px; font-weight: 600; fill: #79c0ff; }
+      .chat-error { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; fill: #ff7b72; }
+      .chat-success { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; fill: #7ee787; }
     </style>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="15" stdDeviation="25" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#7ee787" flood-opacity="0.6"/>
+    </filter>
+    <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#79c0ff" flood-opacity="0.6"/>
+    </filter>
   </defs>
 
-  <rect class="bg" width="1200" height="500" />
+  <rect class="bg" width="1200" height="550" />
   
-  <!-- Left Card: Input -->
-  <rect class="card" x="100" y="75" width="450" height="350" />
-  <text x="140" y="125" class="title">The Input</text>
-  <text x="140" y="150" class="subtitle">Plain English constraint in GROUNDING.md</text>
+  <!-- Main Editor Window -->
+  <rect class="window-bg" x="100" y="60" width="1000" height="430" filter="url(#shadow)" />
   
-  <rect class="code-bg" x="130" y="180" width="390" height="180" />
-  <text x="150" y="220" class="text-code" fill="#ff7b72">## Scope Discipline</text>
-  <text x="150" y="250" class="text-code" fill="#a5d6ff">Never refactor adjacent code. </text>
-  <text x="150" y="275" class="text-code" fill="#a5d6ff">Fix only your own mess. Do not touch</text>
-  <text x="150" y="300" class="text-code" fill="#a5d6ff">working systems outside the task scope.</text>
+  <!-- macOS Controls -->
+  <circle cx="125" cy="85" r="6" fill="#ff5f56" />
+  <circle cx="145" cy="85" r="6" fill="#ffbd2e" />
+  <circle cx="165" cy="85" r="6" fill="#27c93f" />
   
-  <!-- Arrow -->
-  <path class="arrow" d="M 570 250 L 630 250" />
-  <polygon points="635,250 625,245 625,255" fill="#58a6ff" />
+  <!-- Header -->
+  <text x="600" y="90" class="title-main" text-anchor="middle">Deterministic by Design</text>
+  
+  <!-- Divider Line -->
+  <line x1="100" y1="115" x2="1100" y2="115" stroke="#30363d" stroke-width="1.5" />
+  <line x1="600" y1="115" x2="600" y2="490" stroke="#30363d" stroke-width="1.5" />
+  
+  <!-- LEFT PANE: The Rule -->
+  <rect class="pane-bg" x="130" y="145" width="440" height="315" />
+  <text x="150" y="180" class="pane-title">📝 GROUNDING.md</text>
+  <line x1="130" y1="195" x2="570" y2="195" stroke="#21262d" stroke-width="1" />
+  
+  <text x="160" y="240" class="code-h2">## Scope Discipline</text>
+  <text x="160" y="275" class="code-text">&gt; Do not touch <tspan fill="#ff7b72">working code</tspan></text>
+  <text x="160" y="305" class="code-text">&gt; outside the assigned task scope.</text>
+  
+  <!-- Green Shield Icon (SVG Path) -->
+  <g transform="translate(160, 350) scale(1.5)" filter="url(#glow-green)">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9 12l2 2 4-4" fill="none" stroke="#7ee787" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="205" y="375" class="title-sub" fill="#7ee787">Strict Project Boundary Active</text>
 
-  <!-- Right Card: Output -->
-  <rect class="card" x="650" y="75" width="450" height="350" />
-  <text x="690" y="125" class="title">The Output</text>
-  <text x="690" y="150" class="subtitle">The agent halts a bad, unprompted action</text>
+
+  <!-- RIGHT PANE: The Agent -->
+  <rect class="pane-bg" x="630" y="145" width="440" height="315" />
+  <text x="650" y="180" class="pane-title">🤖 Agent Execution Log</text>
+  <line x1="630" y1="195" x2="1070" y2="195" stroke="#21262d" stroke-width="1" />
   
-  <rect class="code-bg" x="680" y="180" width="390" height="180" />
-  <text x="700" y="215" class="text-code" fill="#8b949e">Plan: Update the API route.</text>
-  <text x="700" y="240" class="text-code" fill="#8b949e">Wait, I noticed the adjacent auth </text>
-  <text x="700" y="265" class="text-code" fill="#8b949e">middleware is outdated.</text>
+  <!-- Chat Flow -->
+  <text x="660" y="240" class="chat-dim">Plan: Update the API route.</text>
+  <text x="660" y="270" class="chat-dim">Wait, I noticed the adjacent auth middleware</text>
+  <text x="660" y="295" class="chat-dim">is outdated. I will refactor it first...</text>
   
-  <text x="700" y="300" class="text-code" fill="#58a6ff">&gt; Checking GROUNDING.md constraint...</text>
-  <text x="700" y="330" class="text-code" fill="#ff7b72">"Fix only your own mess."</text>
-  <text x="700" y="330" class="text-code" fill="#e6edf3" dx="215">I will leave</text>
-  <text x="700" y="330" class="text-code" fill="#e6edf3" dy="25">the middleware alone.</text>
+  <!-- The Interception -->
+  <rect x="650" y="325" width="400" height="40" fill="#1f2428" rx="6" stroke="#005cc5" stroke-width="1" />
+  <text x="665" y="350" class="chat-alert" filter="url(#glow-blue)">[!] INTERCEPTED BY GROUNDING.MD</text>
+  
+  <!-- The Save -->
+  <circle cx="670" cy="405" r="4" fill="#ff7b72" />
+  <text x="685" y="410" class="chat-error">Constraint violated. Action blocked.</text>
+  
+  <circle cx="670" cy="435" r="4" fill="#7ee787" />
+  <text x="685" y="440" class="chat-success">Reverting to assigned task scope.</text>
+
 </svg>
