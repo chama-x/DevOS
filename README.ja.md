@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 `.agents` フォルダを任意のワークスペースにドロップするだけで、次に開いたエージェントは最初の応答の前に4つのファイルを読み込みます。もはやターミナルアクセスを持つだけの一般的なチャットボットではありません。

@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 Déposez le dossier `.agents` dans n'importe quel espace de travail. Le prochain agent qui l'ouvrira lira quatre fichiers avant sa première réponse — ce ne sera pas un simple chatbot générique avec un accès au terminal.

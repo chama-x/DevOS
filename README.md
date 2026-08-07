@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 Drop the `.agents` folder into any workspace. The next agent that opens

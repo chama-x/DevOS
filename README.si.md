@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 `.agents` ෆෝල්ඩරය ඕනෑම workspace එකකට එකතු කරන්න. ඊළඟට එය විවෘත කරන agent තම පළමු ප්‍රතිචාරයට පෙර ගොනු හතරක් කියවයි — එය terminal access සහිත සාමාන්‍ය chatbot කෙනෙකු පමණක් නොවේ.

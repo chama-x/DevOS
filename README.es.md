@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 Simplemente copia la carpeta `.agents` en cualquier espacio de trabajo. El próximo agente que la abra leerá cuatro archivos antes de su primera respuesta — no será un simple chatbot genérico con acceso a la terminal.

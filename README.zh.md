@@ -1,5 +1,3 @@
-# DevOS
-
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
 将 `.agents` 文件夹放入任何工作区。接下来打开它的智能体（Agent）在给出第一次回复前会先读取四个文件——它不再是一个仅仅带有终端访问权限的通用聊天机器人。
