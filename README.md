@@ -1,8 +1,23 @@
 ![DevOS: Predictability Over Perfection](assets/devos-bento-hero.jpg)
 
-Drop the `.agents` folder into any workspace. The next agent that opens
-it reads four files before its first response — not a generic chatbot
-with terminal access.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.0.0-success.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
+[![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
+
+**DevOS gives your AI coding agents persistent memory, behavioral discipline, and strict project boundaries.** 
+
+Drop the `.agents` folder into any workspace, and the next agent that opens it reads four files before its first response—transforming it from a generic chatbot into a predictable, context-aware engineering partner.
+
+```text
+> Agent initialized.
+> Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
+> Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
+> Reading .agents/worklog.md... [Session history restored]
+> Ready. 
+```
+
 
 ## What It Does
 
@@ -22,25 +37,35 @@ dynamic files are read on session start. That's the entire system.
 
 ![DevOS 4-File Context Architecture](assets/devos-architecture-infographic.jpg)
 
-## Installation
+## Quickstart
 
-Copy `.agents/` into your project root. Fill in `rules/IDENTITY.md` for
-your project. Done.
+The fastest way to install DevOS is to pull the `.agents` directory directly into your project root using `degit`:
 
-## What's Included
+```bash
+npx degit chama-x/DevOS/.agents .agents
+```
 
-Beyond the four core files, DevOS ships with:
+Then, open `rules/IDENTITY.md` and define your project's boundaries. You're done.
 
-- **11 curated skills** — narrow reasoning loops and output constraints
-  for specific tasks, not generic reference docs the agent might skim.
-- **Skill calibration** — SkillsBench routing loads only the skills a
-  task needs, instead of stacking all eleven into context.
-- **Evolution governance** — agents propose new skills and vocabulary,
-  but only the human approves.
-- **Context compression** — automatic archiving prevents memory files
-  from growing unbounded.
-- **Semantic dictionary** — maps your shorthand and preferences to
-  deterministic agent behavior.
+## Features
+
+Beyond the four core files, DevOS is engineered for disciplined execution:
+
+| Feature | How it works |
+|---|---|
+| **11 Curated Skills** | Narrow reasoning loops for specific tasks, replacing generic reference docs. |
+| **Skill Calibration** | Dynamic routing loads *only* what a task needs, preventing context overload. |
+| **Evolution Governance** | Agents can propose new rules and vocabulary, but only humans approve them. |
+| **Context Compression** | Automatic archiving keeps memory files from growing unbounded over time. |
+| **Semantic Dictionary** | Maps your shorthand preferences into deterministic agent behaviors. |
+
+## Documentation & Community
+
+We prioritize trust, predictability, and collaboration. 
+- [Changelog](CHANGELOG.md) - See our release history.
+- [Contributing Guidelines](CONTRIBUTING.md) - Learn how to add new Skills safely.
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Our community standards.
+
 
 ## Philosophy
 
