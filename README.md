@@ -1,5 +1,7 @@
 # DevOS
 
+![DevOS Architecture](assets/DevOS.jpg)
+
 Drop the `.agents` folder into any workspace. The next agent that opens
 it reads four files before its first response — not a generic chatbot
 with terminal access.

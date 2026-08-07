@@ -1,5 +1,7 @@
 # DevOS
 
+![DevOS Architecture](assets/DevOS.jpg)
+
 Simplemente copia la carpeta `.agents` en cualquier espacio de trabajo. El próximo agente que la abra leerá cuatro archivos antes de su primera respuesta — no será un simple chatbot genérico con acceso a la terminal.
 
 ## Qué Hace

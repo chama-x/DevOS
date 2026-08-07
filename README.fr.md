@@ -1,5 +1,7 @@
 # DevOS
 
+![DevOS Architecture](assets/DevOS.jpg)
+
 Déposez le dossier `.agents` dans n'importe quel espace de travail. Le prochain agent qui l'ouvrira lira quatre fichiers avant sa première réponse — ce ne sera pas un simple chatbot générique avec un accès au terminal.
 
 ## Ce qu'il fait
