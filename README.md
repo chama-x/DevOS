@@ -1,4 +1,4 @@
-![DevOS: Predictability Over Perfection](assets/devos-hero.svg)
+![DevOS: Predictability Over Perfection](assets/devos-hero.svg?v=1786143843)
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -33,7 +33,7 @@ with four files:
 Two rule files are injected into every conversation (~700 tokens). Two
 dynamic files are read on session start. That's the entire system.
 
-![DevOS 4-File Context Architecture](assets/devos-architecture.svg)
+![DevOS 4-File Context Architecture](assets/devos-architecture.svg?v=1786143843)
 
 ## Quickstart
 
