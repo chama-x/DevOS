@@ -247,16 +247,16 @@
     <text x="1144" y="135.5" class="inter" font-size="11" font-weight="500" fill="#8b949e" text-anchor="end">agent — zsh</text>
 
     <!-- ── Terminal Text ── -->
-    <!-- Line 1: Plan: Update the API route. -->
+    <!-- Line 1: Task: Fix the submit button alignment. -->
     <text x="672" y="170" class="mono" font-size="12.5" fill="#c9d1d9">
-      <tspan fill="#3fb950" font-weight="500">Plan:</tspan><tspan> Update the API route.</tspan>
+      <tspan fill="#3fb950" font-weight="500">Task:</tspan><tspan> Fix the submit button alignment.</tspan>
     </text>
 
-    <!-- Line 2: Wait, I noticed the adjacent auth middleware is outdated. -->
+    <!-- Line 2: Plan: I will refactor the surrounding layout to Tailwind. -->
     <!-- Subtle warning highlight -->
     <rect x="669" y="182" width="468" height="19" rx="3" fill="#f0883e" opacity="0.03"/>
     <text x="672" y="198" class="mono" font-size="12.5" fill="#c9d1d9">
-      <tspan fill="#f0883e">Wait</tspan><tspan>, I noticed the adjacent auth middleware is outdated.</tspan>
+      <tspan fill="#f0883e">Plan</tspan><tspan>: I will refactor the surrounding layout to Tailwind.</tspan>
     </text>
 
     <!-- Line 3: ❯ Checking GROUNDING.md constraint... -->
@@ -264,18 +264,18 @@
       <tspan fill="#58a6ff" font-weight="500">❯</tspan><tspan fill="#79c0ff"> Checking </tspan><tspan fill="#d2a8ff">GROUNDING.md</tspan><tspan fill="#79c0ff"> constraint...</tspan>
     </text>
 
-    <!-- Line 4: Constraint found: 'Fix only your own mess.' -->
+    <!-- Line 4: 🛑 VETO: 'Never refactor adjacent code.' -->
     <!-- Subtle highlight behind the matched constraint -->
-    <rect x="669" y="246" width="370" height="19" rx="3" fill="#7ee787" opacity="0.035"/>
+    <rect x="669" y="246" width="370" height="19" rx="3" fill="#ff7b72" opacity="0.05"/>
     <text x="672" y="260" class="mono" font-size="12.5" fill="#c9d1d9">
-      <tspan fill="#f0883e" font-weight="500">Constraint found:</tspan><tspan> </tspan><tspan fill="#7ee787">'Fix only your own mess.'</tspan>
+      <tspan fill="#ff7b72" font-weight="500">🛑 VETO:</tspan><tspan> </tspan><tspan fill="#ff7b72">'Never refactor adjacent code.'</tspan>
     </text>
 
-    <!-- Line 5: ✓ I will leave the middleware alone. -->
+    <!-- Line 5: ✓ Revised: I will only modify the button CSS. -->
     <!-- Subtle success highlight -->
-    <rect x="669" y="280" width="335" height="19" rx="3" fill="#3fb950" opacity="0.04"/>
+    <rect x="669" y="280" width="350" height="19" rx="3" fill="#3fb950" opacity="0.04"/>
     <text x="672" y="296" class="mono" font-size="12.5" fill="#c9d1d9">
-      <tspan fill="#3fb950" font-weight="500">✓</tspan><tspan fill="#3fb950"> I will leave the middleware alone.</tspan>
+      <tspan fill="#3fb950" font-weight="500">✓</tspan><tspan fill="#3fb950"> Revised: I will only modify the button CSS.</tspan>
     </text>
 
     <!-- Blinking cursor -->

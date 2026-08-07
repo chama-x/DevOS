@@ -33,7 +33,7 @@ with four files:
 Two rule files are injected into every conversation (~700 tokens). Two
 dynamic files are read on session start. That's the entire system.
 
-![DevOS 4-File Context Architecture](assets/devos-architecture-v2.svg)
+![DevOS 4-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
 
 ## Quickstart
 

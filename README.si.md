@@ -15,7 +15,7 @@
 > Ready. 
 ```
 
-![DevOS 4-File Context Architecture](assets/devos-architecture-v2.svg)
+![DevOS 4-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
 
 ## ඉක්මන් ආරම්භය
 
