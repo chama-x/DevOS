@@ -49,20 +49,10 @@ DevOSは、エビデンスに裏付けられた4つの原則に基づいて構�
 ├── rules/
 │   ├── IDENTITY.md          ← プロジェクトに合わせて記入
 │   ├── GROUNDING.md         ← エージェントの行動調整
-│   ├── EVOLUTION.md         ← 管理された学習ループ
-│   ├── SKILL_ROUTING.md     ← スキルの決定木
-│   └── business_context.md  ← ナレッジグラフのテンプレート
-├── AGENTS.md                ← スキル調整のルール
+│   └── SKILL_ROUTING.md     ← スキルの決定木
 ├── current.md               ← タスクの揮発性状態
 ├── worklog.md               ← 追記専用の履歴
-├── memory/
-│   ├── user_lexicon.md      ← 意味論的辞書
-│   └── rejected_proposals.md
-├── skills/                  ← 11の厳選されたスキルディレクトリ
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← 11の厳選されたスキルディレクトリ
 ```
 
 ## ライセンス

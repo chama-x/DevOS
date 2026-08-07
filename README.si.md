@@ -49,20 +49,10 @@ DevOS ගොඩනගා ඇත්තේ සාක්ෂි සහිත නි�
 ├── rules/
 │   ├── IDENTITY.md          ← ඔබේ ව්‍යාපෘතිය සඳහා මෙය සම්පූර්ණ කරන්න
 │   ├── GROUNDING.md         ← Agent ගේ හැසිරීම් ක්‍රමාංකනය
-│   ├── EVOLUTION.md         ← පාලනය කළ ඉගෙනුම් ලූපය
-│   ├── SKILL_ROUTING.md     ← කුසලතා තීරණ ගස
-│   └── business_context.md  ← දැනුම් ප්‍රස්තාර (Knowledge graph) අච්චුව
-├── AGENTS.md                ← කුසලතා ක්‍රමාංකන රීති
+│   └── SKILL_ROUTING.md     ← කුසලතා තීරණ ගස
 ├── current.md               ← තාවකාලික කාර්යය තත්ත්වය (Volatile task state)
 ├── worklog.md               ← Append-only ඉතිහාසය
-├── memory/
-│   ├── user_lexicon.md      ← Semantic ශබ්දකෝෂය
-│   └── rejected_proposals.md
-├── skills/                  ← තෝරාගත් කුසලතා 11 ක නාමාවලි
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← තෝරාගත් කුසලතා 11 ක නාමාවලි
 ```
 
 ## බලපත්‍රය

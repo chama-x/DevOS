@@ -49,20 +49,10 @@ Et un principe de conception : **la prévisibilité avant la perfection.** L'hum
 ├── rules/
 │   ├── IDENTITY.md          ← Remplissez ceci pour votre projet
 │   ├── GROUNDING.md         ← Calibrage comportemental de l'agent
-│   ├── EVOLUTION.md         ← Boucle d'apprentissage gouvernée
-│   ├── SKILL_ROUTING.md     ← Arbre de décision des compétences
-│   └── business_context.md  ← Modèle de graphe de connaissances
-├── AGENTS.md                ← Règles de calibrage des compétences
+│   └── SKILL_ROUTING.md     ← Arbre de décision des compétences
 ├── current.md               ← État de la tâche (volatile)
 ├── worklog.md               ← Historique (ajout seulement)
-├── memory/
-│   ├── user_lexicon.md      ← Dictionnaire sémantique
-│   └── rejected_proposals.md
-├── skills/                  ← 11 dossiers de compétences sélectionnées
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← 11 dossiers de compétences sélectionnées
 ```
 
 ## Licence

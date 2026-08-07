@@ -10,3 +10,4 @@
 | 2026-07-20 | Dashboard Relocation & Upstream Sync | 8 | 0 | 0 | 0 | SUCCESS |
 | 2026-08-07 | Skills audit: 27→13, fixed dead routing, archived cloned repos | done |
 | 2026-08-07 | Architectural cleanup: removed textbook skills, rewrote config profiles (10 total) | done |
+| 2026-08-07 | Modernized root repo files (READMEs, EXAMPLES, assets) and added apple-writing-philosophy skill | done |

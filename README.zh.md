@@ -49,20 +49,10 @@ DevOS 建立在四项经过证据支持的指令之上：
 ├── rules/
 │   ├── IDENTITY.md          ← 为你的项目填写此文件
 │   ├── GROUNDING.md         ← 智能体行为校准
-│   ├── EVOLUTION.md         ← 受控的学习循环
-│   ├── SKILL_ROUTING.md     ← 技能决策树
-│   └── business_context.md  ← 知识图谱模板
-├── AGENTS.md                ← 技能校准规则
+│   └── SKILL_ROUTING.md     ← 技能决策树
 ├── current.md               ← 易失性任务状态
 ├── worklog.md               ← 仅追加的历史记录
-├── memory/
-│   ├── user_lexicon.md      ← 语义字典
-│   └── rejected_proposals.md
-├── skills/                  ← 11 个精选技能目录
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← 11 个精选技能目录
 ```
 
 ## 许可证

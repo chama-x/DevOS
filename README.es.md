@@ -49,20 +49,10 @@ Y un principio de diseño: **predictibilidad sobre perfección.** El humano no n
 ├── rules/
 │   ├── IDENTITY.md          ← Completa esto para tu proyecto
 │   ├── GROUNDING.md         ← Calibración de comportamiento del agente
-│   ├── EVOLUTION.md         ← Bucle de aprendizaje gobernado
-│   ├── SKILL_ROUTING.md     ← Árbol de decisión de habilidades
-│   └── business_context.md  ← Plantilla de grafo de conocimiento
-├── AGENTS.md                ← Reglas de calibración de habilidades
+│   └── SKILL_ROUTING.md     ← Árbol de decisión de habilidades
 ├── current.md               ← Estado volátil de la tarea
 ├── worklog.md               ← Historial (solo adición)
-├── memory/
-│   ├── user_lexicon.md      ← Diccionario semántico
-│   └── rejected_proposals.md
-├── skills/                  ← 11 directorios de habilidades seleccionadas
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← 11 directorios de habilidades seleccionadas
 ```
 
 ## Licencia

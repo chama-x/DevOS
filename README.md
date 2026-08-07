@@ -67,20 +67,10 @@ compensate for.
 ├── rules/
 │   ├── IDENTITY.md          ← Fill this for your project
 │   ├── GROUNDING.md         ← Agent behavioral calibration
-│   ├── EVOLUTION.md         ← Governed learning loop
-│   ├── SKILL_ROUTING.md     ← Skill decision tree
-│   └── business_context.md  ← Knowledge graph template
-├── AGENTS.md                ← Skill calibration rules
+│   └── SKILL_ROUTING.md     ← Skill decision tree
 ├── current.md               ← Volatile task state
 ├── worklog.md               ← Append-only history
-├── memory/
-│   ├── user_lexicon.md      ← Semantic dictionary
-│   └── rejected_proposals.md
-├── skills/                  ← 11 curated skill directories
-├── telemetry/
-│   └── runs.md
-└── archive/
-    └── index.md
+└── skills/                  ← 11 curated skill directories
 ```
 
 ## License
