@@ -1,6 +1,6 @@
 # DevOS
 
-Déposez le dossier `.agents` dans n'importe quel espace de travail. Le prochain agent qui l'ouvrira deviendra un partenaire de travail prévisible et ancré dans le contexte — et non un simple chatbot générique avec un accès au terminal.
+Déposez le dossier `.agents` dans n'importe quel espace de travail. Le prochain agent qui l'ouvrira lira quatre fichiers avant sa première réponse — ce ne sera pas un simple chatbot générique avec un accès au terminal.
 
 ## Ce qu'il fait
 
@@ -11,7 +11,7 @@ Un agent d'IDE fraîchement lancé ne connaît pas votre projet, vos standards, 
 | `rules/IDENTITY.md` | Votre déclaration de ce qu'est le projet, à quoi ressemble le travail terminé, et où l'agent a de l'autonomie par rapport aux décisions que vous validez. |
 | `rules/GROUNDING.md` | Calibrage comportemental — comment l'agent implémente, communique, repère ses propres erreurs, et démarre chaque session. |
 | `current.md` | Ce sur quoi l'agent travaille en ce moment, ce qu'il ne touche pas, et quand la tâche est terminée. |
-| `worklog.md` | Ce qui a été fait avant — pour que la prochaine session reprenne là où la précédente s'est arrêtée. |
+| `worklog.md` | Ce qui a été fait avant — pour que la prochaine session ne reparte pas de zéro. |
 
 Deux fichiers de règles sont injectés dans chaque conversation (~700 jetons). Deux fichiers dynamiques sont lus au démarrage de la session. C'est tout le système.
 
@@ -23,8 +23,8 @@ Copiez `.agents/` à la racine de votre projet. Remplissez `rules/IDENTITY.md` p
 
 Au-delà des quatre fichiers de base, DevOS est livré avec :
 
-- **11 compétences (skills) sélectionnées** — des boucles de raisonnement strictement configurées et des contraintes de formatage qui préviennent les hallucinations sans agir comme des manuels génériques.
-- **Calibrage des compétences** — un routage basé sur des preuves (SkillsBench) qui prévient la surcharge cognitive due à l'empilement de trop de compétences.
+- **11 compétences (skills) sélectionnées** — des boucles de raisonnement étroites et des contraintes de sortie pour des tâches spécifiques, et non des documents de référence génériques que l'agent pourrait survoler.
+- **Calibrage des compétences** — le routage SkillsBench charge uniquement les compétences dont une tâche a besoin, au lieu d'empiler les onze dans le contexte.
 - **Gouvernance de l'évolution** — les agents proposent de nouvelles compétences et du vocabulaire, mais seul l'humain approuve.
 - **Compression de contexte** — l'archivage automatique empêche les fichiers de mémoire de croître indéfiniment.
 - **Dictionnaire sémantique** — associe vos raccourcis et préférences à un comportement déterministe de l'agent.
@@ -35,10 +35,10 @@ DevOS est construit sur quatre directives basées sur des preuves :
 
 1. **Demandez, ne supposez pas** — exprimez les incertitudes avant de continuer (+3,7 % de réussite des tâches).
 2. **Implémentation minimum viable** — le code le plus petit qui fonctionne, pas d'abstraction spéculative.
-3. **Discipline de la portée** — ne touchez qu'à ce que la tâche exige (le taux d'erreurs critiques des agents triple sur les tâches de maintenance).
+3. **Discipline de la portée** — ne touchez qu'à ce que la tâche exige (les agents par défaut triplent leur taux de pannes sur les tâches de maintenance).
 4. **Définissez le succès, puis itérez** — sachez à quoi ressemble le résultat avant d'écrire du code.
 
-Et un principe de conception : **la prévisibilité avant la perfection.** L'humain n'a pas besoin d'un agent parfait. Il a besoin d'un agent dont il peut apprendre le comportement, vérifier la portée, et dont il peut compenser les modes de défaillance au fil du temps.
+Et un principe de conception : **la prévisibilité avant la perfection.** L'humain n'a pas besoin d'un agent parfait. Il a besoin d'un agent dont il peut apprendre le comportement, vérifier la portée, et dont il peut compenser les modes de défaillance.
 
 ## Structure du projet
 
