@@ -47,17 +47,18 @@ vim .agents/rules/IDENTITY.md
 
 IDE agents start every chat from scratch. DevOS gives them a memory — your rules, your task, your history — so they stop guessing and start building.
 
-## DevOS vs. Ad-hoc Prompts (.cursorrules, Custom Instructions)
+## DevOS vs. Raw Prompts
 
-Replace scattered prompt packs, single-file `.cursorrules`, and ad-hoc custom instructions with a deterministic 4-file context engine.
+Single-file `.cursorrules` and prompt packs dump thousands of tokens into every chat. DevOS replaces them with four structured files and on-demand skill routing.
 
-| Capability | Raw Prompts & Skill Packs (.cursorrules / CLAUDE.md) | DevOS Engine |
+| Capability | Raw Prompts (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
-| **Architecture** | Monolithic text dump (wastes context window) | 4 modular core files (~700 tokens) |
-| **Session Memory** | Amnesia: resets completely on every new chat | Continuous: restores progress via `worklog.md` |
-| **Skill Loading** | Loads all rules/skills at once (causes hallucination) | Calibrated: dynamic routing loads max 2–3 skills on demand |
-| **Scope Discipline** | Vague suggestions (agents drift and refactor randomly) | Strict enforcement via `GROUNDING.md` failure-mode checks |
-| **Project Boundary** | Implicit or unstated | Explicit autonomy & non-negotiables in `IDENTITY.md` |
+| **Context footprint** | 5,000+ tokens loaded every chat | ~700 core tokens loaded |
+| **Session history** | Resets to zero on new chat | Restores progress from `worklog.md` |
+| **Skill loading** | All rules loaded at once | Max 2–3 skills loaded on demand |
+| **Scope discipline** | Soft suggestions agent can ignore | Hard constraints checked before first response |
+| **Project boundary** | Unstated | Defined in `IDENTITY.md` |
+
 
 ## Features
 
