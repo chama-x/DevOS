@@ -29,15 +29,17 @@ vim .agents/rules/IDENTITY.md
 
 Les agents IDE repartent de zéro à chaque chat. DevOS leur donne une mémoire — vos règles, votre tâche, votre historique — pour qu'ils arrêtent de deviner et commencent à construire.
 
-## DevOS vs Prompts fichier unique (.cursorrules)
+## DevOS vs. Prompts Ad-hoc (.cursorrules, Instructions Personnalisées)
 
-| Fonctionnalité | Fichier `.cursorrules` / Prompts bruts | DevOS |
+Remplacez les packs de prompts dispersés, les fichiers uniques `.cursorrules` et les instructions ad-hoc par un moteur de contexte déterministe en 4 fichiers.
+
+| Capacité | Prompts bruts (.cursorrules / CLAUDE.md) | Moteur DevOS |
 |---|---|---|
-| **Architecture** | Fichier géant (surchargé en contexte) | 4 fichiers modulaires + routage dynamique |
-| **Mémoire de session** | Réinitialisée à chaque nouveau chat | Persistée via `worklog.md` |
-| **Budget Tokens** | ~5 000+ tokens chargés à chaque fois | ~700 tokens de base ; compétences à la demande |
-| **Discipline d'action** | Suggestions vagues (ignorées) | Contraintes strictes via `GROUNDING.md` |
-| **Contrôle d'autonomie** | Limites indéfinies | Niveaux d'autonomie explicites dans `IDENTITY.md` |
+| **Architecture** | Empreinte texte monolithique (gaspille le contexte) | 4 fichiers modulaires (~700 tokens) |
+| **Mémoire de Session** | Amnésie : réinitialisation complète à chaque chat | Continue : restaure la progression via `worklog.md` |
+| **Chargement** | Charge toutes les règles d'un coup (cause des hallucinations) | Calibré : routage dynamique de 2–3 compétences max |
+| **Discipline d'Activité** | Suggestions floues (l'agent refactorise au hasard) | Application stricte via les contrôles `GROUNDING.md` |
+| **Limites du Projet** | Implicites ou non déclarées | Autonomie explicite et règles d'or dans `IDENTITY.md` |
 
 ## Fonctionnalités
 
