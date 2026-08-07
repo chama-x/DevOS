@@ -1,123 +1,78 @@
-# AgentOS Examples
+# DevOS Examples
 
-Real-world code and execution examples demonstrating the core principles of AgentOS. Each example shows what default LLM agents commonly do wrong and how AgentOS forces them to act correctly.
-
----
-
-## 1. Risk-Tiered Autonomy
-
-<img src="assets/risk_tiered.svg" alt="Risk-Tiered Autonomy Visualization" />
-
-### Example: Modifying Authentication Flow
-
-**User Request:** "Update the login function to require a 2FA token."
-
-**❌ What Default LLMs Do (Silent Execution / Blind Edits)**
-They immediately rewrite the `login` function, often deleting crucial error handling or breaking existing sessions, without ever pausing to ask if this is safe.
-
-**✅ What AgentOS Does (T3 Mandatory HITL)**
-```
-[AgentOS Execution Halted]
-Action: Modifying Auth Flow (T3 Action)
-Rule Triggered: `[HARD CONSTRAINT - CONSTITUTIONAL CHANGES / AUTH EDITS]`
-
-I have drafted the 2FA login update. Because this touches authentication, it requires explicit Red Team review before I can commit it.
-
-Please review the proposed diff below:
-+ function login(username, password, token) { ... }
-- function login(username, password) { ... }
-
-Approve? (Yes / No / Modify)
-```
+Real-world code and execution examples demonstrating how the DevOS context files transform agent behavior. Each example shows what default LLM agents commonly do wrong, and how DevOS forces them to act correctly.
 
 ---
 
-## 2. Idempotency & The Recovery Kernel
+## 1. IDENTITY.md: Setting Project Boundaries
 
-<img src="assets/idempotency.svg" alt="Idempotency Visualization" />
+**User Request:** "Add a date picker to the booking form."
 
-### Example: Replacing a block of code
+**❌ What Default LLMs Do (The "Clever" Trap)**
+They immediately run `npm install react-datepicker` or start building a complex custom component, introducing unnecessary dependencies and bloat because they assume "more is better."
 
-**User Request:** "Change the sorting algorithm in the table component to use QuickSort."
+**✅ What DevOS Does (Guided by IDENTITY.md)**
+Before taking action, the agent reads `rules/IDENTITY.md`, which contains the following user-defined anti-pattern:
+> What We Don't Do:
+> - No custom date pickers — native HTML input only.
 
-**❌ What Default LLMs Do (Idempotency Neglect)**
-If their regex or line-matching fails to find the exact code, they often retry in a loop, hallucinate the file contents, or replace the entire file with incomplete code.
-
-**✅ What AgentOS Does (Ensure, Don't Do)**
 ```
-1. [AgentOS]: Executes `view_file` to read the exact target lines.
-2. [AgentOS]: Copies the exact lines into the `TargetContent` field.
-3. [AgentOS]: Applies the edit. 
-
-If it fails on the first try due to a mismatch:
-4. [AgentOS]: Re-reads the file ONCE. Retries ONCE.
-5. [AgentOS]: Aborts execution and alerts the user rather than looping.
+[Agent Output]
+I will add a native HTML `<input type="date">` to the booking form, adhering to the anti-pattern in IDENTITY.md to avoid custom date pickers.
 ```
+*Result: The agent delivers exactly what the project needs, without the user having to re-explain their preferences.*
 
 ---
 
-## 3. Transactional Memory Compression
+## 2. GROUNDING.md: Scope Discipline
 
-<img src="assets/memory_compression.svg" alt="Memory Compression Visualization" />
+**User Request:** "Fix the typo in the checkout header."
 
-### Example: Long-running Chat Session
+**❌ What Default LLMs Do (Scope Creep)**
+While fixing the typo, the agent notices the component isn't using the latest React hooks or Tailwind syntax. It rewrites the entire file, breaking three unrelated tests in the process.
 
-**User Context:** The user has been working for 3 hours. The `worklog.md` is now 5,000 tokens long.
+**✅ What DevOS Does (Guided by GROUNDING.md)**
+The agent follows the `GROUNDING.md` directive on Scope Discipline:
+> "Name what you're changing AND what you're leaving alone... Don't refactor adjacent code. Fix only your own mess."
 
-**❌ What Default LLMs Do (Context Bloat / Forgetting)**
-The agent starts ignoring the first half of the conversation. It forgets earlier architectural decisions and begins hallucinating previous files. If instructed to "summarize memory", it might delete the memory file if the IDE crashes mid-write.
-
-**✅ What AgentOS Does (5-Step Atomic Loop)**
-When `worklog.md` > 4,000 tokens, it triggers:
-1. **Distill**: Summarizes the 5,000 tokens into a dense 500-token snapshot.
-2. **Append**: Writes the snapshot to `archive/2026-07-10_snapshot.md` and updates `archive/index.md`.
-3. **Verify**: Uses `view_file` to ensure the archive exists on disk.
-4. **Truncate**: Clears `worklog.md`.
-5. **Commit**: Runs `git commit` so data is completely safe.
+```
+[Agent Output]
+I will fix the typo in the checkout header. I am deliberately leaving the rest of the file untouched, including the legacy class components, to maintain strict scope discipline.
+```
+*Result: The bug is fixed with zero collateral damage. The human's trust in the agent grows.*
 
 ---
 
-## 4. Frontier Delegation
+## 3. worklog.md: Cross-Session Continuity
 
-<img src="assets/frontier_delegation.svg" alt="Frontier Delegation Visualization" />
+**User Request:** "Continue with the payment integration we started yesterday."
 
-### Example: Massive Architectural Rewrite
+**❌ What Default LLMs Do (Amnesia)**
+The agent asks: "What payment integration? What stack are we using? Do you have the API keys?" The user has to spend 10 minutes re-explaining the entire context.
 
-**User Request:** "Rewrite this entire monolithic Express.js backend into a microservices architecture." (100k+ tokens required)
+**✅ What DevOS Does (Guided by worklog.md)**
+Upon waking up in a fresh session, the agent automatically reads `.agents/worklog.md` and orientates itself.
 
-**❌ What Default LLMs Do (God Model Syndrome)**
-They attempt to do it all in one prompt response. They output 3,000 lines of code, truncate halfway through, and corrupt the workspace.
-
-**✅ What AgentOS Does (Supervisor / Worker MAS)**
 ```
-1. [AgentOS]: Recognizes this is a massive generation task.
-2. [AgentOS]: Prepares a "Handoff Prompt" (scrubbing `.env` secrets).
-3. [AgentOS]: Tells the user: "Feed this prompt to a Frontier Model (like Claude Fable 5 / GLM-5.2 or any frontier model that exists todate (not banned by China or USA lol)). Paste the output back here."
-4. [AgentOS]: Receives the code, checks out a new git branch, injects the code *verbatim*, and presents the git diff for review.
+[Agent Output]
+Orienting from worklog.md: Yesterday, we successfully implemented the Stripe checkout session endpoint. The next pending task is to handle the `checkout.session.completed` webhook. I'll begin drafting the webhook handler now.
 ```
+*Result: The agent picks up exactly where it left off. The workflow is uninterrupted.*
 
 ---
 
-## 5. OS Scaffolding
+## 4. Configuration Skills: Strict Behavior Enforcement
 
-<img src="assets/os_scaffolding.svg" alt="OS Scaffolding Visualization" />
+**User Request:** "Set up the CI/CD pipeline for this repo."
 
-### Example: Starting a brand new project
+**❌ What Default LLMs Do (Improvisation)**
+The agent creates a basic GitHub Actions workflow that builds the code and runs tests. It completely forgets to add security scanning or provenance, because it wasn't explicitly told to do so in the prompt.
 
-**User Context:** The user opens an empty directory and types "Hello".
+**✅ What DevOS Does (Guided by `devsecops-expert` skill)**
+The agent recognizes this is an infrastructure task and loads the `devsecops-expert` skill, which acts as a strict configuration profile.
 
-**❌ What Default LLMs Do (Speculative Wandering)**
-They say "Hello! What can I help you with?" or they start randomly running `ls` to figure out where they are, wasting API calls.
-
-**✅ What AgentOS Does (Strict Handshake)**
 ```
-[AgentOS active | worklog: none (file missing) | pending: none]
-
-I notice core state files like `worklog.md` and `business_context.md` are missing.
-
-[Interactive Questionnaire Triggered]
-Which files would you like me to scaffold for this new workspace?
-[x] worklog.md
-[x] business_context.md
-[x] user_lexicon.md
+[Agent Output]
+Following the DevSecOps pipeline sequence configuration: I am adding Trivy for secret scanning as the very first step, before any dependencies are installed. I am also adding Sigstore provenance generation to the final step.
 ```
+*Result: The agent produces a production-ready, highly secure pipeline that adheres to enterprise standards, without the user needing to be a security expert.*

@@ -4,7 +4,7 @@ trigger: always_on
 
 # Skill Routing
 
-**10 skills. Max 2-3 per task. Load only when the skill adds behavioral configuration or fills a specific knowledge gap.**
+**11 skills. Max 2-3 per task. Load only when the skill adds behavioral configuration or fills a specific knowledge gap.**
 
 > **Architectural Principle:** Skills are NOT textbooks. The model already knows general concepts (like Nielsen's heuristics, REST principles, or GSAP documentation). Skills exist ONLY to provide:
 > 1. **Configuration Profiles:** "Format the audit this specific way", "Use this specific sequence for deployment".
@@ -37,6 +37,10 @@ trigger: always_on
 
 - **GSAP in React/Next.js — ScrollTrigger, timelines, plugins?** → `gsap` (Configures GSAP architecture constraints for this project)
 - **Award-quality scroll experiences, custom cursors, 60fps parallax?** → `awwwards-animations` (Sets the quality bar and specific techniques to use/avoid)
+
+## Content & Copywriting
+
+- **Writing product copy, headlines, taglines, or UI text?** → `apple-writing-philosophy` (Enforces strict reasoning process for Apple-style clarity and concreteness)
 
 ---
 

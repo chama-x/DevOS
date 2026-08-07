@@ -1,31 +1,68 @@
-# AgentOS: ස්වයං-පාලිත MAS රාමුව (Self-Governing MAS Framework)
+# DevOS
 
-![AgentOS Architecture](assets/CortanaAgentOS.jpg)
+`.agents` ෆෝල්ඩරය ඕනෑම workspace එකකට එකතු කරන්න. ඊළඟට එය විවෘත කරන agent, terminal access සහිත සාමාන්‍ය chatbot කෙනෙකු වෙනුවට, පදනම් වූ (grounded) සහ පුරෝකථනය කළ හැකි (predictable) වැඩ කරන සහකරුවෙකු බවට පත් වේ.
 
-අලුත් IDE වල ප්‍රබල LLM ඒජන්තවරු (agents) හිටියත්, සාමාන්‍යයෙන් මේවා terminal එකට ප්‍රවේශය (access) තියෙන චැට්බොට්ලා (stateless chatbots) පමණයි. මොවුන්ට ගොඩක් වෙලාවට වැරදි කේත (code) එක දිගට වෙනස් කරන්න ගිහින් ගැටළු ඇතිවෙන (Idempotency Neglect) අවස්ථා වගේම, මතකය පිරිලා හිරවෙන (context bloat) ප්‍රශ්න එනවා. ඒ වගේම කුඩා මතකයක් ඇතුළේ ලොකු දේවල් කරන්න ගිහින් අසාර්ථක වෙන අවස්ථා (God Model syndrome) තියෙනවා.
+## මෙය කුමක් කරයිද
 
-අපි මේකට විසඳුමක් විදිහට IDE ඒජන්තයාට උඩින් වැඩ කරන **විශේෂිත AgentOS සන්දර්භ රාමුවක් (Custom AgentOS Context Framework)** හැදුවා. අලුත් ඒජන්තයෙක් මේ පරිසරයට ආපු ගමන්, මෙහි තියෙන සැකසුම් ගොනු (local configuration files) හරහා එයා ක්ෂණිකවම තමන්ගේ වැඩ තනියම පාලනය කරගන්න පුළුවන්, අවදානම අනුව තීරණ ගන්න අධීක්ෂකයෙක් (Self-Governing, Risk-Tiered Supervisor) බවට පත්වෙනවා.
+අලුත් IDE agent කෙනෙකුට ඔබේ project එක, ඔබේ ප්‍රමිති, ඔබේ දෝෂ රටා (failure patterns), හෝ ඊයේ සිදු වූ දේ ගැන කිසිම අවබෝධයක් නැත. DevOS මෙම හිඩැස් ගොනු හතරක් (four files) හරහා පුරවයි:
 
-## ප්‍රධාන පහසුකම් (Core Features)
+| File | What It Does |
+|---|---|
+| `rules/IDENTITY.md` | project එක යනු කුමක්ද, අවසන් වූ වැඩක් පෙනෙන්නේ කෙසේද, සහ agent ට ස්වයං පාලනයක් ඇති තැන් සහ ඔබ තීරණ ගන්නා තැන් පිළිබඳ ඔබේ ප්‍රකාශනයයි. |
+| `rules/GROUNDING.md` | හැසිරීම් ක්‍රමාංකනය (Behavioral calibration) — agent ක්‍රියාත්මක කරන ආකාරය, සන්නිවේදනය කරන ආකාරය, තමන්ගේම වැරදි අල්ලා ගන්නා ආකාරය සහ සෑම session එකක්ම ආරම්භ කරන ආකාරය. |
+| `current.md` | agent මේ මොහොතේ වැඩ කරමින් සිටින්නේ කුමක් මතද, ස්පර්ශ නොකරන්නේ මොනවාද, සහ එය අවසන් වන්නේ කවදාද යන්න. |
+| `worklog.md` | මින් පෙර කළ දේ — මීළඟ session එකට, පසුගිය එක නතර කළ තැනින්ම ආරම්භ කළ හැකි වීමට. |
 
-### 1. අවදානම් මට්ටම් අනුව පාලනය (Risk-Tiered Autonomy)
-සාමාන්‍ය ඒජන්තවරු හැම වැඩක්ම එකම විදිහට දැක්කට, අපේ AgentOS එකේ දැඩි මට්ටම් 4ක පාලන පද්ධතියක් (4-Tier Autonomy system) තියෙනවා:
-- **T0**: කේත කියවීම, සෙවීම, සහ වැරදි බැලීම (linting) - මේවා එයාට තනියම කරගෙන යන්න පුළුවන් (Auto-Proceed).
-- **T1**: තනි ගොනුවක් (single-file) වෙනස් කිරීම - මේකටත් අවසර තියෙනවා, හැබැයි මුලින්ම `git commit` එකක් දාලා (checkpoint) ඉන්න ඕනේ.
-- **T2**: ගොනු කිහිපයක් එකවර වෙනස් කිරීම (multi-file refactors) - මේකට කණ්ඩායම් වශයෙන් (batched) අවසර ගන්න ඕනේ.
-- **T3**: කේත මකාදැමීම, පිටතින් කේත ඇතුල් කිරීම (external injection), සහ මුරපද (auth) වෙනස් කිරීම - මේවාට අනිවාර්යයෙන්ම පරිශීලකයෙකුගේ (Red Team Review) අවසරය ඕනෙමයි.
+රීති ගොනු දෙකක් සෑම සංවාදයකටම ඇතුළත් කෙරේ (~700 tokens). dynamic ගොනු දෙකක් session එක ආරම්භයේදී කියවනු ලැබේ. සම්පූර්ණ පද්ධතියම එයයි.
 
-### 2. ආරක්ෂිතව කේත වෙනස් කිරීම (Idempotency & The Recovery Kernel)
-කේතයක් වෙනස් කරන්න (mutation) කලින්, ඒ වෙනස කලින්ම වෙලාද කියලා ඒජන්තයා හොයලා බලනවා. කේතයේ තැනක් වෙනස් කරන්න ගිහින් (surgical text replacement) වැරදුනොත්, එයාට *එක්* පාරක් විතරක් ආයෙත් උත්සාහ කරන්න (retry) අවසර තියෙනවා. දෙවෙනි පාරත් වැරදුනොත් එයා වැඩේ නතර කරනවා. මේකෙන් එකම දේ දිගින් දිගටම කරලා (infinite execution loops) සිස්ටම් එක හිරවෙන එක නවතිනවා.
+## ස්ථාපනය
 
-### 3. ආරක්ෂිත මතක සම්පීඩනය (Transactional Memory Compression)
-ඒජන්තයාගේ මතකය (worklog.md) ටෝකන් 4,000 පැනපු ගමන්, එයා පියවර 5ක ආරක්ෂිත ක්‍රියාවලියක් (transactional 5-step loop) කරනවා: සාරාංශ කිරීම (Distill) → ගබඩා කිරීම (Append) → හරිද බැලීම (Verify) → පරණ ඒවා මැකීම (Truncate) → සේව් කිරීම (Commit). මේ නිසා LLM එක හිරවුණත් ඔයාගේ දත්ත නැතිවෙන්නේ නෑ (context data loss) කියලා සහතික කරනවා.
+`.agents/` ඔබේ project root එකට copy කරන්න. ඔබේ project එක සඳහා `rules/IDENTITY.md` සම්පූර්ණ කරන්න. එපමණයි.
 
-### 4. බර වැඩ වෙනත් අයට දීම (Frontier Delegation - Supervisor/Worker MAS)
-කාර්යයක් ගොඩක් ලොකු නම් (ටෝකන් 40k+), OS එකෙන් වෙනම පැකේජයක් (handoff packet) හදනවා. ඒජන්තයා ඔයාගේ රහස්‍ය දත්ත (secrets) සහ API යතුරු අයින් කරලා, මේ වැඩේ පිටතින් ඉන්න වෙනත් AI මොඩල් එකකට (Frontier Model) දෙනවා. ඒ මොඩල් එකෙන් කේතය හදලා දුන්නම, ඒක වෙනස් නොකරම ගෙනල්ලා (injected verbatim), වැරදි බලලා (statically analyzed), ඔයාට `git diff` එකක් විදිහට පෙන්නනවා (T3 Review).
+## ඇතුළත් වන දෑ
 
-### 5. පද්ධතියේ ආරක්ෂාව (Constitutional Lock & OS Scaffolding)
-ඒජන්තයාට තමන්ගේම නීති (guardrails) වෙනස් කරන්න බෑ. `.agents/rules/` ෆෝල්ඩරයේ කරන ඕනෑම වෙනස්කමක් **T3 ක්‍රියාවක්** විදිහටයි සලකන්නේ. ඒ වගේම, මුලින්ම වැඩක් පටන්ගන්නකොට අවශ්‍ය ෆයිල්ස් (core files) අඩු නම්, ඒජන්තයා ඔයාගෙන් අහලා (multi-select questionnaire) ඒ ටික ස්වයංක්‍රීයව හදලා දෙනවා (scaffold).
+core files හතරට අමතරව, DevOS පහත දෑ සමඟ පැමිණේ:
 
-## ස්ථාපනය කරගන්නා ආකාරය (Installation)
-ඔයාගේ ප්‍රොජෙක්ට් එකේ ප්‍රධාන ෆෝල්ඩරයට (root) `.agents` ෆෝල්ඩරය දාන්න විතරයි තියෙන්නේ. එතකොට ඔයාගේ ඒජන්තයා ක්ෂණිකව V2 Supervisor කෙනෙක් බවට පත්වෙයි!
+- **11 curated skills** — සාමාන්‍ය පෙළපොත් මෙන් ක්‍රියා නොකර, hallucinations වළක්වන, දැඩි ලෙස සකසන ලද (strictly configured) තර්කන ලූප සහ හැඩතල ගැන්වීමේ සීමාවන්.
+- **Skill calibration** — සාක්ෂි මත පදනම් වූ මාර්ගගත කිරීම (evidence-based routing - SkillsBench) මගින් කුසලතා විශාල ප්‍රමාණයක් එකට පැටවීමෙන් ඇතිවන සංජානන බර (cognitive overload) වළක්වයි.
+- **Evolution governance** — agents නව කුසලතා සහ වචන මාලාවන් යෝජනා කරයි, නමුත් අනුමත කරන්නේ පරිශීලකයා (human) පමණි.
+- **Context compression** — ස්වයංක්‍රීය සංරක්ෂණය මගින් මතක ගොනු සීමාවකින් තොරව වර්ධනය වීම වළක්වයි.
+- **Semantic dictionary** — ඔබේ කෙටි යෙදුම් සහ මනාපයන්, agent ගේ නිශ්චිත හැසිරීම් (deterministic behavior) වෙත යොමු කරයි.
+
+## දර්ශනය
+
+DevOS ගොඩනගා ඇත්තේ සාක්ෂි සහිත නියෝග හතරක් මතය:
+
+1. **Ask, don't assume** — ඉදිරියට යාමට පෙර අවිනිශ්චිතතා මතු කරන්න (+3.7% task success).
+2. **Minimum viable implementation** — වැඩ කරන කුඩාම කේතය, අනුමාන කිරීමේ (speculative) වියුක්ත කිරීම් නැත.
+3. **Scope discipline** — කාර්යයට අවශ්‍ය දේ පමණක් ස්පර්ශ කරන්න (නඩත්තු කාර්යයන්හිදී agent breaking-change rate එක තුන් ගුණයකින් වැඩි වේ).
+4. **Define success, then loop** — කේතය ලිවීමට පෙර 'අවසන් වූ (done)' යන්න පෙනෙන්නේ කෙසේදැයි දැන ගන්න.
+
+සහ එක් සැලසුම් මූලධර්මයක්: **පරිපූර්ණත්වයට වඩා පුරෝකථනය කිරීමේ හැකියාව (predictability over perfection).** මිනිසාට පරිපූර්ණ agent කෙනෙකු අවශ්‍ය නොවේ. අවශ්‍ය වන්නේ, හැසිරීම් ඉගෙන ගත හැකි, විෂය පථය තහවුරු කළ හැකි සහ කාලයත් සමඟ අසාර්ථක වීමේ ක්‍රම (failure modes) සඳහා වන්දි ගෙවිය හැකි agent කෙනෙකි.
+
+## Project Structure (ව්‍යාපෘති ව්‍යුහය)
+
+```
+.agents/
+├── rules/
+│   ├── IDENTITY.md          ← ඔබේ ව්‍යාපෘතිය සඳහා මෙය සම්පූර්ණ කරන්න
+│   ├── GROUNDING.md         ← Agent ගේ හැසිරීම් ක්‍රමාංකනය
+│   ├── EVOLUTION.md         ← පාලනය කළ ඉගෙනුම් ලූපය
+│   ├── SKILL_ROUTING.md     ← කුසලතා තීරණ ගස
+│   └── business_context.md  ← දැනුම් ප්‍රස්තාර (Knowledge graph) අච්චුව
+├── AGENTS.md                ← කුසලතා ක්‍රමාංකන රීති
+├── current.md               ← තාවකාලික කාර්යය තත්ත්වය (Volatile task state)
+├── worklog.md               ← Append-only ඉතිහාසය
+├── memory/
+│   ├── user_lexicon.md      ← Semantic ශබ්දකෝෂය
+│   └── rejected_proposals.md
+├── skills/                  ← තෝරාගත් කුසලතා 11 ක නාමාවලි
+├── telemetry/
+│   └── runs.md
+└── archive/
+    └── index.md
+```
+
+## බලපත්‍රය
+
+MIT

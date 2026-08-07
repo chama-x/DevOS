@@ -1,31 +1,68 @@
-# AgentOS : Le Cadre MAS Autogéré
+# DevOS
 
-![Architecture AgentOS](assets/CortanaAgentOS.jpg)
+Déposez le dossier `.agents` dans n'importe quel espace de travail. Le prochain agent qui l'ouvrira deviendra un partenaire de travail prévisible et ancré dans le contexte — et non un simple chatbot générique avec un accès au terminal.
 
-Les IDE modernes sont livrés avec de puissants agents LLM de base, mais dans leur état par défaut, ils sont essentiellement des chatbots sans état avec un accès au terminal. Ils souffrent de "Négligence de l'Idempotence" (casser le code en réessayant de mauvaises modifications), de gonflement du contexte (épuisement de la mémoire), et du syndrome du "Modèle Dieu" (essayer de résoudre des problèmes de 100k tokens dans une fenêtre de 4k tokens).
+## Ce qu'il fait
 
-Nous avons conçu un **Cadre de Contexte AgentOS Personnalisé** qui se place au-dessus de l'agent IDE. Au moment où un agent "frais" se réveille dans cet environnement, il est instantanément transformé par des fichiers de configuration locaux en un **Superviseur Autogéré, Stratifié par les Risques**.
+Un agent d'IDE fraîchement lancé ne connaît pas votre projet, vos standards, vos erreurs fréquentes, ni ce qui s'est passé hier. DevOS comble ces lacunes avec quatre fichiers :
 
-## Fonctionnalités Principales
+| Fichier | Ce qu'il fait |
+|---|---|
+| `rules/IDENTITY.md` | Votre déclaration de ce qu'est le projet, à quoi ressemble le travail terminé, et où l'agent a de l'autonomie par rapport aux décisions que vous validez. |
+| `rules/GROUNDING.md` | Calibrage comportemental — comment l'agent implémente, communique, repère ses propres erreurs, et démarre chaque session. |
+| `current.md` | Ce sur quoi l'agent travaille en ce moment, ce qu'il ne touche pas, et quand la tâche est terminée. |
+| `worklog.md` | Ce qui a été fait avant — pour que la prochaine session reprenne là où la précédente s'est arrêtée. |
 
-### 1. Autonomie Stratifiée par les Risques (Risk-Tiered Autonomy)
-Les agents frais traitent toutes les tâches de la même manière. Notre AgentOS injecte un système strict d'autonomie à 4 niveaux :
-- **T0** : Lectures, recherches, linting (Auto-Procédure).
-- **T1** : Modifications d'un seul fichier (Auto-Procédure. Doit d'abord faire un `git commit` d'un point de contrôle).
-- **T2** : Refactorisations de plusieurs fichiers (Approbation par lots).
-- **T3** : Suppressions, Injection Externe, modifications d'Authentification (Révision Obligatoire par l'Équipe Rouge).
-
-### 2. Idempotence & Le Noyau de Récupération (The Recovery Kernel)
-Chaque mutation doit d'abord vérifier si son effet existe déjà. Si un remplacement de texte chirurgical échoue, l'agent a droit à *une seule* tentative. Au deuxième échec, il doit abandonner, empêchant ainsi les boucles d'exécution infinies.
-
-### 3. Compression de Mémoire Transactionnelle (Transactional Memory Compression)
-Lorsque la mémoire de `worklog.md` dépasse 4 000 tokens, l'agent exécute une boucle transactionnelle en 5 étapes : Distiller → Ajouter → Vérifier → Tronquer → Valider (Commit). Cela offre une garantie à 100 % contre la perte de données de contexte lors des plantages du LLM.
-
-### 4. Délégation Frontalière (Frontier Delegation - Supervisor/Worker MAS)
-Lorsqu'une tâche nécessite une logique extrême (40k+ tokens), l'OS déclenche un paquet de transfert. L'agent nettoie les secrets et les clés API, et compile un prompt dense pour un Modèle Frontal (Frontier Model) externe. Lorsque le code revient, il est injecté textuellement, analysé statiquement, et présenté comme un `git diff` pour une révision humaine de niveau T3.
-
-### 5. Verrou Constitutionnel & Échafaudage de l'OS (Constitutional Lock & OS Scaffolding)
-L'agent ne peut pas réécrire ses propres garde-fous. Toute modification du répertoire `.agents/rules/` est classée de manière permanente comme une **action T3**. De plus, si des fichiers principaux manquent au démarrage, l'agent déclenchera automatiquement un questionnaire à choix multiples pour échafauder l'espace de travail.
+Deux fichiers de règles sont injectés dans chaque conversation (~700 jetons). Deux fichiers dynamiques sont lus au démarrage de la session. C'est tout le système.
 
 ## Installation
-Il suffit de déposer le dossier `.agents` à la racine de votre espace de travail, et votre agent se transformera instantanément en le Superviseur V2 !
+
+Copiez `.agents/` à la racine de votre projet. Remplissez `rules/IDENTITY.md` pour votre projet. C'est fait.
+
+## Ce qui est inclus
+
+Au-delà des quatre fichiers de base, DevOS est livré avec :
+
+- **11 compétences (skills) sélectionnées** — des boucles de raisonnement strictement configurées et des contraintes de formatage qui préviennent les hallucinations sans agir comme des manuels génériques.
+- **Calibrage des compétences** — un routage basé sur des preuves (SkillsBench) qui prévient la surcharge cognitive due à l'empilement de trop de compétences.
+- **Gouvernance de l'évolution** — les agents proposent de nouvelles compétences et du vocabulaire, mais seul l'humain approuve.
+- **Compression de contexte** — l'archivage automatique empêche les fichiers de mémoire de croître indéfiniment.
+- **Dictionnaire sémantique** — associe vos raccourcis et préférences à un comportement déterministe de l'agent.
+
+## Philosophie
+
+DevOS est construit sur quatre directives basées sur des preuves :
+
+1. **Demandez, ne supposez pas** — exprimez les incertitudes avant de continuer (+3,7 % de réussite des tâches).
+2. **Implémentation minimum viable** — le code le plus petit qui fonctionne, pas d'abstraction spéculative.
+3. **Discipline de la portée** — ne touchez qu'à ce que la tâche exige (le taux d'erreurs critiques des agents triple sur les tâches de maintenance).
+4. **Définissez le succès, puis itérez** — sachez à quoi ressemble le résultat avant d'écrire du code.
+
+Et un principe de conception : **la prévisibilité avant la perfection.** L'humain n'a pas besoin d'un agent parfait. Il a besoin d'un agent dont il peut apprendre le comportement, vérifier la portée, et dont il peut compenser les modes de défaillance au fil du temps.
+
+## Structure du projet
+
+```
+.agents/
+├── rules/
+│   ├── IDENTITY.md          ← Remplissez ceci pour votre projet
+│   ├── GROUNDING.md         ← Calibrage comportemental de l'agent
+│   ├── EVOLUTION.md         ← Boucle d'apprentissage gouvernée
+│   ├── SKILL_ROUTING.md     ← Arbre de décision des compétences
+│   └── business_context.md  ← Modèle de graphe de connaissances
+├── AGENTS.md                ← Règles de calibrage des compétences
+├── current.md               ← État de la tâche (volatile)
+├── worklog.md               ← Historique (ajout seulement)
+├── memory/
+│   ├── user_lexicon.md      ← Dictionnaire sémantique
+│   └── rejected_proposals.md
+├── skills/                  ← 11 dossiers de compétences sélectionnées
+├── telemetry/
+│   └── runs.md
+└── archive/
+    └── index.md
+```
+
+## Licence
+
+MIT

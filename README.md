@@ -23,7 +23,7 @@ Copy `.agents/` into your project root. Fill in `rules/IDENTITY.md` for your pro
 
 Beyond the four core files, DevOS ships with:
 
-- **27 curated skills** — GSAP, motion design, Apple UX, Awwwards animation, DevSecOps, accessibility, Odoo, Prisma, and more
+- **11 curated skills** — strictly configured reasoning loops and formatting constraints that prevent hallucinations without acting like generic textbooks.
 - **Skill calibration** — evidence-based routing (SkillsBench) prevents cognitive overload from stacking too many skills
 - **Evolution governance** — agents propose new skills and vocabulary, but only the human approves
 - **Context compression** — automatic archiving prevents memory files from growing unbounded
@@ -56,7 +56,7 @@ And one design principle: **predictability over perfection.** The human doesn't 
 ├── memory/
 │   ├── user_lexicon.md      ← Semantic dictionary
 │   └── rejected_proposals.md
-├── skills/                  ← 27 curated skill directories
+├── skills/                  ← 11 curated skill directories
 ├── telemetry/
 │   └── runs.md
 └── archive/
