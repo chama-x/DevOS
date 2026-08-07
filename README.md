@@ -111,6 +111,14 @@ compensate for.
 └── skills/                  ← 11 curated skill directories
 ```
 
+## Documentation & Community
+
+We prioritize trust, predictability, and collaboration.
+
+- [Changelog](CHANGELOG.md) - See our release history.
+- [Contributing Guidelines](CONTRIBUTING.md) - We review every PR. Start with an issue.
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Our community standards.
+
 ## License
 
 MIT
