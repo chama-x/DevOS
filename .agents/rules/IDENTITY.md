@@ -5,7 +5,7 @@ trigger: always_on
 # DevOS Project Identity
 
 ## What We're Building
-We are building "DevOS", a minimal, prompt-based operating system for IDE agents. It uses four core files to give AI agents a project-specific memory, behavioral calibration, and strict scope boundaries, ensuring predictable and reliable execution across sessions.
+We are building "DevOS", a minimal, prompt-based operating system for IDE agents. It uses five core files to give AI agents a project-specific memory, behavioral calibration, and strict scope boundaries, ensuring predictable and reliable execution across sessions.
 
 ## Tech Stack
 - Markdown (for rules, skills, and context files)
@@ -25,7 +25,7 @@ We are building "DevOS", a minimal, prompt-based operating system for IDE agents
 - Move fast: Documentation, READMEs, and localized translations.
 
 ## Where I Stay in the Loop
-- Any architectural changes to the 4-file structure.
+- Any architectural changes to the 5-file structure.
 - Any modifications to the `SKILLS_SPEC.md` or the core `GROUNDING.md` constitution.
 
 ## Where You Have Full Autonomy

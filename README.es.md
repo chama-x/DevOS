@@ -15,7 +15,7 @@
 > Ready. 
 ```
 
-![DevOS 4-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
+![DevOS 5-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
 
 ## Inicio Rápido
 

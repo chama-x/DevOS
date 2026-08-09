@@ -9,7 +9,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/chama-x/DevOS?style=social)](https://github.com/chama-x/DevOS/stargazers)
 [![CI](https://github.com/chama-x/DevOS/actions/workflows/ci.yml/badge.svg)](https://github.com/chama-x/DevOS/actions/workflows/ci.yml)
 
-> **DevOS — Give any IDE agent your project's rules, current task, and history in four files.**
+> **DevOS — Give any IDE agent your project's rules, current task, and history in five files.**
 
 ```text
 > Agent initialized.
@@ -24,10 +24,11 @@
 
 A fresh IDE agent doesn't know your project, your standards, your
 failure patterns, or what happened yesterday. DevOS closes those gaps
-with four files:
+with five files:
 
 | File | What It Does |
 |---|---|
+| `AGENTS.md` | Root-level discovery router for AI agents to locate the context directory |
 | `rules/IDENTITY.md` | Your declaration of what the project is, what done looks like, and where the agent has autonomy vs. where you stay in the loop |
 | `rules/GROUNDING.md` | Behavioral calibration — how the agent implements, communicates, catches its own mistakes, and starts each session |
 | `NOW.md` | What the agent is working on right now, what it's not touching, when it's done |
@@ -36,7 +37,7 @@ with four files:
 Two rule files are injected into every conversation (~700 tokens). Two
 dynamic files are read on session start. That's the entire system.
 
-![DevOS 4-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
+![DevOS 5-File Context Architecture](assets/devos-architecture-v3.svg?v=1786144986)
 
 ## Quickstart
 
@@ -52,7 +53,7 @@ IDE agents start every chat from scratch. DevOS gives them a memory — your rul
 
 ## DevOS vs. Raw Prompts
 
-Single-file `.cursorrules` and prompt packs dump thousands of tokens into every chat. DevOS replaces them with four structured files and on-demand skill routing.
+Single-file `.cursorrules` and prompt packs dump thousands of tokens into every chat. DevOS replaces them with five structured files and on-demand skill routing.
 
 | Capability | Raw Prompts (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
@@ -65,7 +66,7 @@ Single-file `.cursorrules` and prompt packs dump thousands of tokens into every 
 
 ## Features
 
-Beyond the four core files, DevOS is engineered for disciplined execution:
+Beyond the five core files, DevOS is engineered for disciplined execution:
 
 | Feature | How it works |
 |---|---|
@@ -104,6 +105,7 @@ compensate for.
 ## Project Structure
 
 ```
+AGENTS.md                ← Context router for agent discovery
 .agents/
 ├── rules/
 │   ├── IDENTITY.md          ← Fill this for your project
