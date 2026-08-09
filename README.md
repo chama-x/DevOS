@@ -114,6 +114,9 @@ compensate for.
 └── skills/                  ← 11 curated skill directories
 ```
 
+### Looking for a working example?
+Check out the [`examples/demo-project-context/`](examples/demo-project-context/) directory to study a fully populated DevOS setup for a realistic Next.js + Supabase SaaS application.
+
 ## Documentation & Community
 
 We prioritize trust, predictability, and collaboration.

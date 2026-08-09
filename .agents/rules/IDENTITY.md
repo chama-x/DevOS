@@ -2,45 +2,33 @@
 trigger: always_on
 ---
 
-<!-- IDENTITY.md — The human's declaration of what matters.
-     Fill this once. The agent reads it every session.
-     This is the contract between you and your agent. -->
-
-# [Project Name]
+# DevOS Project Identity
 
 ## What We're Building
-<!-- One paragraph. What would you tell a smart friend who asks
-     "what is this?" Not a spec — a human explanation. -->
-
-## When It's Done
-<!-- What does a person using this actually DO and SEE? -->
-A user will:
-1. [action → result]
-2. [action → result]
-
-## How It Should Feel
-<!-- Not design jargon. How does it feel to use?
-     Think of the best tool you've ever picked up. -->
-
-## What Matters to Me
-<!-- What do you consider high-risk? Non-negotiable? Trivial?
-     This tells the agent where to be careful and where to move fast. -->
-- High-risk: [e.g., "anything touching user data or auth"]
-- Non-negotiable: [e.g., "accessibility on all interactive elements"]
-- Move fast: [e.g., "internal admin pages, build tooling"]
-
-## Where I Stay in the Loop
-<!-- What decisions do you want to see before the agent acts? -->
-- [e.g., "architecture choices", "third-party dependencies", "user-facing copy"]
-
-## Where You Have Full Autonomy
-<!-- What can the agent handle without asking? -->
-- [e.g., "implementation within approved architecture", "test writing", "build config"]
+We are building "DevOS", a minimal, prompt-based operating system for IDE agents. It uses four core files to give AI agents a project-specific memory, behavioral calibration, and strict scope boundaries, ensuring predictable and reliable execution across sessions.
 
 ## Tech Stack
-- [framework, package manager, database, key dependencies]
+- Markdown (for rules, skills, and context files)
+- Node.js (for the interactive CLI installer)
+
+## Test Command
+`npm run test` (Note: tests will be added in a future PR, run manual Git checks for now)
 
 ## What We Don't Do
-<!-- Project-specific anti-patterns. The agent checks here before adding anything. -->
-- [e.g., "No client-side state management — server components only"]
-- [e.g., "No custom date pickers — native HTML input"]
+- No runtime dependencies. The entire system must remain flat files.
+- No complex UI components or frontend frameworks.
+- No IDE-specific hacks (DevOS must remain universally portable across all major AI coding agents like Cursor, Cline, Antigravity, etc).
+
+## What Matters to Me
+- High-risk: Anything that touches the core rule files (`GROUNDING.md`, `IDENTITY.md`). These form the brain of the system.
+- Non-negotiable: Progressive disclosure. Agents should not load textbooks of information they already know. Skills must be strict configuration profiles < 150 words.
+- Move fast: Documentation, READMEs, and localized translations.
+
+## Where I Stay in the Loop
+- Any architectural changes to the 4-file structure.
+- Any modifications to the `SKILLS_SPEC.md` or the core `GROUNDING.md` constitution.
+
+## Where You Have Full Autonomy
+- Refactoring internal skill files to adhere strictly to `SKILLS_SPEC.md`.
+- Updating the `bin/create-devos.js` CLI installer to improve usability.
+- Managing your own task state in `NOW.md` and appending to `LOG.md`.

@@ -1,5 +1,7 @@
 # DevOS Examples
 
+*Note: For a fully fleshed-out, working example of DevOS context files in a real-world SaaS application, see the [`examples/demo-project-context/`](examples/demo-project-context/) directory.*
+
 Four requests, run twice — once with a stock agent, once with DevOS
 context files loaded. Each pair traces the exact line that changed the
 outcome.
