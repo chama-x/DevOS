@@ -1,7 +1,7 @@
 {
   "name": "create-devos",
   "version": "2.0.0",
-  "description": "The .gitignore for AI agents. Give any IDE agent persistent memory with five markdown files.",
+  "description": "A zero-runtime memory layer for AI agents. Give any IDE agent persistent memory with five markdown files.",
   "bin": {
     "create-devos": "bin/create-devos.js"
   },
