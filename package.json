@@ -1,0 +1,42 @@
+{
+  "name": "create-devos",
+  "version": "2.0.0",
+  "description": "The .gitignore for AI agents. Give any IDE agent persistent memory with five markdown files.",
+  "bin": {
+    "create-devos": "bin/create-devos.js"
+  },
+  "scripts": {
+    "test": "echo \"Tests coming soon\" && exit 0"
+  },
+  "keywords": [
+    "ai-agents",
+    "developer-tools",
+    "cursor",
+    "claude-code",
+    "agents-md",
+    "llm",
+    "context-engineering",
+    "coding-assistant",
+    "productivity",
+    "cursorrules",
+    "claude-md",
+    "devos"
+  ],
+  "author": "chama-x",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chama-x/DevOS.git"
+  },
+  "homepage": "https://github.com/chama-x/DevOS",
+  "bugs": {
+    "url": "https://github.com/chama-x/DevOS/issues"
+  },
+  "files": [
+    "bin/",
+    ".agents/",
+    "AGENTS.md",
+    "README.md",
+    "LICENSE"
+  ]
+}
