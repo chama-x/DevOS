@@ -118,13 +118,17 @@ See [`examples/demo-project-context/`](examples/demo-project-context/) for a ful
 
 ---
 
-## Philosophy
+## Why This Works
 
-Your LLM already knows how to code. It just doesn't know *your* project's rules.
+Andrej Karpathy described the LLM as a CPU and the context window as its RAM. Tobi Lütke called context engineering *"the art of providing all the context for the task to be plausibly solvable."*
 
-DevOS provides **constraints**, not capabilities. No agents. No skills library. No CLI to maintain. Five files that tell the model what your project is, how to behave, what you're doing now, and what you did before.
+When your agent writes bad code, it's almost never because the model is stupid. It's because the model is missing context — your stack, your rules, your history. That's a context failure, not an intelligence failure.
 
-The tradeoff: you maintain `NOW.md` and `LOG.md` yourself. There are no automated hooks. We consider this a feature — you stay in control of what the agent knows.
+Heavy frameworks try to fix this by making the model smarter — bolting on 67 agents and 284 skills. But the model is already smart. It just needs your project loaded into its working memory.
+
+DevOS loads that memory. Five files. Nothing else.
+
+The tradeoff: you maintain `NOW.md` and `LOG.md` yourself. There are no automated hooks. We consider this a feature — you stay in control of what your agent knows.
 
 ---
 
