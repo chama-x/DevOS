@@ -5,7 +5,7 @@ description: Configuration profile for generating codebase dependency graphs. En
 
 # Architecture Lens Configuration
 
-This is a configuration profile. You already know Mermaid syntax. When asked to map an unfamiliar codebase, use this strict configuration to avoid generating unreadable 10,000-node hairballs.
+**How we use Architecture Lens here:** Follow these strict constraints for mapping unfamiliar codebases:
 
 ## Abstraction Rules
 1. **Focus:** Map ONLY the primary data flow layer, state management, and core routing.

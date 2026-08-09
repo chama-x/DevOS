@@ -11,7 +11,7 @@
 > Agent initialized.
 > Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
 > Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
-> Reading .agents/worklog.md... [Session history restored]
+> Reading .agents/LOG.md... [Session history restored]
 > Ready. 
 ```
 
@@ -36,7 +36,7 @@ IDE agents සෑම chat එකක්ම බිංදුවෙන් ආරම�
 | ධාරිතාව | තනි Prompts (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
 | **Context භාවිතය** | සාමාන්‍යයෙන් 5,000+ tokens පටවයි | ~700 core tokens පමණක් පටවයි |
-| **Session මතකය** | නව chat එකකදී බිංදුවටම reset වේ | `worklog.md` හරහා ප්‍රගතිය නැවත ලබා ගනී |
+| **Session මතකය** | නව chat එකකදී බිංදුවටම reset වේ | `LOG.md` හරහා ප්‍රගතිය නැවත ලබා ගනී |
 | **Skill පැටවීම** | සියලුම නීති එකවර පටවයි | අවශ්‍යතාවය අනුව උපරිම 2–3ක් පටවයි |
 | **විෂය පථයේ විනය** | Agent ට අමතක කළ හැකි බුරුල් නීති | පළමු පිළිතුරට පෙර පරීක්ෂා කරන දැඩි නීති |
 | **Project සීමාවන්** | සඳහන් කර නැත | `IDENTITY.md` හි පැහැදිලිව දක්වා ඇත |
@@ -67,8 +67,8 @@ IDE agents සෑම chat එකක්ම බිංදුවෙන් ආරම�
 │   ├── IDENTITY.md          ← ඔබේ ව්‍යාපෘතිය සඳහා මෙය සම්පූර්ණ කරන්න
 │   ├── GROUNDING.md         ← Agent ගේ හැසිරීම් ක්‍රමාංකනය
 │   └── SKILL_ROUTING.md     ← කුසලතා තීරණ ගස
-├── current.md               ← තාවකාලික කාර්යය තත්ත්වය (Volatile task state)
-├── worklog.md               ← Append-only ඉතිහාසය
+├── NOW.md               ← තාවකාලික කාර්යය තත්ත්වය (Volatile task state)
+├── LOG.md               ← Append-only ඉතිහාසය
 └── skills/                  ← තෝරාගත් කුසලතා 11 ක නාමාවලි
 ```
 

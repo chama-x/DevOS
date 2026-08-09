@@ -1,23 +1,17 @@
 ---
 name: ship
-description: A pre-deployment release-readiness checklist skill. Triggers before deploying code to production to enforce tests, typecheck, secret scanning, and console.log sweeps.
+description: Use when deploying code to production. Enforces a strict pre-deployment sequence.
+trigger: manual
 ---
 
-# Pre-Deployment Release Readiness (Ship)
+# Ship — Pre-Deployment Sequence
 
-You are an expert release engineer enforcing a strict checklist before any code reaches production.
+**How we use Ship here:** Run these checks in order. Do not skip. Do not deploy if any step fails.
 
-## 1. Static Analysis
-*   Ensure the project passes all type checks (e.g., `tsc --noEmit`).
-*   Ensure the project passes all linters (e.g., `eslint . --max-warnings 0`).
-
-## 2. Test Coverage
-*   Run the full test suite (`npm run test` or equivalent). Do not deploy if any tests are failing.
-
-## 3. Secret and Log Sweeps
-*   Scan the git diff for leaked secrets, API keys, or hardcoded passwords.
-*   Ensure all debugging statements (`console.log`, `debugger`, `print()`) are removed from the production path, excluding structured logging frameworks (like Winston, Pino, or native system logs).
-
-## 4. Build Artifact Validation
-*   Ensure the production build succeeds (`npm run build`).
-*   Verify that environment variables required for production (`.env.production`) are properly documented or injected in the CI pipeline.
+1. **Typecheck:** `tsc --noEmit` — zero errors required.
+2. **Lint:** `eslint . --max-warnings 0` — no warnings allowed in production path.
+3. **Tests:** `npm run test` (or project equivalent) — all must pass.
+4. **Secret sweep:** Scan `git diff HEAD` for hardcoded API keys, passwords, or tokens.
+5. **Log sweep:** Remove `console.log`, `debugger`, `print()` from production paths. Exception: structured loggers (Winston, Pino).
+6. **Build:** `npm run build` — must succeed cleanly.
+7. **Env check:** Confirm all `.env.production` variables are documented or injected via CI.

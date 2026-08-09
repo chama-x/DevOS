@@ -15,7 +15,7 @@
 > Agent initialized.
 > Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
 > Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
-> Reading .agents/worklog.md... [Session history restored]
+> Reading .agents/LOG.md... [Session history restored]
 > Ready. 
 ```
 
@@ -30,8 +30,8 @@ with four files:
 |---|---|
 | `rules/IDENTITY.md` | Your declaration of what the project is, what done looks like, and where the agent has autonomy vs. where you stay in the loop |
 | `rules/GROUNDING.md` | Behavioral calibration — how the agent implements, communicates, catches its own mistakes, and starts each session |
-| `current.md` | What the agent is working on right now, what it's not touching, when it's done |
-| `worklog.md` | What was done before — so the next session doesn't start from zero |
+| `NOW.md` | What the agent is working on right now, what it's not touching, when it's done |
+| `LOG.md` | What was done before — so the next session doesn't start from zero |
 
 Two rule files are injected into every conversation (~700 tokens). Two
 dynamic files are read on session start. That's the entire system.
@@ -57,7 +57,7 @@ Single-file `.cursorrules` and prompt packs dump thousands of tokens into every 
 | Capability | Raw Prompts (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
 | **Context footprint** | 5,000+ tokens loaded every chat | ~700 core tokens loaded |
-| **Session history** | Resets to zero on new chat | Restores progress from `worklog.md` |
+| **Session history** | Resets to zero on new chat | Restores progress from `LOG.md` |
 | **Skill loading** | All rules loaded at once | Max 2–3 skills loaded on demand |
 | **Scope discipline** | Soft suggestions agent can ignore | Hard constraints checked before first response |
 | **Project boundary** | Unstated | Defined in `IDENTITY.md` |
@@ -109,8 +109,8 @@ compensate for.
 │   ├── IDENTITY.md          ← Fill this for your project
 │   ├── GROUNDING.md         ← Agent behavioral calibration
 │   └── SKILL_ROUTING.md     ← Skill decision tree
-├── current.md               ← Volatile task state
-├── worklog.md               ← Append-only history
+├── NOW.md               ← Volatile task state
+├── LOG.md               ← Append-only history
 └── skills/                  ← 11 curated skill directories
 ```
 

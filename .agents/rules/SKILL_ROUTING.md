@@ -1,8 +1,6 @@
----
-trigger: always_on
----
-
 # Skill Routing
+
+*Do not load this file unless a task requires a specialized framework. Skills are configuration profiles, not textbooks.*
 
 **11 skills. Max 2-3 per task. Load only when the skill adds behavioral configuration or fills a specific knowledge gap.**
 

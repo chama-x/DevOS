@@ -11,7 +11,7 @@
 > Agent initialized.
 > Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
 > Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
-> Reading .agents/worklog.md... [Session history restored]
+> Reading .agents/LOG.md... [Session history restored]
 > Ready. 
 ```
 
@@ -36,7 +36,7 @@ IDE 智能体每次对话都从零开始。DevOS 赋予它们记忆——你的�
 | 能力 | 原始提示词 (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
 | **上下文占用** | 每次对话加载 5,000+ Tokens | 仅加载 ~700 核心 Tokens |
-| **会话历史** | 新对话立即清零 | 从 `worklog.md` 恢复进度 |
+| **会话历史** | 新对话立即清零 | 从 `LOG.md` 恢复进度 |
 | **技能加载** | 一次性加载所有规则 | 按需最多加载 2–3 项技能 |
 | **范围纪律** | 智能体可忽略的软建议 | 首次响应前强制检查硬约束 |
 | **项目边界** | 未声明 | 在 `IDENTITY.md` 中明确定义 |
@@ -67,8 +67,8 @@ IDE 智能体每次对话都从零开始。DevOS 赋予它们记忆——你的�
 │   ├── IDENTITY.md          ← 为你的项目填写此文件
 │   ├── GROUNDING.md         ← 智能体行为校准
 │   └── SKILL_ROUTING.md     ← 技能决策树
-├── current.md               ← 易失性任务状态
-├── worklog.md               ← 仅追加的历史记录
+├── NOW.md               ← 易失性任务状态
+├── LOG.md               ← 仅追加的历史记录
 └── skills/                  ← 11 个精选技能目录
 ```
 

@@ -11,7 +11,7 @@
 > Agent initialized.
 > Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
 > Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
-> Reading .agents/worklog.md... [Session history restored]
+> Reading .agents/LOG.md... [Session history restored]
 > Ready. 
 ```
 
@@ -36,7 +36,7 @@ IDEエージェントは毎回のチャットをゼロから始めます。DevOS
 | 機能 | 生のプロンプト (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
 | **消費トークン** | チャットごとに5,000+トークン | ~700トークンのみ読み込み |
-| **セッション履歴** | 新規チャットでゼロにリセット | `worklog.md` から進捗を復元 |
+| **セッション履歴** | 新規チャットでゼロにリセット | `LOG.md` から進捗を復元 |
 | **スキル読み込み** | 全ルールを一律読み込み | オンデマンドで最大2〜3スキル |
 | **スコープの規律** | 無視可能な曖昧な提案 | 応答前に制約を厳格チェック |
 | **プロジェクト境界** | 未定義 | `IDENTITY.md` で明確に定義 |
@@ -67,8 +67,8 @@ IDEエージェントは毎回のチャットをゼロから始めます。DevOS
 │   ├── IDENTITY.md          ← プロジェクトに合わせて記入
 │   ├── GROUNDING.md         ← エージェントの行動調整
 │   └── SKILL_ROUTING.md     ← スキルの決定木
-├── current.md               ← タスクの揮発性状態
-├── worklog.md               ← 追記専用の履歴
+├── NOW.md               ← タスクの揮発性状態
+├── LOG.md               ← 追記専用の履歴
 └── skills/                  ← 11の厳選されたスキルディレクトリ
 ```
 

@@ -57,7 +57,7 @@ I will fix the typo in the checkout header. I am deliberately leaving the rest o
 
 ---
 
-## 3. worklog.md: Cross-Session Continuity
+## 3. LOG.md: Cross-Session Continuity
 
 **User Request:** "Continue with the payment integration we started
 yesterday."
@@ -68,14 +68,14 @@ The agent asks: "What payment integration? What stack are we using? Do
 you have the API keys?" The user spends 10 minutes re-explaining context
 it already gave.
 
-**✅ What DevOS Does (Guided by worklog.md)**
+**✅ What DevOS Does (Guided by LOG.md)**
 
 In a new session, before responding, the agent reads
-`.agents/worklog.md`.
+`.agents/LOG.md`.
 
 ```
 [Agent Output]
-Orienting from worklog.md: Yesterday, we successfully implemented the Stripe checkout session endpoint. The next pending task is to handle the `checkout.session.completed` webhook. I'll begin drafting the webhook handler now.
+Orienting from LOG.md: Yesterday, we successfully implemented the Stripe checkout session endpoint. The next pending task is to handle the `checkout.session.completed` webhook. I'll begin drafting the webhook handler now.
 ```
 
 *Result: Zero re-explaining. Zero minutes lost.*

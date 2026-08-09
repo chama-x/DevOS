@@ -11,7 +11,7 @@
 > Agent initialized.
 > Reading .agents/rules/IDENTITY.md... [Project boundaries loaded]
 > Reading .agents/rules/GROUNDING.md... [Behavioral constraints loaded]
-> Reading .agents/worklog.md... [Session history restored]
+> Reading .agents/LOG.md... [Session history restored]
 > Ready. 
 ```
 
@@ -36,7 +36,7 @@ Los archivos únicos `.cursorrules` y paquetes de prompts vierten miles de token
 | Capacidad | Prompts Directos (.cursorrules / CLAUDE.md) | DevOS |
 |---|---|---|
 | **Consumo de contexto** | +5,000 tokens cargados por chat | ~700 tokens núcleo cargados |
-| **Historial de sesión** | Se reinicia a cero en cada chat | Restaura progreso desde `worklog.md` |
+| **Historial de sesión** | Se reinicia a cero en cada chat | Restaura progreso desde `LOG.md` |
 | **Carga de habilidades** | Todas las reglas juntas | Máx. 2–3 habilidades a demanda |
 | **Disciplina de alcance** | Sugerencias suaves ignorables | Restricciones verificadas antes de responder |
 | **Límites de proyecto** | No especificados | Definidos en `IDENTITY.md` |
@@ -67,8 +67,8 @@ Priorizamos la confianza, la predictibilidad y la colaboración.
 │   ├── IDENTITY.md          ← Completa esto para tu proyecto
 │   ├── GROUNDING.md         ← Calibración de comportamiento del agente
 │   └── SKILL_ROUTING.md     ← Árbol de decisión de habilidades
-├── current.md               ← Estado volátil de la tarea
-├── worklog.md               ← Historial (solo adición)
+├── NOW.md               ← Estado volátil de la tarea
+├── LOG.md               ← Historial (solo adición)
 └── skills/                  ← 11 directorios de habilidades seleccionadas
 ```
 
