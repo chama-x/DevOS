@@ -1,16 +1,7 @@
 # Log
 
-<!-- Append only. Never edit past entries. Compress to archive when >50 lines.
-     Each entry: timestamp, task, what changed, approach, outcome, lessons. -->
+<!-- Append only. Compress when >50 lines. Format: [Date] Feature: Outcome. (Decision/Lesson) -->
 
-## 2026-08-07T14:20:00Z - Initial DB Schema Setup
-- **What changed**: Created migration for `profiles`, `classes`, and `bookings` tables in Supabase.
-- **Approach**: Used standard Supabase migration workflows. Added RLS policies ensuring users can only see their own bookings.
-- **Outcome**: Schema successfully deployed locally. RLS tests pass.
-- **Lessons**: Supabase local development requires Docker running; noted to ensure it's up before running DB commands.
-
-## 2026-08-08T09:15:00Z - Stripe Checkout Session Endpoint
-- **What changed**: Implemented `POST /api/checkout` to create a Stripe Checkout Session.
-- **Approach**: Used Stripe Node SDK. Mapped `class_id` to Stripe Price ID and passed user email to pre-fill the form.
-- **Outcome**: Endpoint returns a valid session URL.
-- **Lessons**: Needed to include `metadata.booking_id` in the session so the webhook can identify which booking to update later.
+- **2026-08-07** Schema Migration: `profiles`, `classes`, `bookings` deployed locally. *(Lesson: Ensure local Docker daemon is running before Supabase CLI commands).*
+- **2026-08-07** Database Security: RLS policies enforced for user-isolated reads. *(Decision: Users can only select bookings where `user_id == auth.uid()`).*
+- **2026-08-08** Stripe Checkout: `POST /api/checkout` returns valid session URL. *(Decision: Injected `metadata.booking_id` into the session so the webhook can map it back to Postgres later).*

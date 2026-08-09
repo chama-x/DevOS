@@ -1,6 +1,12 @@
 # Current Task
 
 **WHAT**: Implement the `checkout.session.completed` Stripe webhook handler.
-**SCOPE**: `app/api/webhooks/stripe/route.ts`, Supabase client helpers to update the `bookings` table status to 'paid'.
-**NOT_TOUCHING**: Frontend checkout page logic or the actual Stripe product configuration.
-**DONE_WHEN**: The webhook successfully verifies the Stripe signature, updates the booking status in Postgres, and returns a 200 OK. We have written a unit test simulating a valid payload.
+**SCOPE**: Only `app/api/webhooks/stripe/route.ts` and Supabase DB helpers.
+**NOT_TOUCHING**: 
+- **NEVER** touch frontend checkout components (`app/checkout/page.tsx`).
+- **NEVER** touch Stripe dashboard configuration.
+**SUCCESS_CRITERIA**: 
+1. Validates Stripe signature using the official SDK.
+2. Updates `bookings` table status to `'paid'`.
+3. Returns `200 OK`. 
+4. Associated unit test passes.

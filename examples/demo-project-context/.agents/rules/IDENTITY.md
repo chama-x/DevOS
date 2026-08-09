@@ -1,37 +1,22 @@
 ---
 trigger: always_on
 ---
+# AcmeBook — Project Identity
 
-# Project Identity
+## Boundaries & Core Stack
+- **Stack:** Next.js 14 App Router, Supabase, Tailwind, shadcn/ui.
+- **Mission:** B2B SaaS for fitness instructors to manage classes and clients to book slots.
 
-## What We're Building
-We are building "AcmeBook", a Next.js B2B SaaS platform where fitness instructors can manage their class schedules and clients can book slots. It focuses on a frictionless mobile booking experience and a powerful desktop calendar view for instructors.
+## Constraints (What We Don't Do)
+- **NEVER** use raw SQL. **ALWAYS** use the Supabase JS client.
+- **NEVER** use inline styles. **ALWAYS** use Tailwind utility classes (e.g., `<div className="flex gap-4">`).
+- **NEVER** add state management libraries like Redux or Zustand. Rely strictly on React Server Components and native Context.
+- **NEVER** implement custom date pickers. **ALWAYS** use native HTML `<input type="date">` or the canonical shadcn calendar component.
 
-## Tech Stack
-- Frontend: Next.js 14 (App Router), React, Tailwind CSS
-- Backend: Supabase (Postgres, Auth, Edge Functions)
-- Payments: Stripe
-- UI Components: shadcn/ui
+## Priorities
+- **High-Risk:** Row Level Security (RLS) policies and Stripe payment Webhooks. Stop and verify before changing.
+- **Non-Negotiable:** Keyboard accessibility on all interactive elements.
 
-## Test Command
-`npm run test`
-
-## What We Don't Do
-- Never use raw SQL queries. Always use Supabase JS client or Prisma ORM.
-- No custom date pickers — rely on native HTML `<input type="date">` or shadcn's standard calendar component.
-- Do not add external state management libraries (no Redux, no Zustand). Stick to React Context and Server Components.
-
-## What Matters to Me
-- High-risk: Anything touching user data, Stripe payment logic, or Row Level Security (RLS) policies. Double-check before modifying.
-- Non-negotiable: Accessibility. All interactive elements must be keyboard navigable and screen-reader friendly.
-- Move fast: Internal admin dashboards and basic CRUD UI.
-
-## Where I Stay in the Loop
-- Architecture choices and database schema migrations.
-- Adding any new third-party dependencies.
-- User-facing copy (marketing pages).
-
-## Where You Have Full Autonomy
-- Implementation of features within the approved architecture.
-- Writing unit tests and resolving test failures.
-- Styling components to match the existing Tailwind design system.
+## Autonomy vs. Approval
+- **Full Autonomy:** Feature implementation within boundaries, unit tests, matching Tailwind designs.
+- **Requires Approval:** DB schema migrations, adding third-party `npm` dependencies, modifying Stripe products.
