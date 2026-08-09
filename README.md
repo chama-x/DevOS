@@ -118,6 +118,16 @@ See [`examples/demo-project-context/`](examples/demo-project-context/) for a ful
 
 ---
 
+## The Missing Piece
+
+DevOS is not an execution harness. It doesn't run terminal commands, orchestrate subagents, or manage API keys. 
+
+If you use tools like Cursor, Claude Code, Cline, or ECC — keep using them. They are excellent at **execution**.
+
+DevOS provides the **persistent memory** that those tools lack out of the box. Instead of stuffing thousands of tokens into a monolithic `.cursorrules`, `CLAUDE.md`, or `.windsurfrules` file, DevOS structures your project's context so any execution harness can read exactly what it needs, when it needs it.
+
+---
+
 ## Why This Works
 
 Andrej Karpathy described the LLM as a CPU and the context window as its RAM. Tobi Lütke called context engineering *"the art of providing all the context for the task to be plausibly solvable."*
