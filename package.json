@@ -34,8 +34,7 @@
   },
   "files": [
     "bin/",
-    ".agents/",
-    "AGENTS.md",
+    "template/",
     "README.md",
     "LICENSE"
   ]

@@ -111,7 +111,7 @@ npx create-devos
 Manual (copy the template, edit it yourself):
 
 ```bash
-npx degit chama-x/DevOS/.agents .agents
+npx degit chama-x/DevOS/template .
 ```
 
 See [`examples/demo-project-context/`](examples/demo-project-context/) for a fully populated example.
