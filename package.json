@@ -1,7 +1,7 @@
 {
   "name": "create-devos",
-  "version": "2.0.0",
-  "description": "A zero-runtime memory layer for AI agents. Give any IDE agent persistent memory with five markdown files.",
+  "version": "2.1.0",
+  "description": "Cognitive Grounding & Behavioral Protocol for AI Coding Agents. Zero runtime, zero dependencies.",
   "bin": {
     "create-devos": "bin/create-devos.js"
   },
@@ -11,16 +11,15 @@
   "keywords": [
     "ai-agents",
     "developer-tools",
-    "cursor",
+    "grounding",
+    "antigravity",
     "claude-code",
+    "cursor",
     "agents-md",
-    "llm",
     "context-engineering",
+    "epistemic-security",
     "coding-assistant",
-    "productivity",
-    "cursorrules",
-    "claude-md",
-    "devos"
+    "guardrails"
   ],
   "author": "chama-x",
   "license": "MIT",
