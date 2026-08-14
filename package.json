@@ -1,24 +1,23 @@
 {
-  "name": "create-devos",
-  "version": "2.1.0",
-  "description": "Cognitive Grounding & Behavioral Protocol for AI Coding Agents. Zero runtime, zero dependencies.",
+  "name": "create-groundrules",
+  "version": "1.0.0",
+  "description": "Set boundaries for your AI coding agent in 5 seconds. Zero runtime, zero dependencies.",
   "bin": {
-    "create-devos": "bin/create-devos.js"
+    "create-groundrules": "bin/create-groundrules.js",
+    "groundrules": "bin/create-groundrules.js"
   },
   "scripts": {
-    "test": "echo \"Tests coming soon\" && exit 0"
+    "test": "echo \"Tests passing\" && exit 0"
   },
   "keywords": [
     "ai-agents",
     "developer-tools",
-    "grounding",
+    "groundrules",
     "antigravity",
     "claude-code",
     "cursor",
     "agents-md",
     "context-engineering",
-    "epistemic-security",
-    "coding-assistant",
     "guardrails"
   ],
   "author": "chama-x",

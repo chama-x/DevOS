@@ -2,28 +2,18 @@
 trigger: always_on
 ---
 
-# Project Identity
+# Project Identity & Boundaries
 
 ## What We're Building
-<!-- Fill this in: one paragraph explaining the project to a smart friend. -->
+<!-- One sentence explaining the project -->
 
 ## Tech Stack
-- [e.g., Next.js, Node, Supabase]
+- [e.g., Next.js 15, Supabase, Tailwind v4]
 
 ## Test Command
-`[e.g., npm run test]`
+`[e.g., npm test]`
 
-## What We Don't Do
-<!-- Non-negotiable. The agent checks here before adding anything. -->
+## What We Don't Do (Non-Negotiable)
+<!-- The agent checks here before writing anything -->
 - [e.g., Never touch auth logic without approval]
-
-## What Matters to Me
-- High-risk: [e.g., "anything touching user data or auth"]
-- Non-negotiable: [e.g., "accessibility on all interactive elements"]
-- Move fast: [e.g., "internal admin pages, build tooling"]
-
-## Where I Stay in the Loop
-- [e.g., "architecture choices", "third-party dependencies", "user-facing copy"]
-
-## Where You Have Full Autonomy
-- [e.g., "implementation within approved architecture", "test writing", "build config"]
+- [e.g., Never add unrequested dependencies]
