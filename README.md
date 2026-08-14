@@ -85,4 +85,4 @@ GroundRules uses **Perimeter-Based Freedom**:
 
 ---
 
-[Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) · MIT License
+[Contributing](.github/CONTRIBUTING.md) · [Code of Conduct](.github/CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) · [License](LICENSE)

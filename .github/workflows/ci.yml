@@ -7,13 +7,12 @@ on:
     branches: [ master, main ]
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Check Markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+      - uses: actions/setup-node@v3
         with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'yes'
-          config-file: '.markdownlinkcheck.json'
+          node-version: '18'
+      - name: Run Test
+        run: npm test
