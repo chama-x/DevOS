@@ -1,66 +1,87 @@
 # GroundRules
 ### Set boundaries for your AI coding agent in 5 seconds.
 
-Default AI agents suffer from 3 annoying habits:
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/create-groundrules.svg?style=flat)](https://www.npmjs.com/package/create-groundrules)
+[![Zero Runtime](https://img.shields.io/badge/runtime-zero%20dependencies-brightgreen.svg)]()
+
+Default AI coding agents suffer from 3 inherent behavioral failure modes:
 1. **Silent Assumptions:** Guessing your architecture instead of asking when requirements are ambiguous.
 2. **Speculative Abstractions:** Writing unrequested factories, helper sprawl, and premature refactors.
-3. **Hallucinated Imports:** Guessing library versions from memory instead of checking what's installed.
+3. **Hallucinated Imports:** Guessing library versions from training memory instead of checking what is installed.
 
-**GroundRules** fixes all three with 2 clean Markdown files in `.agents/rules/`.
+**GroundRules** fixes all three using 2 minimal, factual Markdown files (~250 tokens total).
 
 ```bash
 npx create-groundrules
 ```
 
-Zero runtime. Zero dependencies. ~250 tokens. Works natively with Antigravity, Claude Code, Cursor, Copilot, and Windsurf.
+Zero runtime. Zero dependencies. Works natively with **Antigravity**, **Claude Code**, **Cursor**, **GitHub Copilot**, and **Windsurf**.
 
 ---
 
-## What It Installs
+## The 2-File Architecture
 
 ```
 AGENTS.md                      → Root router pointing to your guardrails
 .agents/
 └── rules/
-    ├── IDENTITY.md            → Tech stack, test command, & "What We Don't Do"
-    └── GROUNDING.md           → 4 universal cognitive rules (No guessing, verify lockfiles)
+    ├── IDENTITY.md            → Tech stack, test command, & non-negotiable boundaries
+    └── GROUNDING.md           → 4 factual cognitive invariants (No guessing, verify lockfiles)
 ```
 
-### 1. `IDENTITY.md` (Negative Boundaries)
+### 1. `IDENTITY.md` (Settled Boundaries)
+*Facts, not commands. Models resist drift significantly better when rules are stated as settled codebase reality.*
+
 ```markdown
-## What We Don't Do
-- NEVER use raw SQL (use Supabase client).
-- NEVER touch auth logic without approval.
-- NEVER add unrequested dependencies.
+## Non-Negotiable Invariants
+- Database access: Supabase JS client only. Raw SQL does not exist in this repo.
+- Auth boundaries: Authentication files are human-managed and read-only.
+- Dependencies: Only packages present in `package-lock.json` exist. No unrequested libraries.
 ```
 
-### 2. `GROUNDING.md` (Cognitive Discipline)
+### 2. `GROUNDING.md` (Cognitive Invariants)
+
 ```markdown
-## 1. Never Guess Silently
-When requirements are ambiguous, STOP and ask before implementing.
+## 1. Ambiguity Resolution
+When a requirement is underspecified, the agent presents concrete options via `ask_question` rather than choosing silently.
 
-## 2. Verify Lockfiles First
-Check package-lock.json before writing imports. Never guess from memory.
+## 2. Epistemic Baseline
+Import versions derive strictly from `package-lock.json`. If a package is not in the lockfile, it does not exist in this project.
 
-## 3. No Speculative Abstractions
-Write surgical, minimum viable code. No unrequested helper sprawl.
+## 3. Scope & Abstraction
+Code changes are minimal and surgical. The codebase contains no wrapper factories or unused utilities.
 
-## 4. High Signal Communication
-Lead with the code and diffs. No conversational fluff or preambles.
+## 4. Communication Rhythm
+Responses lead directly with code diffs and verified terminal output. Conversational preambles are omitted.
 ```
 
 ---
 
 ## Installation
 
+### Interactive (5 seconds)
 ```bash
-# Interactive (takes 5 seconds)
 npx create-groundrules
+```
+*Prompts for stack, test command, and your non-negotiables, then creates the files.*
 
-# Or clone manually
-npx degit chama-x/DevOS/template .
+### Manual (Clone Template)
+```bash
+npx degit chama-x/GroundRules/template .
 ```
 
 ---
 
-[Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · MIT License
+## Why GroundRules Works
+
+Most agent prompt frameworks try to act like an operating system—building complex state machines and dumping thousands of tokens into chat prompts. 
+
+GroundRules uses **Progressive Disclosure** and **Factual Invariants**:
+- **Factual Framing:** States boundaries as immutable environmental truths rather than imperative rules models can negotiate with.
+- **Context Hygiene:** ~250 tokens total. Preserves your context window for actual code.
+- **Universal Portability:** Committed directly to Git so your entire team and any IDE agent share the exact same ground truth.
+
+---
+
+[Contributing](CONTRIBUTING.md) · [Code of Conduct](CODE_OF_CONDUCT.md) · [Changelog](CHANGELOG.md) · MIT License

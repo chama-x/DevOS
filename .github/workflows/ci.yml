@@ -1,4 +1,4 @@
-name: DevOS CI
+name: GroundRules CI
 
 on:
   push:

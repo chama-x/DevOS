@@ -24,11 +24,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chama-x/DevOS.git"
+    "url": "git+https://github.com/chama-x/GroundRules.git"
   },
-  "homepage": "https://github.com/chama-x/DevOS",
+  "homepage": "https://github.com/chama-x/GroundRules",
   "bugs": {
-    "url": "https://github.com/chama-x/DevOS/issues"
+    "url": "https://github.com/chama-x/GroundRules/issues"
   },
   "files": [
     "bin/",

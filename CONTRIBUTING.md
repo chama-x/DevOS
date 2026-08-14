@@ -1,40 +1,19 @@
-# Contributing to DevOS
+# Contributing to GroundRules
 
-Thank you for considering contributing to DevOS! We're building the simplest possible context layer for AI coding agents, and every contribution matters.
+Thank you for contributing to GroundRules! We are building the cleanest, zero-dependency cognitive grounding and boundaries layer for AI coding agents.
 
-## The Core Philosophy
+## Core Directives
 
-DevOS prioritizes **predictability over perfection.** Before submitting a PR, please ensure your contribution aligns with the four directives in the README:
+Before submitting a PR, ensure your contribution adheres to our core invariants:
 
-1. Ask, don't assume
-2. Minimum viable implementation
-3. Scope discipline
-4. Define success, then loop
+1. **Identity as fact, not command:** Frame boundaries as settled facts rather than shouting imperative commands.
+2. **Zero runtime dependencies:** GroundRules must remain pure Markdown and minimal Node.js CLI code.
+3. **No speculative bloat:** No runtime daemons, task databases, or complex state machines.
+4. **Universal portability:** Works seamlessly across Antigravity, Claude Code, Cursor, Copilot, and Windsurf.
 
-## Good First Contributions
-
-- Improve documentation or fix typos
-- Add a new localized README translation
-- Propose a new curated skill (see below)
-
-## Adding Skills
-
-Skills are strict **configuration profiles**, not reference manuals. If you are submitting a new skill:
-
-1. It **must** enforce a behavioral or formatting constraint.
-2. It **must not** simply dump API documentation (the model already knows the API).
-3. It **must** be under 150 words (per `SKILLS_SPEC.md`).
-4. It **must** be added to `SKILL_ROUTING.md` with a clear trigger condition.
-
-## Submitting Pull Requests
+## Submitting Changes
 
 1. Fork the repo and create your branch from `master`.
-2. Update the README or documentation if you change functionality.
-3. Keep the scope of the PR focused. (Scope discipline applies to humans too!)
-4. Issue that pull request!
-
-## What We Won't Accept
-
-- Runtime dependencies of any kind (npm packages, Python libraries, etc.)
-- IDE-specific code or configurations
-- Skills that exceed 150 words or contain generic advice the model already knows
+2. Keep edits focused and surgical.
+3. Run tests with `npm test`.
+4. Open a Pull Request!
