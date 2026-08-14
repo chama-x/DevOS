@@ -1,16 +1,18 @@
 # GroundRules
-### Set boundaries for your AI coding agent in 5 seconds.
+### Two files. ~250 tokens. Zero drift.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 [![Zero Runtime](https://img.shields.io/badge/runtime-zero%20dependencies-brightgreen.svg)]()
 
-Default AI coding agents suffer from 3 inherent behavioral failure modes:
-1. **Silent Assumptions:** Guessing your architecture instead of asking when requirements hit breaking trade-offs.
-2. **Speculative Abstractions:** Writing unrequested factories, helper sprawl, and premature refactors.
-3. **Hallucinated Imports:** Guessing library versions from training memory instead of checking what is installed.
+AI coding agents don't fail from lack of intelligence. They fail from lack of boundaries.
 
-**GroundRules** fixes all three using 2 minimal, factual Markdown files (~250 tokens total).
+Without explicit project invariants, frontier models default to three behaviors:
+- **Silent Assumptions:** Guessing architecture on ambiguous tasks rather than asking.
+- **Speculative Code:** Writing unrequested factories, wrappers, and adjacent refactors.
+- **Version Confabulation:** Importing APIs from pre-training memory instead of installed packages.
+
+GroundRules fixes all three with two flat Markdown files in `.agents/rules/`.
 
 ```bash
 npx create-groundrules
@@ -20,31 +22,43 @@ Zero runtime. Zero dependencies. Works natively with **Antigravity**, **Claude C
 
 ---
 
-## The 2-File Architecture
+## Why Facts Beat Commands
+
+Prompt frameworks shout imperative rules at the model:
+> *"YOU MUST NEVER USE RAW SQL AND YOU MUST ALWAYS CHECK PACKAGE.JSON!"*
+
+As conversation context grows, models negotiate with imperative commands and drift.
+
+GroundRules states boundaries as **settled codebase reality**:
+> *"Database access: Supabase JS client only. Raw SQL does not exist in this codebase."*
+> *"Dependencies: The lockfile is the sole source of truth for packages."*
+
+When stated as environmental facts, the model treats them as immutable laws of physics. Adherence stays high across long sessions with zero prompt tension.
+
+---
+
+## The Architecture
 
 ```
-AGENTS.md                      → Root router pointing to your guardrails
+AGENTS.md                      → Universal router pointing agents to guardrails
 .agents/
 └── rules/
-    ├── IDENTITY.md            → Tech stack, test command, & non-negotiable boundaries
-    └── GROUNDING.md           → 4 factual cognitive invariants (No guessing, verify lockfiles)
+    ├── IDENTITY.md            → Settled project boundaries & "What We Don't Do"
+    └── GROUNDING.md           → 4 cognitive invariants
 ```
 
-### 1. `IDENTITY.md` (Settled Boundaries)
-*Facts, not commands. Models resist drift significantly better when rules are stated as settled codebase reality.*
-
+### 1. `IDENTITY.md` — Project Invariants
 ```markdown
 ## Non-Negotiable Invariants
 - Database access: Supabase JS client only. Raw SQL does not exist in this repo.
 - Auth boundaries: Authentication files are human-managed and read-only.
-- Dependencies: Only packages present in `package-lock.json` exist. No unrequested libraries.
+- Dependencies: Only packages present in `package-lock.json` exist.
 ```
 
-### 2. `GROUNDING.md` (Cognitive Invariants)
-
+### 2. `GROUNDING.md` — Cognitive Invariants
 ```markdown
 ## 1. Ambiguity & Autonomy Threshold
-- Standard Implementation: Use native intelligence to make sensible default choices on routine tasks without pausing.
+- Standard Implementation: Use native intelligence on routine tasks without pausing.
 - Architectural Crossroads: When a task involves major structural trade-offs, surface concrete choices via `ask_question`.
 
 ## 2. Epistemic Baseline
@@ -59,7 +73,7 @@ Responses lead directly with code diffs and verified terminal output. Conversati
 
 ---
 
-## Installation
+## Quickstart
 
 ### Interactive (5 seconds)
 ```bash
@@ -74,14 +88,11 @@ npx degit chama-x/GroundRules/template .
 
 ---
 
-## Why GroundRules Works
+## Universal Portability
 
-Most agent prompt frameworks over-constrain the model with prescriptive micromanagement, leading to instruction paralysis.
+GroundRules is not an execution harness. It manages no API keys and runs no background daemons.
 
-GroundRules uses **Perimeter-Based Freedom**:
-- **Full Internal Autonomy:** The agent uses its full reasoning power to design the best solution without being micromanaged.
-- **Hard Perimeters:** Protects your project's high-risk boundaries (`IDENTITY.md`) and stops hallucinations without adding friction.
-- **Zero System Prompt Conflict:** Integrates seamlessly with your IDE's native planning modes and tool calling.
+It is a pure Git-committed specification. Whether your team runs Antigravity, Claude Code, Cursor, or Copilot, every agent reads the exact same project reality.
 
 ---
 
