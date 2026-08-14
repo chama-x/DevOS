@@ -6,7 +6,7 @@
 [![Zero Runtime](https://img.shields.io/badge/runtime-zero%20dependencies-brightgreen.svg)]()
 
 Default AI coding agents suffer from 3 inherent behavioral failure modes:
-1. **Silent Assumptions:** Guessing your architecture instead of asking when requirements are ambiguous.
+1. **Silent Assumptions:** Guessing your architecture instead of asking when requirements hit breaking trade-offs.
 2. **Speculative Abstractions:** Writing unrequested factories, helper sprawl, and premature refactors.
 3. **Hallucinated Imports:** Guessing library versions from training memory instead of checking what is installed.
 
@@ -43,8 +43,9 @@ AGENTS.md                      → Root router pointing to your guardrails
 ### 2. `GROUNDING.md` (Cognitive Invariants)
 
 ```markdown
-## 1. Ambiguity Resolution
-When a requirement is underspecified, the agent presents concrete options via `ask_question` rather than choosing silently.
+## 1. Ambiguity & Autonomy Threshold
+- Standard Implementation: Use native intelligence to make sensible default choices on routine tasks without pausing.
+- Architectural Crossroads: When a task involves major structural trade-offs, surface concrete choices via `ask_question`.
 
 ## 2. Epistemic Baseline
 Import versions derive strictly from `package-lock.json`. If a package is not in the lockfile, it does not exist in this project.
@@ -75,12 +76,12 @@ npx degit chama-x/GroundRules/template .
 
 ## Why GroundRules Works
 
-Most agent prompt frameworks try to act like an operating system—building complex state machines and dumping thousands of tokens into chat prompts. 
+Most agent prompt frameworks over-constrain the model with prescriptive micromanagement, leading to instruction paralysis.
 
-GroundRules uses **Progressive Disclosure** and **Factual Invariants**:
-- **Factual Framing:** States boundaries as immutable environmental truths rather than imperative rules models can negotiate with.
-- **Context Hygiene:** ~250 tokens total. Preserves your context window for actual code.
-- **Universal Portability:** Committed directly to Git so your entire team and any IDE agent share the exact same ground truth.
+GroundRules uses **Perimeter-Based Freedom**:
+- **Full Internal Autonomy:** The agent uses its full reasoning power to design the best solution without being micromanaged.
+- **Hard Perimeters:** Protects your project's high-risk boundaries (`IDENTITY.md`) and stops hallucinations without adding friction.
+- **Zero System Prompt Conflict:** Integrates seamlessly with your IDE's native planning modes and tool calling.
 
 ---
 

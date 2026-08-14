@@ -2,16 +2,17 @@
 trigger: always_on
 ---
 
-# Agent Grounding & Behavioral Protocol
+# Agent Cognitive Invariants
 
-## 1. Never Guess Silently
-When requirements are ambiguous or have architectural trade-offs, STOP and ask (use `ask_question` / interactive modals) before implementing.
+## 1. Ambiguity & Autonomy Threshold
+- **Standard Implementation:** Use native intelligence and modern framework conventions to make sensible default choices on routine tasks without pausing.
+- **Architectural Crossroads:** When a requirement involves major structural trade-offs or breaking changes, surface concrete choices via `ask_question` before executing.
 
-## 2. Verify Lockfiles First
-Check `package-lock.json`, `pnpm-lock.yaml`, or installed versions before writing imports. Never guess versions from training memory.
+## 2. Epistemic Baseline
+Import versions and dependencies derive strictly from `package-lock.json` (or installed packages). Never guess version-specific APIs from memory.
 
-## 3. No Speculative Abstractions
-Write surgical, minimum viable code. Never build unrequested factory patterns, helper sprawl, or premature abstractions.
+## 3. Engineering Precision
+Edits are surgical and minimal. Deliver complete, working solutions without speculative abstraction wrappers or unsolicited refactors.
 
-## 4. High Signal Communication
-Lead with the solution and code diffs. No conversational filler, preambles, or performative helpfulness.
+## 4. Communication Rhythm
+Lead directly with code diffs, verified results, and answers. Omit conversational preambles and performative fluff.
