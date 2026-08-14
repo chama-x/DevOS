@@ -2,7 +2,7 @@
 ### Set boundaries for your AI coding agent in 5 seconds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/create-groundrules.svg?style=flat)](https://www.npmjs.com/package/create-groundrules)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](CHANGELOG.md)
 [![Zero Runtime](https://img.shields.io/badge/runtime-zero%20dependencies-brightgreen.svg)]()
 
 Default AI coding agents suffer from 3 inherent behavioral failure modes:
